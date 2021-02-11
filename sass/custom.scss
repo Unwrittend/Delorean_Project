@@ -1,0 +1,35 @@
+// Project DeLorean
+// SCSS Document
+// This document contains all custom variable names
+@charset "UTF-8";
+
+// Import all Bootstrap styles
+
+// Global Colors
+// -- Theme
+$black:			rgb(0, 0, 0);
+$black-shadow:	rgba(0, 0, 0, 0.75);
+$blue-light: 	rgb(41, 171, 226);
+$green: 		rgb(57, 181, 74);
+$grey: 			rgb(179, 179, 179);
+$orange: 		rgb(251, 196, 15);
+$orange-dark: 	rgb(164, 123, 0);
+$white:			rgb(255, 255, 255);
+
+// Global Fonts
+// -- Theme
+$font-family-sans-serif: Lucida Sans;
+
+//Body
+$body-bg: $white;
+$body-color: #aaa;
+
+// Borders
+$radius-container: 20px;
+
+// Navigation
+$navbar-dark-color:					$white;
+$navbar-dark-hover-color:			$grey;
+$navbar-dark-active-color:			$orange;
+$navbar-dark-disabled-color:		$orange-dark;
+$navbar-dark-toggler-border-color:	$orange;
