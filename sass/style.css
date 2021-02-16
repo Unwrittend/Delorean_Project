@@ -10669,8 +10669,17 @@ main.content {
   width: 100%;
 }
 
+#mc {
+  min-height: 500px;
+}
+
 #peak-lg {
   width: 94%;
+}
+
+.form-control:focus {
+  border-color: #39b54a;
+  box-shadow: 0 0 0 0.25rem rgba(57, 181, 74, 0.3);
 }
 
 .slider {
@@ -10739,6 +10748,7 @@ main.content {
   margin-bottom: 10px;
   padding: 5px;
   text-align: right;
+  cursor: pointer;
   -webkit-transition: linear 0.2s;
   -moz-transition: linear 0.2s;
 }
@@ -10758,6 +10768,7 @@ main.content {
 
 select.form-control {
   margin-bottom: 10px;
+  cursor: pointer;
   color: black;
 }
 

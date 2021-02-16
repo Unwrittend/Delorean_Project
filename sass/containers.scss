@@ -52,6 +52,10 @@ main.content {
 	}
 }
 
+.form-input {
+	// Nothing here yet
+}
+
 .form-result {
 	background: $blue-light;
 	color: $black;
@@ -61,6 +65,11 @@ main.content {
 // Style for the Map input
 #map {
 	width: 100%;
+}
+
+// Style for the Multiple Choice Input
+#mc {
+	min-height: 500px;
 }
 
 // Style for the Peak Shaving Graph shown on large displays (in the center column)
