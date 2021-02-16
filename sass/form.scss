@@ -1,0 +1,106 @@
+@charset "UTF-8";
+// Project DeLorean
+// SCSS Document
+// This document contains all styles for form elements.
+
+.slider {
+	-webkit-appearance: none;
+	width: 90%;
+	height: 5px;
+	outline: none;
+	opacity: 0.7;
+	margin: 30px 0 0 5%;
+	padding: 1px;
+}
+
+.slider:focus {
+	-webkit-appearance: none;
+	outline: none;
+	opacity: 0.7;
+}
+
+.slider::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 20px;
+	height: 20px;
+	background: $green;
+	cursor: pointer;
+	border-radius: 50%;
+}
+
+.slider::-moz-range-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 20px;
+	height: 20px;
+	background: $green;
+	cursor: pointer;
+	border-radius: 50%;
+}
+
+.input-text {
+	width: auto;
+	text-align: center;
+	margin-left: 27%;
+	color: $black;
+}
+
+.input-text:focus {
+	color: $black;
+}
+
+.align-left {
+	margin-left: 10px;
+	text-align: left;
+	float: left;
+}
+
+.align-right {
+	margin-right: 10px;
+	text-align: right;
+	float: right;
+}
+
+.multi-choice {
+	//Nothing here yet
+}
+
+.option {
+	width: 100%;
+	background: $white;
+	border-radius: 10px;
+	margin-bottom: 10px;
+	padding: 5px;
+	text-align: right;
+	-webkit-transition: linear 0.2s;
+	-moz-transition: linear 0.2s;
+
+	* {
+		display: inline;
+	}
+
+	img {
+		//Nothing here yet
+	}
+}
+
+.option:hover {
+	filter: drop-shadow(0px 3px 3px $black-shadow);
+	-webkit-transition: linear 0.2s;
+	-moz-transition: linear 0.2s;
+}
+
+.selected {
+	background: #4ab558;
+	filter: drop-shadow(0px 3px 3px $black-shadow);
+}
+
+select.form-control {
+	margin-bottom: 10px;
+	color: $black;
+}
+
+select.form-control:focus {
+	color: $black;
+}

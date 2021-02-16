@@ -1,7 +1,7 @@
+@charset "UTF-8";
 // Project DeLorean
 // SCSS Document
 // This document contains all custom variable names
-@charset "UTF-8";
 
 // Import all Bootstrap styles
 
@@ -9,7 +9,8 @@
 // -- Theme
 $black:			rgb(0, 0, 0);
 $black-shadow:	rgba(0, 0, 0, 0.75);
-$blue-light: 	rgb(41, 171, 226);
+//$blue-light: 	rgb(41, 171, 226);
+$blue-light: 	rgb(102, 174, 226);
 $green: 		rgb(57, 181, 74);
 $grey: 			rgb(179, 179, 179);
 $orange: 		rgb(251, 196, 15);
@@ -18,11 +19,13 @@ $white:			rgb(255, 255, 255);
 
 // Global Fonts
 // -- Theme
-$font-family-sans-serif: Lucida Sans;
+$font-family-sans-serif: 	Lucida Sans;
+$h2-font-size: 				24px;
+$h4-font-size:				20px;
 
 //Body
-$body-bg: $white;
-$body-color: #aaa;
+$body-bg: 		$white;
+$body-color: 	#aaa;
 
 // Borders
 $radius-container: 20px;

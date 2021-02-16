@@ -10,6 +10,7 @@
 	<title>Project DeLorean</title>
 </head>
 <body>
+	<!-- Main Navigation -->
 	<nav class="navbar navbar-expand-md navbar-dark">
 		<a class="navbar-brand" href="#"><em>PROJECT</em></a>
 		
@@ -31,7 +32,135 @@
 			</ul>
 		</div>
 	</nav>
-	
+	<!-- Form -->
+	<main class="container-fluid content">
+		<form class="row main-form">
+			<!-- Map Section (To be filled with map -- right now it has filler text) -->
+			<div class="grid-item col-lg-12">
+				<div id="map" class="form-group">
+					<label>Map</label>
+					<p>
+					Donec blandit, odio sit amet tempor imperdiet, justo enim porttitor lacus, ut condimentum ligula purus non eros. Maecenas ut diam eget nunc aliquam pellentesque. Quisque diam turpis, finibus ac sem a, sodales finibus libero. Maecenas rhoncus leo quis semper pellentesque. Fusce consectetur lectus sit amet purus vehicula, id viverra arcu finibus. Aliquam pellentesque, tortor id ultrices tempus, ipsum magna pharetra lectus, in volutpat sem ligula nec mi. Donec dictum hendrerit nisl, sed elementum magna semper vel. Aliquam at tortor sed nibh condimentum condimentum eget id enim. Aliquam in dui massa. Aenean sed congue dui. Morbi sed efficitur magna. Nam sit amet lorem eu augue sodales posuere. Vestibulum imperdiet dictum consectetur. Maecenas vulputate, eros et convallis auctor, nibh erat bibendum massa, sed dictum lectus diam nec sapien. Vestibulum ultrices mauris at odio iaculis feugiat.<br>
+						Proin fermentum rutrum nunc, in luctus tellus sollicitudin at. Praesent sit amet magna sollicitudin ipsum vestibulum elementum sed et libero. Sed consequat fringilla pellentesque. Curabitur non velit ut tellus commodo efficitur sit amet nec quam. In hac habitasse platea dictumst. Morbi sed venenatis quam. Phasellus ut gravida sem. Quisque interdum nec ipsum a commodo. Pellentesque eget odio pretium, fermentum metus quis, viverra urna.<br>
+						Nullam venenatis, mi quis rhoncus viverra, est dui rhoncus erat, ut mollis est eros eget est. Phasellus efficitur ipsum sed lacus suscipit, vel efficitur ipsum rutrum. Pellentesque sagittis sollicitudin ornare. Aliquam erat volutpat. Sed eleifend, nisl vitae tempor vulputate, velit nulla sollicitudin mi, non iaculis leo arcu non dolor. Duis vitae odio pharetra, dignissim nisl cursus, scelerisque enim. Maecenas non aliquet magna. Fusce placerat elit pretium posuere ultrices. Curabitur sed volutpat sapien. Etiam et diam enim. Mauris quis malesuada odio. Cras porta mauris ante, ut venenatis augue accumsan sit amet. Phasellus nec suscipit turpis.<br>
+						Integer rutrum enim in tempus ornare. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Nunc ac nisl non libero iaculis faucibus. Quisque euismod eget massa eget aliquet. Phasellus id lectus eros. Pellentesque eget ipsum non ipsum tempus ullamcorper. Morbi quis tellus nisi. Etiam nec lorem eu tellus dapibus maximus. Vestibulum mollis, elit in tincidunt porttitor, mi nisl euismod lectus, id pellentesque justo ipsum sit amet diam.<br>
+						Praesent ut augue consectetur, lobortis massa sed, ultricies velit. Duis ullamcorper, mi nec tempus rhoncus, arcu velit egestas felis, ac cursus augue eros et metus. Praesent elementum vitae velit ut pellentesque. Aliquam erat volutpat. Donec quis est eget mauris mattis pulvinar. Phasellus leo massa, finibus a feugiat sit amet, sodales sed quam. Fusce gravida ex non massa venenatis, non scelerisque mi fermentum. Aliquam ultrices pretium ipsum sed vehicula. Aenean arcu lectus, interdum in scelerisque ac, interdum ac mauris. Morbi nisi augue, iaculis a nisl laoreet, fringilla faucibus urna. Aliquam nunc nisi, tincidunt vel leo vitae, tempor fermentum justo. Aenean vitae urna pretium mi ornare placerat. Mauris vitae odio ac mauris euismod aliquam porta id arcu. Nulla non eros suscipit, vehicula enim et, finibus nulla. Aliquam a rutrum metus. Fusce mollis justo nulla, at convallis augue pellentesque ut.<br>
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus quis turpis in sapien commodo consectetur sed vel nunc. Sed imperdiet, nulla vel ornare ullamcorper, lorem massa consectetur est, a mollis orci neque eu tellus. Cras nisi purus, finibus in augue vehicula, eleifend iaculis lacus. Donec eu ante et neque dictum dapibus quis in dolor. Duis eu turpis facilisis massa dictum finibus vel eu justo. Sed tempor orci at leo porttitor interdum. Curabitur varius eros sed ipsum gravida molestie. Aliquam malesuada et erat quis malesuada.<br>
+						Vestibulum sit amet luctus ante. Integer iaculis tempor egestas. Aenean vehicula maximus justo, et laoreet tortor tempus nec. Aliquam non eros lacus. Pellentesque condimentum justo at urna posuere tincidunt. Sed commodo, sapien at posuere fringilla, ipsum mauris tincidunt urna, hendrerit ultrices orci sem vel neque. Curabitur faucibus fermentum augue, vel interdum mi posuere ac. Proin vel cursus augue, at condimentum ex. Ut est tellus, viverra a egestas at, dictum pellentesque tortor. Curabitur fermentum, nisi nec suscipit euismod, arcu ipsum elementum urna, vitae cursus urna dolor sed neque. Fusce hendrerit tincidunt massa pretium finibus. Integer eu nisi non enim tincidunt varius.
+					</p>
+				</div>
+			</div>
+			
+			<!-- Left Column -->
+			<div id="mc" class="grid-item col-lg-4">
+				<div class="form-group">
+					<label for="car-make">Cars</label>
+					<select id="car-make" class="form-control" name="car-make">
+						<option value="place">--Select Make--</option>
+						<option value="nissan">Nissan</option>
+					</select>
+					<div class="multi-choice">
+						<div class="option selected"><img src="" alt="" class="img-fluid" /><h4>Nissan leaf</h4></div>
+						<div class="option"><img src="" alt="" class="img-fluid" /><h4>Nissan leaf</h4></div>
+					</div>
+				</div>
+			</div>
+			
+			<!-- Center Column  -->
+			<div class="grid-item col-lg-4">
+				
+				<!-- Approximate Population (Range, 1000-1,000,000) -->
+				<div class="form-group">
+					<label for="pop">Approximate Population</label>
+					<input type="range" name="population" id="pop" class="form-control slider" />
+					<span class="align-left">1000</span><span class="align-right">1,000,000</span>
+					<br><br>
+					<input type="text" name="population" id="pop-text" class="form-control input-text" />
+				</div>
+				
+				<!-- Minimum State of Charge (Range, ???-???) -->
+				<div class="form-group">
+					<label for="msoc">Minimum State of Charge</label>
+					<input type="range" name="msoc" id="msoc" class="form-control slider" />
+					<span class="align-left">???</span><span class="align-right">???</span>
+					<br><br>
+					<input type="text" name="msoc" id="msoc-text" class="form-control input-text" />
+				</div>
+				
+				<!-- Hours Charging (Range, 0-24) -->
+				<div class="form-group">
+					<label for="hours-slider">Hours Charging</label>
+					<input type="range" name="hours" id="hours-slider" class="form-control slider" />
+					<span class="align-left">0</span><span class="align-right">24</span>
+					<br><br>
+					<input type="text" name="hours" id="hours-text" class="form-control input-text" />
+				</div>
+				
+				<!-- Opt-in Percentage (Range, 0-100) -->
+				<div class="form-group">
+					<label for="optin">Opt-In Percentage</label>
+					<input type="range" name="optin" id="optin" class="form-control slider" min="0" max="100"/>
+					<span class="align-left">0</span><span class="align-right">100</span>
+					<br><br>
+					<input type="text" name="optin" id="optin-text" class="form-control input-text" />
+				</div>
+				
+				<!-- Peak Shaving (Graph) NOTE: This will be displayed on sizes: LG, MD -->
+				<div id="peak-lg" class="form-group form-result d-none d-lg-block d-xl-block">
+					<label>Peak Shaving</label>
+					<p>
+						Donec blandit, odio sit amet tempor imperdiet, justo enim porttitor lacus, ut condimentum ligula purus non eros. Maecenas ut diam eget nunc aliquam pellentesque. Quisque diam turpis, finibus ac sem a, sodales finibus libero. Maecenas rhoncus leo quis semper pellentesque. Fusce consectetur lectus sit amet purus vehicula, id viverra arcu finibus. Aliquam pellentesque, tortor id ultrices tempus, ipsum magna pharetra lectus, in volutpat sem ligula nec mi. Donec dictum hendrerit nisl, sed elementum magna semper vel. Aliquam at tortor sed nibh condimentum condimentum eget id enim. Aliquam in dui massa. Aenean sed congue dui. Morbi sed efficitur magna. Nam sit amet lorem eu augue sodales posuere. Vestibulum imperdiet dictum consectetur. Maecenas vulputate, eros et convallis auctor, nibh erat bibendum massa, sed dictum lectus diam nec sapien. Vestibulum ultrices mauris at odio iaculis feugiat.
+					</p>
+				</div>
+				
+			</div>
+			
+			<!-- Right Column (Mostly graphs &c. -->
+			<div class="grid-item col-lg-4">
+				
+				<!-- Return on Investment (Text, USD) -->
+				<div class="form-group form-result">
+					<label>ROI</label>
+					<h3 class="text-center">$<span id="roi-value">20,000,000</span></h3>
+				</div>
+				
+				<!-- Frequency Regulation (Graph) -->
+				<div class="form-group form-result">
+					<label>Frequency Regulation</label>
+					<p>
+						Donec blandit, odio sit amet tempor imperdiet, justo enim porttitor lacus, ut condimentum ligula purus non eros. Maecenas ut diam eget nunc aliquam pellentesque. Quisque diam turpis, finibus ac sem a, sodales finibus libero. Maecenas rhoncus leo quis semper pellentesque. Fusce consectetur lectus sit amet purus vehicula, id viverra arcu finibus. Aliquam pellentesque, tortor id ultrices tempus, ipsum magna pharetra lectus, in volutpat sem ligula nec mi. Donec dictum hendrerit nisl, sed elementum magna semper vel. Aliquam at tortor sed nibh condimentum condimentum eget id enim. Aliquam in dui massa. Aenean sed congue dui. Morbi sed efficitur magna. Nam sit amet lorem eu augue sodales posuere. Vestibulum imperdiet dictum consectetur. Maecenas vulputate, eros et convallis auctor, nibh erat bibendum massa, sed dictum lectus diam nec sapien. Vestibulum ultrices mauris at odio iaculis feugiat.
+					</p>
+				</div>
+				
+				<!-- Battery Degradation (Graph) -->
+				<div class="form-group form-result">
+					<label>Battery Degradation</label>
+					<p>
+						Donec blandit, odio sit amet tempor imperdiet, justo enim porttitor lacus, ut condimentum ligula purus non eros. Maecenas ut diam eget nunc aliquam pellentesque. Quisque diam turpis, finibus ac sem a, sodales finibus libero. Maecenas rhoncus leo quis semper pellentesque. Fusce consectetur lectus sit amet purus vehicula, id viverra arcu finibus. Aliquam pellentesque, tortor id ultrices tempus, ipsum magna pharetra lectus, in volutpat sem ligula nec mi. Donec dictum hendrerit nisl, sed elementum magna semper vel. Aliquam at tortor sed nibh condimentum condimentum eget id enim. Aliquam in dui massa. Aenean sed congue dui. Morbi sed efficitur magna. Nam sit amet lorem eu augue sodales posuere. Vestibulum imperdiet dictum consectetur. Maecenas vulputate, eros et convallis auctor, nibh erat bibendum massa, sed dictum lectus diam nec sapien. Vestibulum ultrices mauris at odio iaculis feugiat.
+					</p>
+				</div>
+				
+				<!-- Cars Required (Graph) -->
+				<div class="form-group form-result">
+					<label>Cars Required</label>
+					<p>
+						Donec blandit, odio sit amet tempor imperdiet, justo enim porttitor lacus, ut condimentum ligula purus non eros. Maecenas ut diam eget nunc aliquam pellentesque. Quisque diam turpis, finibus ac sem a, sodales finibus libero. Maecenas rhoncus leo quis semper pellentesque. Fusce consectetur lectus sit amet purus vehicula, id viverra arcu finibus. Aliquam pellentesque, tortor id ultrices tempus, ipsum magna pharetra lectus, in volutpat sem ligula nec mi. Donec dictum hendrerit nisl, sed elementum magna semper vel. Aliquam at tortor sed nibh condimentum condimentum eget id enim. Aliquam in dui massa. Aenean sed congue dui. Morbi sed efficitur magna. Nam sit amet lorem eu augue sodales posuere. Vestibulum imperdiet dictum consectetur. Maecenas vulputate, eros et convallis auctor, nibh erat bibendum massa, sed dictum lectus diam nec sapien. Vestibulum ultrices mauris at odio iaculis feugiat.
+					</p>
+				</div>
+				
+				<!-- Peak Shaving (Graph) NOTE: This will be displayed on sizes: SM, XS -->
+				<div class="form-group form-result d-block d-lg-none d-xl-none">
+					<label>Peak Shaving</label>
+					<p>
+						Donec blandit, odio sit amet tempor imperdiet, justo enim porttitor lacus, ut condimentum ligula purus non eros. Maecenas ut diam eget nunc aliquam pellentesque. Quisque diam turpis, finibus ac sem a, sodales finibus libero. Maecenas rhoncus leo quis semper pellentesque. Fusce consectetur lectus sit amet purus vehicula, id viverra arcu finibus. Aliquam pellentesque, tortor id ultrices tempus, ipsum magna pharetra lectus, in volutpat sem ligula nec mi. Donec dictum hendrerit nisl, sed elementum magna semper vel. Aliquam at tortor sed nibh condimentum condimentum eget id enim. Aliquam in dui massa. Aenean sed congue dui. Morbi sed efficitur magna. Nam sit amet lorem eu augue sodales posuere. Vestibulum imperdiet dictum consectetur. Maecenas vulputate, eros et convallis auctor, nibh erat bibendum massa, sed dictum lectus diam nec sapien. Vestibulum ultrices mauris at odio iaculis feugiat.
+					</p>
+				</div>
+				
+			</div>
+			
+		</form>
+		
+	</main>
 	<script src="scripts/app.js"></script>
 </body>
 </html>

@@ -1,8 +1,8 @@
+@charset "UTF-8";
 // Project DeLorean
 // SCSS Document
 // This document contains references to all main SCSS documents
 // The compiled version of this document must be linked in all HTML files
-@charset "UTF-8";
 
 // Import variables before Bootstrap
 @import "custom.scss";
@@ -12,3 +12,4 @@
 
 // Load custom styles after Bootstrap
 @import "containers.scss";
+@import "form.scss";
