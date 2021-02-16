@@ -3,12 +3,6 @@
 // SCSS Document
 // This document contains all styles for form elements.
 
-// Change all inputs so on focus, they have a green outline instead of a blue one
-.form-control:focus {
-	border-color: $green;
-	box-shadow: 0 0 0 0.25rem rgba($green, 0.3);
-}
-
 // Styles for the slider inputs
 .slider {
 	-webkit-appearance: none;
@@ -77,23 +71,31 @@
 }
 
 .option {
+	height: 110px;
 	width: 100%;
 	background: $white;
 	border-radius: 10px;
 	margin-bottom: 10px;
 	padding: 5px;
-	text-align: right;
 	cursor: pointer;
 	-webkit-transition: linear 0.2s;
 	-moz-transition: linear 0.2s;
 
-	* {
-		display: inline;
+	img {
+		max-height: 100px;
+		width: auto;
+		min-width: 100px;
+		line-height: 100px;
+		background: $white;
+		border-color: $white;
 	}
 
-	img {
-		//Nothing here yet
+	h4 {
+		text-align: right;
+		float: right;
+		line-height: 100px;
 	}
+
 }
 
 .option:hover {
@@ -104,16 +106,17 @@
 
 // Styles for the select menu (used in the Vehicle Select menu)
 .selected {
-	background: #4ab558;
+	background-color: #4ab558;
+	border-color: transparent;
 	filter: drop-shadow(0px 3px 3px $black-shadow);
 }
 
-select.form-control {
+select.form-select {
 	margin-bottom: 10px;
 	cursor: pointer;
 	color: $black;
 }
 
-select.form-control:focus {
+select.form-select:focus {
 	color: $black;
 }

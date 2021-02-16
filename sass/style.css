@@ -4133,7 +4133,7 @@ textarea.form-control-lg {
   color: white;
 }
 .navbar-dark .navbar-nav .nav-link:hover, .navbar-dark .navbar-nav .nav-link:focus {
-  color: #b3b3b3;
+  color: #d2d2d2;
 }
 .navbar-dark .navbar-nav .nav-link.disabled {
   color: #a47b00;
@@ -10635,6 +10635,27 @@ main.content {
   padding-right: 20px;
 }
 
+.view-toggle {
+  padding: 15px 0px 20px 5px;
+  color: black;
+}
+
+.btn {
+  background: white;
+  border-radius: 0px;
+  border-color: #d2d2d2;
+  color: black;
+  -webkit-transition: linear 0.2s;
+  -moz-transition: linear 0.2s;
+}
+
+.btn:hover {
+  color: black;
+  filter: drop-shadow(0px 3px 3px rgba(0, 0, 0, 0.75));
+  -webkit-transition: linear 0.2s;
+  -moz-transition: linear 0.2s;
+}
+
 .main-form .row {
   margin: 10px 0 0 0;
   padding: 0;
@@ -10647,7 +10668,7 @@ main.content {
 .form-group {
   height: auto;
   width: 94%;
-  background: #b3b3b3;
+  background: #d2d2d2;
   border: none;
   border-radius: 20px;
   color: black;
@@ -10675,11 +10696,6 @@ main.content {
 
 #peak-lg {
   width: 94%;
-}
-
-.form-control:focus {
-  border-color: #39b54a;
-  box-shadow: 0 0 0 0.25rem rgba(57, 181, 74, 0.3);
 }
 
 .slider {
@@ -10742,19 +10758,30 @@ main.content {
 }
 
 .option {
+  height: 110px;
   width: 100%;
   background: white;
   border-radius: 10px;
   margin-bottom: 10px;
   padding: 5px;
-  text-align: right;
   cursor: pointer;
   -webkit-transition: linear 0.2s;
   -moz-transition: linear 0.2s;
 }
-.option * {
-  display: inline;
+.option img {
+  max-height: 100px;
+  width: auto;
+  min-width: 100px;
+  line-height: 100px;
+  background: white;
+  border-color: white;
 }
+.option h4, .option .h4 {
+  text-align: right;
+  float: right;
+  line-height: 100px;
+}
+
 .option:hover {
   filter: drop-shadow(0px 3px 3px rgba(0, 0, 0, 0.75));
   -webkit-transition: linear 0.2s;
@@ -10762,18 +10789,30 @@ main.content {
 }
 
 .selected {
-  background: #4ab558;
+  background-color: #4ab558;
+  border-color: transparent;
   filter: drop-shadow(0px 3px 3px rgba(0, 0, 0, 0.75));
 }
 
-select.form-control {
+select.form-select {
   margin-bottom: 10px;
   cursor: pointer;
   color: black;
 }
 
-select.form-control:focus {
+select.form-select:focus {
   color: black;
+}
+
+.screen-reader-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
 }
 
 /*# sourceMappingURL=style.css.map */

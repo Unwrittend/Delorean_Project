@@ -9,8 +9,22 @@ var msocConstant = 100;
 $(function() {
 });
 
+// Toggle green background for the currently selected view option (indiv/org)
+$(".view-toggle button").click(function (){
+	$(".view-toggle button").removeClass("selected");
+	$(this).addClass("selected");
+});
+
 // Toggle green background for the currently selected MC option
 $(".option").click(function (){
 	$(".option").removeClass("selected");
 	$(this).addClass("selected");
 });
+
+function hideOptIn() {
+	$("#optin-panel").addClass("d-none");
+}
+
+function showOptIn() {
+	$("#optin-panel").removeClass("d-none");
+}
