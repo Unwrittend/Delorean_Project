@@ -1,6 +1,9 @@
 
 # Vehicle Type Variable Data (FuelEcon CSV data)
 
+## Data Source:
+  0. Parses `vehicles.csv` from [fueleconomy.gov](https://www.fueleconomy.gov/feg/ws/index.shtml)
+
 ## Fuelecon_csv_parser.js
   0. Used to generate the JSON file contents
 
