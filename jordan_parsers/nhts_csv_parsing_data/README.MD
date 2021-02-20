@@ -1,6 +1,9 @@
 
 # Charging Percentages (NHTS CSV data)
 
+## Data Source:
+  0. Parses `trippub.csv` from [nhts.ornl.gov](https://nhts.ornl.gov/)
+
 ## Nhts_csv_parser.js
   0. Used to generate both JSON file contents
 
