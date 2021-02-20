@@ -10,11 +10,11 @@
 
 ## Insideevs_html_parser.js
   0. Used to parse [insideevs.com](https://insideevs.com/reviews/344001/compare-evs/)'s data. 
-  1. More code may be added to the `main` function in order to use the parsed data.
+  1. Include as a library: exports the `parseInsideEvs` function
+     - `parseInsideEvs` returns a [promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) that resolves to an array of vehicle entries.
 
 ## Parsed Data Representation:
-  0. Parsed data in a variable called `data`
-  1. `data` is an array of objects, each object is a vehicle entry:
+  0. Array of objects, each object is a vehicle entry:
      * Vehicle entries represent a row in one of the 2 tables
      * Vehicle entries have 2 members:
        - `modelName` (a string)
