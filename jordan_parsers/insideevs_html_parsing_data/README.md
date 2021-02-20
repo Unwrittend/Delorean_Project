@@ -10,7 +10,7 @@
 
 ## Insideevs_html_parser.js
   0. Used to parse [insideevs.com](https://insideevs.com/reviews/344001/compare-evs/)'s data. 
-  1. Include as a library: exports the `parseInsideEvs` function
+  1. `require` as a library: exports the `parseInsideEvs` function
      - `parseInsideEvs` returns a [promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) that resolves to an array of vehicle entries.
 
 ## Parsed Data Representation:
