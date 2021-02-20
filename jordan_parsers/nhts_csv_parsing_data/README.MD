@@ -1,7 +1,7 @@
 
 # Charging Percentages (NHTS CSV data)
 
-## Csv_parser.js
+## Nhts_csv_parser.js
   0. Used to generate both JSON file contents
 
 ## JSON File Naming Semantics:
