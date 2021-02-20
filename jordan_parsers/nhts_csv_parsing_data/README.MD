@@ -8,7 +8,7 @@
   0. "present" assumes user only charges prior their first (& after their last) trip of the day.
   1. "future" assumes user can charge anytime they aren't driving.
 
-## Data Description:
+## JSON Data Description:
   0. Realized as an array of values. 
      * Values = percentages of total cars charging throughout the given time slot.
      * Indices = time slot # (each slot is 15min)
