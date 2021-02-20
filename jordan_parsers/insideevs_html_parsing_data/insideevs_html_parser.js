@@ -1,7 +1,7 @@
 // Author: Jordan Randleman -- insideevs_html_parser.js
 // Use: designed to parse 2 tables from "https://insideevs.com/reviews/344001/compare-evs/"
 //      *) 2 Tables being parsed are those w/ model-name & battery-capacity (kWh) data
-// Exported Function: 
+// Exported Function: "parseInsideEvs"
 
 /******************************************************************************
 * EXTERNAL NPM LIBRARY DEPENDANCIES
