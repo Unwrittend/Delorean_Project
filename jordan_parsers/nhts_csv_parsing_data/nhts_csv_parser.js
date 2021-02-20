@@ -1,4 +1,4 @@
-// Author: Jordan Randleman -- csv_parser.js
+// Author: Jordan Randleman -- nhts_csv_parser.js
 // Use: designed to parse "trippub.csv" from "https://nhts.ornl.gov/"
 
 /******************************************************************************
