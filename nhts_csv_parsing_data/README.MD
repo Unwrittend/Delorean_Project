@@ -2,9 +2,8 @@
 # Charging Percentages (NHTS CSV data)
 
 ## Semantics:
-  0. "present" denotes assumption user can only charge before their first trip<br>
-     and after their last trip of the day.
-  1. "future" denotes assumption user can charge anytime they aren't driving.
+  0. "present" assumes user only charges prior their first (& after their last) trip of the day.
+  1. "future" assumes user can charge anytime they aren't driving.
 
 ## Data Description:
   0. Realized as an array of values. 
