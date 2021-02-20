@@ -1,7 +1,10 @@
 
 # Charging Percentages (NHTS CSV data)
 
-## Semantics:
+## Csv_parser.js
+  0. Used to generate both JSON file contents
+
+## JSON File Name Semantics:
   0. "present" assumes user only charges prior their first (& after their last) trip of the day.
   1. "future" assumes user can charge anytime they aren't driving.
 
