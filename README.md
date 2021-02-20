@@ -14,3 +14,9 @@ These models include:
 
 ### Notes:
 The directory "sass" is misnamed. It should read "scss". Sass is not used in this project.
+
+### Collaborators
+- Chris Pitterle
+- Arjun Chimni
+- Pranav Rao
+- Jordan Randleman
