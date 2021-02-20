@@ -1,6 +1,7 @@
 // Author: Jordan Randleman -- insideevs_html_parser.js
 // Use: designed to parse 2 tables from "https://insideevs.com/reviews/344001/compare-evs/"
 //      *) 2 Tables being parsed are those w/ model-name & battery-capacity (kWh) data
+// Exported Function: 
 
 /******************************************************************************
 * EXTERNAL NPM LIBRARY DEPENDANCIES
@@ -69,30 +70,14 @@ function parseHtml(html) {
 }
 
 /******************************************************************************
-* MAIN DISPATCH
+* PARSER EXPORT
 ******************************************************************************/
 
-function print(obj) {
-  console.log(JSON.stringify(obj, null, 2));
-}
-
-
-function main() {
-  fetch(SOURCE_URL, {method: 'get'})
+exports.parseInsideEvs = function() {
+  return fetch(SOURCE_URL, {method: 'get'})
     .then(response => response.text())
     .then(html => {
       const data = parseHtml(html);
-
-      ////////////////////////////////////////////////////////
-      // ... CODE TO MANIPULATE/USE <data> HERE! ...
-      ////////////////////////////////////////////////////////
-
-      print(data);
-
-    }).catch(err => {
-      console.error(`FATAL ERROR: ${err}`);
-    });
+      return new Promise((resolve, reject) => resolve(data));
+    }).catch(err => new Promise((resolve, reject) => reject(err)));
 }
-
-
-main();
