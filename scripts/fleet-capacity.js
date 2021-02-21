@@ -8,6 +8,9 @@
 var vehicle_type = "Nissan Leaf", msoc = .5, opt_in = .5, battery_capacity = 100, zip_code = 95050,
 	veh_pop, flt_cap, flt_profit = 11975128, indiv_profit = 619;
 
+const indiv_roi_field = $("#indiv-roi");
+const flt_roi_field = $("#flt-roi");
+
 var flt_tou_profit =[
 	{season: "Winter", revenue: 0, id: 1},
 	{season: "Summer", revenue: 0, id: 2}
@@ -52,6 +55,9 @@ $("#zip").change(function(){
 		PGE_TOU_D.winter_length, PGE_TOU_D.summer_length));
 	indiv_profit = Math.round(calc_annual_profit(flt_tou_profit[0].revenue/veh_pop, flt_tou_profit[1].revenue/veh_pop,
 		PGE_TOU_D.winter_length, PGE_TOU_D.summer_length));
+	
+	flt_roi_field.text(flt_profit.toFixed(2));
+	indiv_roi_field.text(indiv_profit.toFixed(2));
 });
 
 // When multiple choice is changed, update variable value
@@ -103,6 +109,10 @@ $("#mc .multi-choice .option").click(function(){
 	indiv_profit = Math.round(calc_annual_profit(flt_tou_profit[0].revenue/veh_pop, flt_tou_profit[1].revenue/veh_pop,
 		PGE_TOU_D.winter_length, PGE_TOU_D.summer_length));
 
+	// Populate spans in HTML with the values
+	flt_roi_field.text(flt_profit.toFixed(2));
+	indiv_roi_field.text(indiv_profit.toFixed(2));
+
 });
 
 // When MSOC inputs are changed, update variable value
@@ -117,6 +127,9 @@ $("#msocText, #msocSlider").change(function(){
 		PGE_TOU_D.winter_length, PGE_TOU_D.summer_length));
 	indiv_profit = Math.round(calc_annual_profit(flt_tou_profit[0].revenue/veh_pop, flt_tou_profit[1].revenue/veh_pop,
 		PGE_TOU_D.winter_length, PGE_TOU_D.summer_length));
+	
+	flt_roi_field.text(flt_profit.toFixed(2));
+	indiv_roi_field.text(indiv_profit.toFixed(2));
 });
 
 // When Opt-in inputs are changed, update variable value
@@ -133,6 +146,9 @@ $("#optinText, #optinSlider").change(function(){
 		PGE_TOU_D.winter_length, PGE_TOU_D.summer_length));
 	console.log(indiv_profit);
 	console.log(flt_profit);
+
+	flt_roi_field.text(flt_profit.toFixed(2));
+	indiv_roi_field.text(indiv_profit.toFixed(2));
 });
 
 //----------------------UPDATE CALCULATIONS-----------------------
@@ -209,8 +225,3 @@ function mil_time_to_minutes(mil_time) {
 	var minutes = mil_time % 100;
 	return (minutes + hours * 60);
 }
-
-
-
-
-

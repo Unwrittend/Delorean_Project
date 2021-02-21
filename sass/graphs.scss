@@ -1,0 +1,45 @@
+@charset "UTF-8";
+// SCSS Document
+// This document contains the styles for the Graphs made with D3JS
+
+.app {
+	display: flex;
+}
+
+.chart {
+	background-color: $body-bg;
+	padding: 1rem;
+	border: solid 0px transparent;
+	border-radius: 10px;
+}
+
+.chart,
+#data {
+}
+
+#data ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+#data li {
+	margin-bottom: 1rem;
+	padding: 1rem;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+	width: 10rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-weight: bold;
+}
+
+.bar {
+	fill: $green;
+}
+
+.label {
+	fill: #4f009e;
+}
+
+

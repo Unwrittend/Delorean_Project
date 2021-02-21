@@ -16,6 +16,12 @@ nav {
 	}
 }
 
+.navbar-brand-img {
+	height: 35px;
+	width: auto;
+	margin-left: 10px;
+}
+
 main.content {
 	padding-top: 10px;
 	padding-left: 20px;
@@ -86,6 +92,19 @@ main.content {
 // Style for the Map input
 #map {
 	width: 100%;
+}
+
+#zip {
+	margin: 10px 0px 20px 0px;
+}
+
+#map-container {
+	width: 99%;
+	height: 500px;
+}
+
+.mapboxgl-ctrl-attrib-inner {
+	display: none !important;
 }
 
 // Style for the Multiple Choice Input
