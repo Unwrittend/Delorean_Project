@@ -23,12 +23,18 @@ $(".option").click(function (){
 });
 
 // Next 2 functions are for the mode toggle
-function hideOptIn() {
+function switchToIndiv() {
 	$("#optin-panel").addClass("d-none");
+	$("#hours-panel").removeClass("d-none");
+	$("#flt-roi").addClass("d-none");
+	$("#indiv-roi").removeClass("d-none");
 }
 
-function showOptIn() {
+function switchToOrg() {
 	$("#optin-panel").removeClass("d-none");
+	$("#hours-panel").addClass("d-none");
+	$("#flt-roi").removeClass("d-none");
+	$("#indiv-roi").addClass("d-none");
 }
 
 function listCars(make) {
