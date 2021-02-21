@@ -10642,6 +10642,12 @@ nav ul {
   margin-left: auto;
 }
 
+.navbar-brand-img {
+  height: 35px;
+  width: auto;
+  margin-left: 10px;
+}
+
 main.content {
   padding-top: 10px;
   padding-left: 20px;
@@ -10701,6 +10707,19 @@ main.content {
 
 #map {
   width: 100%;
+}
+
+#zip {
+  margin: 10px 0px 20px 0px;
+}
+
+#map-container {
+  width: 99%;
+  height: 500px;
+}
+
+.mapboxgl-ctrl-attrib-inner {
+  display: none !important;
 }
 
 #mc {
@@ -10854,6 +10873,42 @@ select.form-select {
 
 select.form-select:focus {
   color: black;
+}
+
+.app {
+  display: flex;
+}
+
+.chart {
+  background-color: whitesmoke;
+  padding: 1rem;
+  border: solid 0px transparent;
+  border-radius: 10px;
+}
+
+#data ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#data li {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  width: 10rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+}
+
+.bar {
+  fill: #39b54a;
+}
+
+.label {
+  fill: #4f009e;
 }
 
 .screen-reader-only {
