@@ -71,7 +71,7 @@ $("#mc .multi-choice .option").click(function(){
 			break;
 	}
 
-	//TO DO make car selection dynamic
+	//TODO make car selection dynamic
 	//retrieve vehicle statistics
 	// const { MongoClient } = require("mongodb");
 	// const uri =
@@ -118,7 +118,8 @@ $("#msocText, #msocSlider").change(function(){
 	calc_flt_cap();
 	flt_tou_profit[0].revenue = calc_revenue_pge_tou("Winter", 15);		//index 0 is winter
 	flt_tou_profit[1].revenue = calc_revenue_pge_tou("Summer", 15);		//index 1 is summer
-
+	clearGraph();
+	updateGraph();
 });
 
 // When Opt-in inputs are changed, update variable value
