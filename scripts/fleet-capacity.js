@@ -5,8 +5,10 @@
 
 // Variables for 3 user inputs. Names self-explanatory. MSOC is Minimum State of Charge
 //variables set at default
-var vehicle_type = "Nissan Leaf", msoc = .5, opt_in = .5, battery_capacity = 100, zip_code = 95050,
-	veh_pop, flt_cap, flt_profit = 11975128, indiv_profit = 619;
+// var vehicle_type = "Nissan Leaf", msoc = .5, opt_in = .5, battery_capacity = 80, zip_code = 95050,
+// 	veh_pop, flt_cap, flt_profit = 7424579, indiv_profit = 384;
+var vehicle_type, msoc = .5, opt_in = .5, battery_capacity, zip_code = 95050,
+	veh_pop, flt_cap, flt_profit, indiv_profit;
 
 const indiv_roi_field = $("#indiv-roi");
 const flt_roi_field = $("#flt-roi");
@@ -161,7 +163,9 @@ function calc_veh_pop() {
 
 //update flt_cap
 function calc_flt_cap() {
-	flt_cap = veh_pop * (1-msoc) * battery_capacity;
+	flt_cap = veh_pop * (1 - msoc) * battery_capacity;
+	if (!(battery_capacity >= 0))	//checks for NaN
+		flt_cap = 0;
 }
 
 
