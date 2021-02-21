@@ -130,6 +130,8 @@ $("#msocText, #msocSlider").change(function(){
 	
 	flt_roi_field.text(flt_profit.toFixed(2));
 	indiv_roi_field.text(indiv_profit.toFixed(2));
+	clearGraph();
+	updateGraph();
 });
 
 // When Opt-in inputs are changed, update variable value

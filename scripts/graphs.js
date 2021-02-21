@@ -12,10 +12,10 @@ function clearGraph() {
 }
 
 function updateGraph() {
-	var DUMMY_DATA = [
+	let DUMMY_DATA; /*= [
 		{season: "Winter", revenue: 11000, id: 1},
 		{season: "Summer", revenue: 2300, id: 2}
-	];
+	]*/
 
 	console.log(flt_tou_profit);
 
