@@ -151,11 +151,17 @@
 			
 			<!-- Right Column (Mostly graphs &c. -->
 			<div class="grid-item col-lg-4">
-				
+
 				<!-- Return on Investment (Text, USD) -->
 				<div class="form-group form-result">
 					<label>ROI</label>
 					<h3 class="text-center">$<span id="indiv-roi" class="d-none"></span><span id="flt-roi"></span></h3>
+				</div>
+
+				<!-- Stores energy (kWh) -->
+				<div class="form-group form-result" id="kwh-panel">
+					<label>Max Energy Stored in Fleet</label>
+					<h3 class="text-center"><span id="fleet-capacity"></span>kWh</h3>
 				</div>
 				
 				<!-- Peak Shaving (Graph) -->

@@ -28,6 +28,7 @@ function switchToIndiv() {
 	$("#hours-panel").removeClass("d-none");
 	$("#flt-roi").addClass("d-none");
 	$("#indiv-roi").removeClass("d-none");
+	$("#kwh-panel").addClass("d-none");
 }
 
 function switchToOrg() {
@@ -35,6 +36,7 @@ function switchToOrg() {
 	$("#hours-panel").addClass("d-none");
 	$("#flt-roi").removeClass("d-none");
 	$("#indiv-roi").addClass("d-none");
+	$("#kwh-panel").removeClass("d-none");
 }
 
 function listCars(make) {
