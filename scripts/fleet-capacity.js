@@ -36,6 +36,29 @@ $("#mc .multi-choice .option").click(function(){
 			break;
 	}
 
+	//TO DO make car selection dynamic
+	//retrieve vehicle statistics
+	// const { MongoClient } = require("mongodb");
+	// const uri =
+	//   "mongodb+srv://chris:delorean@cluster0.joafk.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+	// const client = new MongoClient(uri);
+	// async function run() {
+	//   try {
+	//     await client.connect();
+	//     const database = client.db('delorean');
+	//     const collection = database.collection('Vehicles');
+	//     // Query for a movie that has the title 'Back to the Future'
+	//     const query = { model: vehicle_type };
+	// 	const car = await collection.findOne(query);	  
+	// 	//retrieved variables
+	// 	battery_capacity = car.batteryKWHCapacity;
+	//   } finally {
+	//     // Ensures that the client will close when you finish/error
+	//     await client.close();
+	//   }
+	// }
+	// run();
+
 	calc_veh_pop();
 	calc_flt_cap();
 });
