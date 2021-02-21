@@ -6,12 +6,11 @@
 // The population and MSOC inputs require constant factors so the sliders work properly
 // Sliders go from 1-100. Factors make it easier to manage the maximum and minimum values
 var popConstant = 1000;
-var msocConstant = 100;
 
 $(function() {
 });
 
-// Toggle green background for the currently selected view option (indiv/org)
+// Toggle green background for the currently selected view option (individual/organization)
 $(".view-toggle button").click(function (){
 	$(".view-toggle button").removeClass("selected");
 	$(this).addClass("selected");
@@ -23,6 +22,7 @@ $(".option").click(function (){
 	$(this).addClass("selected");
 });
 
+// Next 2 functions are for the mode toggle
 function hideOptIn() {
 	$("#optin-panel").addClass("d-none");
 }
@@ -31,10 +31,14 @@ function showOptIn() {
 	$("#optin-panel").removeClass("d-none");
 }
 
+function listCars(make) {
+
+}
+
 // Setup for the jQuery UI Slider
-var slider = $("#slider");
-var hours1 = $("#hours-1");
-var hours2 = $("#hours-2");
+const slider = $("#slider");
+const hours1 = $("#hours-1");
+const hours2 = $("#hours-2");
 var hrs1, hrs2;
 
 slider.slider({
@@ -43,24 +47,25 @@ slider.slider({
 	range: true,
 	values: [ 9, 17 ],
 
-	slide: function(event, ui){
+	/* Set the time field input when the sliders change */
+	slide: function(event, ui) {
 		hrs1 = ui.values[0];
 		hrs2 = ui.values[1];
 
 		if (hrs1 === 24) {
-			hrs1 = 0;
+			hours1.val( "23:59" );
 		} else if (hrs1 >= 10) {
-			hours1.val( ui.values[0] + ":00" );
+			hours1.val( hrs1 + ":00" );
 		} else {
-			hours1.val( "0" + ui.values[0] + ":00" );
+			hours1.val( "0" + hrs1 + ":00" );
 		}
 
 		if (hrs2 === 24) {
-			hrs2 = 0;
+			hours2.val( "23:59" );
 		} else if (hrs2 >= 10) {
-			hours2.val( ui.values[1] + ":00" );
+			hours2.val( hrs2 + ":00" );
 		} else {
-			hours2.val( "0" + ui.values[1] + ":00" );
+			hours2.val( "0" + hrs2 + ":00" );
 		}
 	}
 });
@@ -68,6 +73,7 @@ slider.slider({
 hours1.val( "0" + slider.slider( "values", 0 ) + ":00" );
 hours2.val( slider.slider( "values", 1 ) + ":00" );
 
+/* Change the slider values when the time fields are changed */
 hours1.change(function(){
 	slider.slider( "values", 0, hours1.val().substring(0, 1) );
 });
