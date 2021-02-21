@@ -6,7 +6,7 @@
 // Variables for 3 user inputs. Names self-explanatory. MSOC is Minimum State of Charge
 //variables set at default
 var vehicle_type = "Nissan Leaf", msoc = .5, opt_in = .5, battery_capacity = 100, zip_code = 95050,
-	veh_pop, flt_cap, flt_profit = 0, indiv_profit = 0;
+	veh_pop, flt_cap, flt_profit = 11975128, indiv_profit = 619;
 
 var flt_tou_profit =[
 	{season: "Winter", revenue: 0, id: 1},
@@ -48,7 +48,10 @@ $("#zip").change(function(){
 	calc_flt_cap();
 	flt_tou_profit[0].revenue = calc_revenue_pge_tou("Winter", 15);		//index 0 is winter
 	flt_tou_profit[1].revenue = calc_revenue_pge_tou("Summer", 15);		//index 1 is summer
-
+	flt_profit = Math.round(calc_annual_profit(flt_tou_profit[0].revenue, flt_tou_profit[1].revenue,
+		PGE_TOU_D.winter_length, PGE_TOU_D.summer_length));
+	indiv_profit = Math.round(calc_annual_profit(flt_tou_profit[0].revenue/veh_pop, flt_tou_profit[1].revenue/veh_pop,
+		PGE_TOU_D.winter_length, PGE_TOU_D.summer_length));
 });
 
 // When multiple choice is changed, update variable value
@@ -95,10 +98,10 @@ $("#mc .multi-choice .option").click(function(){
 	calc_flt_cap();
 	flt_tou_profit[0].revenue = calc_revenue_pge_tou("Winter", 15);		//index 0 is winter
 	flt_tou_profit[1].revenue = calc_revenue_pge_tou("Summer", 15);		//index 1 is summer
-	flt_profit = calc_annual_profit(flt_tou_profit[0].revenue, flt_tou_profit[1].revenue,
-		PGE_TOU_D.winter_length, PGE_TOU_D.summer_length);
-	indiv_profit = calc_annual_profit(flt_tou_profit[0].revenue/veh_pop, flt_tou_profit[1].revenue/veh_pop,
-		PGE_TOU_D.winter_length, PGE_TOU_D.summer_length);
+	flt_profit = Math.round(calc_annual_profit(flt_tou_profit[0].revenue, flt_tou_profit[1].revenue,
+		PGE_TOU_D.winter_length, PGE_TOU_D.summer_length));
+	indiv_profit = Math.round(calc_annual_profit(flt_tou_profit[0].revenue/veh_pop, flt_tou_profit[1].revenue/veh_pop,
+		PGE_TOU_D.winter_length, PGE_TOU_D.summer_length));
 
 });
 
@@ -110,7 +113,10 @@ $("#msocText, #msocSlider").change(function(){
 	calc_flt_cap();
 	flt_tou_profit[0].revenue = calc_revenue_pge_tou("Winter", 15);		//index 0 is winter
 	flt_tou_profit[1].revenue = calc_revenue_pge_tou("Summer", 15);		//index 1 is summer
-
+	flt_profit = Math.round(calc_annual_profit(flt_tou_profit[0].revenue, flt_tou_profit[1].revenue,
+		PGE_TOU_D.winter_length, PGE_TOU_D.summer_length));
+	indiv_profit = Math.round(calc_annual_profit(flt_tou_profit[0].revenue/veh_pop, flt_tou_profit[1].revenue/veh_pop,
+		PGE_TOU_D.winter_length, PGE_TOU_D.summer_length));
 });
 
 // When Opt-in inputs are changed, update variable value
@@ -121,40 +127,13 @@ $("#optinText, #optinSlider").change(function(){
 	calc_flt_cap();
 	flt_tou_profit[0].revenue = calc_revenue_pge_tou("Winter", 15);		//index 0 is winter
 	flt_tou_profit[1].revenue = calc_revenue_pge_tou("Summer", 15);		//index 1 is summer
-	// console.log(flt_tou_profit[0]);
-	// console.log(flt_tou_profit[1]);
-	flt_profit = calc_annual_profit(flt_tou_profit[0].revenue, flt_tou_profit[1].revenue,
-		PGE_TOU_D.winter_length, PGE_TOU_D.summer_length);
-	indiv_profit = calc_annual_profit(flt_tou_profit[0].revenue/veh_pop, flt_tou_profit[1].revenue/veh_pop,
-		PGE_TOU_D.winter_length, PGE_TOU_D.summer_length);
+	flt_profit = Math.round(calc_annual_profit(flt_tou_profit[0].revenue, flt_tou_profit[1].revenue,
+		PGE_TOU_D.winter_length, PGE_TOU_D.summer_length));
+	indiv_profit = Math.round(calc_annual_profit(flt_tou_profit[0].revenue/veh_pop, flt_tou_profit[1].revenue/veh_pop,
+		PGE_TOU_D.winter_length, PGE_TOU_D.summer_length));
 	console.log(indiv_profit);
 	console.log(flt_profit);
-	// console.log(summer_rev / veh_pop);
 });
-
-//Chris
-//TO DO make dynamic
-//retrieve vehicle statistics
-// const { MongoClient } = require("mongodb");
-// const uri =
-//   "mongodb+srv://chris:delorean@cluster0.joafk.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
-// const client = new MongoClient(uri);
-// async function run() {
-//   try {
-//     await client.connect();
-//     const database = client.db('delorean');
-//     const collection = database.collection('Vehicles');
-//     // Query for a movie that has the title 'Back to the Future'
-//     const query = { model: vehicle_type };
-// 	const car = await collection.findOne(query);	  
-// 	//retrieved variables
-// 	battery_capacity = car.batteryKWHCapacity;
-//   } finally {
-//     // Ensures that the client will close when you finish/error
-//     await client.close();
-//   }
-// }
-// run();
 
 //----------------------UPDATE CALCULATIONS-----------------------
 
@@ -177,13 +156,9 @@ function calc_flt_cap() {
  * @param {*} division_of_time - For example: hourly inputs would be 60
  */
 function calc_revenue_pge_tou(season, division_of_time) {
-	//type stamp 15 minutes
 	var revenue;
 
-	
-
 	switch (season) {
-		
 		case "Winter":
 			//create subarray of percent_flt_avail within the range of peak hours
 			var start_index = mil_time_to_minutes(PGE_TOU_D.winter_peak_start) / division_of_time;
@@ -236,12 +211,6 @@ function mil_time_to_minutes(mil_time) {
 }
 
 
-//peak shaving pricing calculations
 
 
 
-//output: json with revenue per winter and per summer
-/* [
-	{season: "Winter", revenue: 123, id: 1},
-	{season: "Summer", revenue: 456, id: 2}
-] */
