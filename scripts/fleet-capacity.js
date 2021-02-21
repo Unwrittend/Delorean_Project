@@ -20,3 +20,10 @@ $("#optinText, #optinSlider").change(function(){
 	opt_in = $("#optinText").val();
 	console.log(opt_in);
 });
+
+//retrieve vehicle statistics
+
+
+//Determine the number of vehicles in the fleet
+//TO DO: use zip code -> populations
+
