@@ -14,7 +14,7 @@ var flt_tou_profit =[
 ]
 
 //PGE_TOU_D holds PGE's time of use rates and their on and off peak hours
-	//in military time
+//in military time
 	let PGE_TOU_D = {
 		winter_peak : 0.29231,
 		winter_off_peak : 0.27493,
@@ -71,7 +71,7 @@ $("#mc .multi-choice .option").click(function(){
 			break;
 	}
 
-	//TO DO make car selection dynamic
+	//TO DO make car selection dynamic from mongo
 	//retrieve vehicle statistics
 	// const { MongoClient } = require("mongodb");
 	// const uri =
@@ -149,7 +149,7 @@ function calc_flt_cap() {
 }
 
 
-//TO DO include holidays
+//TO DO exclude holidays
 /**
  * Calculates the money saved using PGE's TOU-D plan over one day
  * @param {*} season - Either Winter or Summer
