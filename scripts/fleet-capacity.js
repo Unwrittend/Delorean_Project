@@ -60,6 +60,8 @@ $("#zip").change(function(){
 	
 	flt_roi_field.text(flt_profit.toFixed(2));
 	indiv_roi_field.text(indiv_profit.toFixed(2));
+	clearGraph();
+	updateGraph();
 });
 
 // When multiple choice is changed, update variable value
@@ -114,6 +116,8 @@ $("#mc .multi-choice .option").click(function(){
 	// Populate spans in HTML with the values
 	flt_roi_field.text(flt_profit.toFixed(2));
 	indiv_roi_field.text(indiv_profit.toFixed(2));
+	clearGraph();
+	updateGraph();
 
 });
 
@@ -153,6 +157,8 @@ $("#optinText, #optinSlider").change(function(){
 
 	flt_roi_field.text(flt_profit.toFixed(2));
 	indiv_roi_field.text(indiv_profit.toFixed(2));
+	clearGraph();
+	updateGraph();
 });
 
 //----------------------UPDATE CALCULATIONS-----------------------
