@@ -6,7 +6,7 @@
   1. [Node-fetch](https://www.npmjs.com/package/node-fetch)
 
 ## Data Source:
-  0. Parses 2 tables from `vehicles.csv` from [insideevs.com](https://insideevs.com/reviews/344001/compare-evs/)
+  0. Parses 2 tables from [insideevs.com](https://insideevs.com/reviews/344001/compare-evs/)
 
 ## Insideevs_html_parser.js
   0. Used to parse [insideevs.com](https://insideevs.com/reviews/344001/compare-evs/)'s data. 
