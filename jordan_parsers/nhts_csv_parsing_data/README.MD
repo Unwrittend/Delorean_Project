@@ -1,11 +1,27 @@
 
 # Charging Percentages (NHTS CSV data)
 
+## Invocation Order:
+  0. Compile `nhts_tripub_csv_splitter` using C++17
+  1. Run the compiled code (generates files to be parsed)
+  2. Run `nhts_csv_parser.js` to parse the 10 files & print out JSON
+```
+$ clang++ -std=c++17 -O3 -o splitter nhts_tripub_csv_splitter.cpp
+$ ./splitter
+$ node nhts_csv_parser.js
+```
+
 ## Data Source:
   0. Parses `trippub.csv` from [nhts.ornl.gov](https://nhts.ornl.gov/)
 
+## Nhts_tripub_csv_splitter.cpp
+  0. Used to split `trippub.csv` into 10 files. These are parsed by `nhts_csv_parser.js`.
+
 ## Nhts_csv_parser.js
   0. Used to generate both JSON file contents
+  1. To generate present data comment out line 331 & uncomment line 330
+     * To generate future data comment out line 330 & uncomment line 331
+     * Don't print them both out at the same time (undefined behavior)!
 
 ## JSON File Naming Semantics:
   0. "present" assumes user only charges prior their first (& after their last) trip of the day.
