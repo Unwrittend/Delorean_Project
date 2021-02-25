@@ -2,7 +2,7 @@
 # Charging Percentages (NHTS CSV data)
 
 ## Invocation Order:
-  0. Compile `nhts_tripub_csv_splitter` using C++17
+  0. Compile `nhts_tripub_csv_splitter.cpp` using C++17
   1. Run the compiled code (generates files to be parsed)
   2. Run `nhts_csv_parser.js` to parse the 10 files & print out JSON
 ```
