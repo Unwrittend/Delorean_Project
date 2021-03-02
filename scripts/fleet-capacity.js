@@ -60,7 +60,8 @@ $("#zip").change(function(){
 	indiv_roi_field.text(indiv_profit);
 	flt_cap_field.text((battery_capacity*veh_pop).toFixed(0))
 	clearGraph();
-	updateGraph();
+	updatePS();
+	updateFA();
 });
 
 // When multiple choice is changed, update variable value
@@ -117,7 +118,8 @@ $("#mc .multi-choice .option").click(function(){
 	indiv_roi_field.text(indiv_profit.toFixed(2));
 	flt_cap_field.text((battery_capacity*veh_pop).toFixed(0))
 	clearGraph();
-	updateGraph();
+	updatePS();
+	updateFA();
 
 });
 
@@ -138,7 +140,8 @@ $("#msocText, #msocSlider").change(function(){
 	indiv_roi_field.text(indiv_profit.toFixed(2));
 	flt_cap_field.text((battery_capacity*veh_pop).toFixed(0))
 	clearGraph();
-	updateGraph();
+	updatePS();
+	updateFA();
 });
 
 // When Opt-in inputs are changed, update variable value
@@ -160,7 +163,8 @@ $("#optinText, #optinSlider").change(function(){
 	indiv_roi_field.text(indiv_profit.toFixed(2));
 	flt_cap_field.text((battery_capacity*veh_pop).toFixed(0))
 	clearGraph();
-	updateGraph();
+	updatePS();
+	updateFA();
 });
 
 //----------------------UPDATE CALCULATIONS-----------------------

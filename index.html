@@ -12,10 +12,11 @@
 	<!-- All Bootstrap styles are embedded in this stylesheet -->
 	<link href="sass/style.css" rel="stylesheet" type="text/css" />
 	
-	<!-- Import jQuery, PopperJS (For bootstrap effects), and Bootstrap's own JS library -->
+	<!-- Import jQuery, PopperJS (For bootstrap effects), Bootstrap's own JS library, and jQuery UI (local file -- not remote) -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<script src="scripts/jquery-ui.min.js"></script>
 	
 	<!-- Import Mapbox API -->
 	<script src="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js"></script>
@@ -24,6 +25,11 @@
 	<script src="https://d3js.org/d3.v6.min.js" defer></script>
 	<script src="https://d3js.org/d3-scale.v3.min.js" defer></script>
 	<script src="https://d3js.org/d3-axis.v1.min.js" defer></script>
+	
+	<!-- Our custom scripts. App = generic functionality; fleet-capacity = calculations; graphs = D3JS; -->
+	<script src="scripts/app.js" defer></script>
+	<script src="scripts/fleet-capacity.js" defer></script>
+	<script src="scripts/graphs.js" defer></script>
 
 	<title>Project DeLorean</title>
 </head>
@@ -51,7 +57,7 @@
 			</ul>
 		</div>
 	</nav>
-	<!-- Content -->
+	<!-- Content (sr-only link jumps here) -->
 	<main id="article" class="container-fluid content">
 		
 		<!-- Buttons to decide whether client wants Individual or Organizer View -->
@@ -63,7 +69,7 @@
 		
 		<!-- The actual form -->
 		<form class="row main-form">
-			<!-- Map Section (To be filled with map -- right now it has filler text) -->
+			<!-- Map Section (For now, map is from Mapbox, but it may be filled with Google Maps instead) -->
 			<div class="grid-item col-lg-12">
 				<div id="map" class="form-group">
 					<label>Map</label>
@@ -121,7 +127,7 @@
 					<input type="text" name="msoc" id="msocText" class="form-control input-text" value="50" oninput="msocSlider.value = msocText.value" />
 				</div>
 				
-				<!-- Hours Charging (Range, 0-24) -->
+				<!-- Hours Charging (Range, 0-24) (only show in  -->
 				<div id="hours-panel" class="form-group d-none">
 					<label for="slider">Hours Charging</label>
 					<div id="hours-group">
@@ -132,7 +138,7 @@
 					</div>
 				</div>
 				
-				<!-- Opt-in Percentage (Range, 0-100) -->
+				<!-- Opt-in Percentage (Range, 0-100) (only show in organization view) -->
 				<div id="optin-panel" class="form-group">
 					<label for="optinSlider">Opt-In Percentage</label>
 					<input type="range" name="optin" id="optinSlider" class="form-control slider" min="0" max="100" oninput="optinText.value = optinSlider.value" />
@@ -207,14 +213,13 @@
 		
 		<!-- Footer -->
 		<footer>
-		
+			<hr>
+			<ul>
+				<li>Lipsum</li>
+			</ul>
 		</footer>
 		
 	</main>
-	<script src="scripts/jquery-ui.min.js"></script>
-	<script src="scripts/app.js" defer></script>
-	<script src="scripts/fleet-capacity.js" defer></script>
-	<!-- Graph customization file -->
-	<script src="scripts/graphs.js" defer></script>
+	
 </body>
 </html>

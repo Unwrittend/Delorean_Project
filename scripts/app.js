@@ -7,6 +7,11 @@
 // Sliders go from 1-100. Factors make it easier to manage the maximum and minimum values
 var popConstant = 1000;
 
+var widget_width = $(".form-result").css("width");
+widget_width = widget_width.substr(0, widget_width.length - 2);
+widget_width = parseInt(widget_width, 10);
+widget_width -= 50;
+
 $(function() {
 });
 
@@ -88,4 +93,16 @@ hours1.change(function(){
 
 hours2.change(function(){
 	slider.slider( "values", 1, hours2.val().substring(0, 1) );
+});
+
+// Update graph width when window is resized (prevents horizontal scroll)
+$(window).resize(function(){
+	widget_width = $(".form-result").css("width");
+	widget_width = widget_width.substr(0, widget_width.length - 2);
+	widget_width = parseInt(widget_width, 10);
+	widget_width -= 50;
+	clearGraph();
+	updatePS();
+	updateFA();
+
 });
