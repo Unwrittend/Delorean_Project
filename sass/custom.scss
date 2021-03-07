@@ -9,9 +9,9 @@
 // -- Theme
 $black:			rgb(0, 0, 0);
 $black-shadow:	rgba(0, 0, 0, 0.75);
+$blue:			rgb(102, 174, 226);
 $grey:			rgb(245, 245, 245);
 $green:			rgb(57, 181, 74);
-$nav-bkg-color:	rgb(102, 174, 226);
 $orange: 		rgb(251, 196, 15);
 $orange-dark: 	rgb(164, 123, 0);
 $white:			rgb(255, 255, 255);
@@ -24,17 +24,19 @@ $h4-font-size:				22px;
 
 //Body
 $body-bg: 		rgb(245, 245, 245);
-$body-color: 	$black;
+$body-color: 	#0a0a0a;
 
 // Borders
 $radius-container: 20px;
 
 // Navigation
+$nav-bkg-color:						$body-bg;
 $navbar-dark-color:					$white;
 $navbar-dark-hover-color:			$grey;
 $navbar-dark-active-color:			$orange;
 $navbar-dark-disabled-color:		$orange-dark;
 $navbar-dark-toggler-border-color:	$orange;
+$nav-link-color:					#217a2e;
 
 // Interactives
 // Input = the widget

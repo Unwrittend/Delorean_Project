@@ -3,7 +3,7 @@
 // SCSS Document
 // This document contains all styles for the containers (divs, navs, mains, etc.)
 
-nav {
+nav.navbar-light {
 	background-color: $nav-bkg-color;
 	border-bottom-left-radius: $radius-container;
 	border-bottom-right-radius: $radius-container;
@@ -11,13 +11,17 @@ nav {
 	padding-left: 10px;
 	padding-right: 10px;
 
-	ul {
+	ul.navbar-nav {
 		margin-left: auto;
+
+		.nav-link {
+			color: $nav-link-color;
+		}
 	}
 }
 
 .navbar-brand-img {
-	height: 35px;
+	height: 55px;
 	width: auto;
 	margin-left: 10px;
 }
@@ -31,20 +35,20 @@ main.content {
 // Section for Individual/Organizer View buttons
 .view-toggle {
 	padding: 15px 0 20px 5px;
-	color: $black;
+	color: $body-color;
 }
 
 .btn {
 	background: $btn-bkg-color;
 	border-radius: 0;
 	border-color: $btn-border-color;
-	color: $black;
+	color: $body-color;
 	-webkit-transition: linear 0.2s;
 	-moz-transition: linear 0.2s;
 }
 
 .btn:hover {
-	color: $black;
+	color: $body-color;
 	filter: drop-shadow(0px 3px 3px $black-shadow);
 	-webkit-transition: linear 0.2s;
 	-moz-transition: linear 0.2s;
@@ -69,7 +73,7 @@ main.content {
 	background: $input-bkg-color;
 	border: none;
 	border-radius: 20px;
-	color: $black;
+	color: $body-color;
 	margin-bottom: 20px;
 	padding: 12px;
 	filter: drop-shadow(0px 2px 4px $black-shadow);
@@ -84,8 +88,8 @@ main.content {
 }
 
 .form-result {
-	background: $nav-bkg-color;
-	color: $black;
+	background: $blue;
+	color: $body-color;
 	width: 100%;
 }
 
