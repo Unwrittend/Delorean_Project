@@ -10915,6 +10915,11 @@ select.form-select:focus {
   fill: #4f009e;
 }
 
+.graph-label {
+  fong-size: 25px;
+  fill: white;
+}
+
 .screen-reader-only {
   position: absolute;
   width: 1px;

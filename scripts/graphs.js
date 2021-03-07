@@ -18,7 +18,7 @@ function updatePS() {
 
 	//DUMMY_DATA = flt_tou_profit;
 
-	const MARGIN = {top: 20, right: 5, bottom: 10, left: 40};
+	const MARGIN = {top: 20, right: 5, bottom: 40, left: 70};
 	const CHART_WIDTH = widget_width - MARGIN.right - MARGIN.left;
 	const CHART_HEIGHT = 400 - MARGIN.top - MARGIN.bottom;
 
@@ -35,6 +35,7 @@ function updatePS() {
 
 	const chart = chartContainer.append("g"); // Group in SVG for the many bars
 
+	// X-axis
 	chart
 		.append("g")
 		.call(d3.axisBottom(xScale).tickSizeOuter(0))
@@ -42,10 +43,26 @@ function updatePS() {
 		.attr("color", "#000");
 
 	chart
+		.append("text")
+		.attr("class", "graph-label")
+		.attr("transform", `translate(${CHART_WIDTH/2 + 10}, ${CHART_HEIGHT + 50})`)
+		.text("Season");
+
+	// Y-axis
+	chart
 		.append("g")
 		.call(d3.axisLeft(yScale).tickSizeOuter(0))
 		.attr("color", "#000")
 		.attr("transform", `translate(${MARGIN.left}, 10)`);
+
+	chart
+		.append("text")
+		.attr("class", "graph-label")
+		.attr("x",0 - (CHART_HEIGHT / 2))
+		.attr("y", 15)
+		.style("text-anchor", "middle")
+		.attr("transform", `rotate(-90)`)
+		.text("Money (USD)");
 
 	chart.selectAll(".bar")
 		.data(flt_tou_profit)
@@ -62,7 +79,7 @@ function updatePS() {
 /**                           Fleet Availability                                **/
 /** *************************************************************************** **/
 function updateFA() {
-	const MARGIN_FA = {top: 20, right: 5, bottom: 10, left: 40};
+	const MARGIN_FA = {top: 20, right: 5, bottom: 40, left: 50};
 	const CHART_WIDTH_FA = widget_width - MARGIN_FA.right - MARGIN_FA.left;
 	const CHART_HEIGHT_FA = 400 - MARGIN_FA.top - MARGIN_FA.bottom;
 
@@ -83,25 +100,46 @@ function updateFA() {
 
 
 	const xScale_FA = d3.scaleBand().range([0, CHART_WIDTH_FA]).padding(0.1);
+	const xScale_Labels = d3.scaleLinear().range([0, CHART_WIDTH_FA]);
+
 	const yScale_FA = d3.scaleLinear().range([CHART_HEIGHT_FA, 0]);
 
 	xScale_FA.domain(stuffJson.map((d) => d.time)); // Unique token used to separate data (here, either ID or time can be used)
+	xScale_Labels.domain([0, 24]);
 	yScale_FA.domain([0, 100]) // Determines max height of the graph (we add 3 so there's some padding above the tallest bar)
 
 	const chart_FA = chartContainer_FA.append("g"); // Group in SVG for the many bars
 
+	// X-axis
 	chart_FA
 		.append("g")
-		.call( d3.axisBottom(xScale_FA).ticks(5) ) //.ticks(10, "s").tickSizeOuter(0)
+		.call( d3.axisBottom(xScale_Labels) ) //.ticks(10, "s").tickSizeOuter(0)
 		.attr("transform", `translate(${MARGIN_FA.left}, ${CHART_HEIGHT_FA + 10})`)
 		.attr("color", "#000");
 
 	chart_FA
+		.append("text")
+		.attr("class", "graph-label")
+		.attr("transform", `translate(${CHART_WIDTH_FA/2 + 10}, ${CHART_HEIGHT_FA + 50})`)
+		.text("Time (Hrs)");
+
+	// Y-axis
+	chart_FA
 		.append("g")
-		.call(d3.axisLeft(yScale_FA).tickSizeOuter(0))
+		.call(d3.axisLeft(yScale_FA))
 		.attr("color", "#000")
 		.attr("transform", `translate(${MARGIN_FA.left}, 10)`);
 
+	chart_FA
+		.append("text")
+		.attr("class", "graph-label")
+		.attr("x",0 - (CHART_HEIGHT_FA / 2))
+		.attr("y", 15)
+		.style("text-anchor", "middle")
+		.attr("transform", `rotate(-90)`)
+		.text("Percentage of Fleet Available");
+
+	// Path/Graph
 	const area_FA = d3.area()
 		.curve(d3.curveLinear)
 		.x(d => xScale_FA(d.time))
