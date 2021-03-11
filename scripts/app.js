@@ -95,6 +95,18 @@ hours2.change(function(){
 	slider.slider( "values", 1, hours2.val().substring(0, 1) );
 });
 
+var useFuture = false;
+$("#graphType").change(function () {
+	if (useFuture) {
+		useFuture = false;
+	} else {
+		useFuture = true;
+	}
+	clearGraph();
+	updatePS()
+	updateFA();
+});
+
 // Update graph width when window is resized (prevents horizontal scroll)
 $(window).resize(function(){
 	widget_width = $(".form-result").css("width");
@@ -104,5 +116,4 @@ $(window).resize(function(){
 	clearGraph();
 	updatePS();
 	updateFA();
-
 });
