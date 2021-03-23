@@ -1,0 +1,28 @@
+@charset "UTF-8";
+// Project DeLorean
+// SCSS Document
+// This document contains references to all main SCSS documents
+// The compiled version of this document must be linked in all HTML files
+
+// Import variables before Bootstrap
+@import "custom";
+
+// Import all Bootstrap Styles
+@import "../../node_modules/bootstrap/scss/bootstrap";
+
+// Load custom styles after Bootstrap
+@import "containers";
+@import "form";
+@import "graphs";
+
+// Misc styles
+.screen-reader-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0,0,0,0);
+	border: 0;
+}
