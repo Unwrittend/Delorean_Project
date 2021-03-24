@@ -1,8 +1,8 @@
 // D3JS Document
 
 function clearGraph() {
-	//$("#svg-ps").empty();
-	//$("#svg-fa").empty();
+	$("#svg-ps").empty();
+	$("#svg-fa").empty();
 }
 
 /** *************************************************************************** **/

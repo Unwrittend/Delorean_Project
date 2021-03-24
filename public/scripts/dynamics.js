@@ -28,6 +28,7 @@ function populateCars() {
 
 				$("#" +carId).append("<h4>" +mc_value + " " +carModel +"</h4>");
 
+				$(document).on("click", ".option", toggleMCSelected);
 			});
 		},
 		error: function(err){

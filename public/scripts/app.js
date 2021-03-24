@@ -22,10 +22,10 @@ $(".view-toggle button").click(function (){
 });
 
 // Toggle green background for the currently selected MC option
-$(".option").click(function (){
+function toggleMCSelected() {
 	$(".option").removeClass("selected");
 	$(this).addClass("selected");
-});
+}
 
 // Next 2 functions are for the mode toggle
 function switchToIndiv() {
@@ -42,10 +42,6 @@ function switchToOrg() {
 	$("#flt-roi").removeClass("d-none");
 	$("#indiv-roi").addClass("d-none");
 	$("#kwh-panel").removeClass("d-none");
-}
-
-function listCars(make) {
-
 }
 
 // Setup for the jQuery UI Slider
