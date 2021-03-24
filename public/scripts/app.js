@@ -21,10 +21,11 @@ $(".view-toggle button").click(function (){
 	$(this).addClass("selected");
 });
 
-// Toggle green background for the currently selected MC option
+// Toggle green background for the currently selected MC option, and then update the graphs
 function toggleMCSelected() {
 	$(".option").removeClass("selected");
 	$(this).addClass("selected");
+	updateGraphs();
 }
 
 // Next 2 functions are for the mode toggle

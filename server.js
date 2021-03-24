@@ -65,8 +65,8 @@ app.get("/", (req, res) => {
 	});
 });
 
-// Load cars into index.js
-app.get("/populateCars", (req, res) => {
+// Send list of cars with requested manufacturer
+app.get("/getCarsByMake", (req, res) => {
 
 	// Find all cars with the specified make. Sort results by Model name
 	Vehicles.find({make: {$eq: req.query.make} }, {}, {
@@ -74,6 +74,14 @@ app.get("/populateCars", (req, res) => {
 	}, function(err, cars) {
 		// Send results as a collection
 		res.send(cars);
+	});
+});
+
+// Send back car with requested id
+app.get("/getCarById", (req, res) => {
+	Vehicles.find({_id: {$eq: req.query._id} }, {}, function(err, cars) {
+		// find() always returns an array, so simply return the first element in this case.
+		res.send(cars[0]);
 	});
 });
 

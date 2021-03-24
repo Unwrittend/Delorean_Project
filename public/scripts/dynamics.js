@@ -9,7 +9,7 @@ function populateCars() {
 
 	$.ajax({
 		type: "GET",
-		url: "/populateCars",
+		url: "/getCarsByMake",
 		data: {make: mc_value},
 		contentType: "String",
 
@@ -27,9 +27,10 @@ function populateCars() {
 				$("#" +carId).append("<img src=\"images/" +carId +".png\" alt=\"" +mc_value + " " +carModel +" image\" class=\"img-thumbnail\" />");
 
 				$("#" +carId).append("<h4>" +mc_value + " " +carModel +"</h4>");
-
-				$(document).on("click", ".option", toggleMCSelected);
 			});
+
+			// Attach click event handler to the newly created elements
+			$(document).on("click", ".option", toggleMCSelected);
 		},
 		error: function(err){
 			console.log(err.body);

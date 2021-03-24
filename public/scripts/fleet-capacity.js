@@ -64,64 +64,51 @@ $("#zip").change(function(){
 	updateFA();
 });
 
-// When multiple choice is changed, update variable value
-$("#mc .multi-choice .option").click(function(){
-	vehicle_type = $("#mc .multi-choice .selected h4").text();
-
-	//hardcode: remove after H4H
-	switch (vehicle_type) {
-		case "Tesla Model S":
-			battery_capacity = 80;
-			break;
-		case "Nissan Leaf":
-			battery_capacity = 62;
-			break;
-		case "Nissan ENV-200":
-			battery_capacity = 80;
-			break;
-	}
-
-	//TO DO make car selection dynamic from mongo
-	//retrieve vehicle statistics
-	// const { MongoClient } = require("mongodb");
-	// const uri =
-	//   "mongodb+srv://chris:delorean@cluster0.joafk.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
-	// const client = new MongoClient(uri);
-	// async function run() {
-	//   try {
-	//     await client.connect();
-	//     const database = client.db('delorean');
-	//     const collection = database.collection('Vehicles');
-	//     // Query for a movie that has the title 'Back to the Future'
-	//     const query = { model: vehicle_type };
-	// 	const car = await collection.findOne(query);	  
-	// 	//retrieved variables
-	// 	battery_capacity = car.batteryKWHCapacity;
-	//   } finally {
-	//     // Ensures that the client will close when you finish/error
-	//     await client.close();
-	//   }
-	// }
-	// run();
-
-	calc_veh_pop();
-	calc_flt_cap();
-	flt_tou_profit[0].revenue = calc_revenue_pge_tou("Winter", 15);		//index 0 is winter
-	flt_tou_profit[1].revenue = calc_revenue_pge_tou("Summer", 15);		//index 1 is summer
-	flt_profit = Math.round(calc_annual_profit(flt_tou_profit[0].revenue, flt_tou_profit[1].revenue,
-		PGE_TOU_D.winter_length, PGE_TOU_D.summer_length));
-	indiv_profit = Math.round(calc_annual_profit(flt_tou_profit[0].revenue/veh_pop, flt_tou_profit[1].revenue/veh_pop,
-		PGE_TOU_D.winter_length, PGE_TOU_D.summer_length));
-
-	// Populate spans in HTML with the values
-	flt_roi_field.text(flt_profit.toFixed(2));
-	indiv_roi_field.text(indiv_profit.toFixed(2));
-	flt_cap_field.text((battery_capacity*veh_pop).toFixed(0))
+// When multiple choice is changed, update graphs. This function is called in app.js
+function updateGraphs(){
+	// Clear graphs and show spinner
 	clearGraph();
-	updatePS();
-	updateFA();
 
-});
+	// Get id of selected vehicle
+	vehicle_type = $("#car-list .selected").attr("id");
+	//console.log(vehicle_type);
+
+	// Ask server.js to give us a car object based on the currently selected one's ID
+	$.ajax({
+		type: "GET",
+		url: "/getCarById",
+		data: {_id: vehicle_type},
+		contentType: "Number",
+
+		success: function (data) {
+			//console.log(data.batteryKWhCapacity);
+			battery_capacity = data.batteryKWhCapacity;
+
+			calc_veh_pop();
+			calc_flt_cap();
+			flt_tou_profit[0].revenue = calc_revenue_pge_tou("Winter", 15);		//index 0 is winter
+			flt_tou_profit[1].revenue = calc_revenue_pge_tou("Summer", 15);		//index 1 is summer
+			flt_profit = Math.round(calc_annual_profit(flt_tou_profit[0].revenue, flt_tou_profit[1].revenue,
+				PGE_TOU_D.winter_length, PGE_TOU_D.summer_length));
+			indiv_profit = Math.round(calc_annual_profit(flt_tou_profit[0].revenue/veh_pop, flt_tou_profit[1].revenue/veh_pop,
+				PGE_TOU_D.winter_length, PGE_TOU_D.summer_length));
+
+			// Populate spans in HTML with the values
+			flt_roi_field.text(flt_profit.toFixed(2));
+			indiv_roi_field.text(indiv_profit.toFixed(2));
+			flt_cap_field.text((battery_capacity*veh_pop).toFixed(0))
+
+			// Update graphs
+			updatePS();
+			updateFA();
+		},
+
+		error: function(err) {
+			alert("Sorry, an AJAX error occurred. Please reload the page or contact the administrators.");
+			console.log(err);
+		}
+	});
+}
 
 // When MSOC inputs are changed, update variable value
 $("#msocText, #msocSlider").change(function(){
