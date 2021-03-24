@@ -13,7 +13,7 @@ app.set("view engine", "ejs");
 mongoose.connect("mongodb+srv://pranav:delorean@cluster0.joafk.mongodb.net/delorean?retryWrites=true&w=majority");
 
 // Schema for the Vehicles collection within DeLorean database
-var vehiclesSchema = mongoose.Schema,
+let vehiclesSchema = mongoose.Schema,
 	ObjectId = mongoose.Schema.ObjectId;
 vehiclesSchema = new mongoose.Schema ({
 	charge120: Number,
@@ -41,10 +41,39 @@ app.use(express.static(__dirname + "/public/"));
 
 // Load index.ejs
 app.get("/", (req, res) => {
-	Vehicles.find({}, function(err, cars) {
+	Vehicles.find({}, {}, {
+		sort: {make: 1}
+	}, function(err, cars) {
+
+		// Make a list of the unique auto makes for the multiple choice box (remove duplicates)
+		let makeList = [];
+		let i=0;
+		cars.forEach(car => {
+			makeList.push(car.make);
+			if(makeList.indexOf(makeList[i]) < i) {
+				makeList.pop();
+				i--;
+			}
+			i++;
+		});
+
+		// Render the homepage
 		res.render("index", {
+			makeList: makeList,
 			carsList: cars
 		});
+	});
+});
+
+// Load cars into index.js
+app.get("/populateCars", (req, res) => {
+
+	// Find all cars with the specified make. Sort results by Model name
+	Vehicles.find({make: {$eq: req.query.make} }, {}, {
+		sort: {model: 1}
+	}, function(err, cars) {
+		// Send results as a collection
+		res.send(cars);
 	});
 });
 

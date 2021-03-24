@@ -1,33 +1,38 @@
 // JQuery Document
 
-function populateMultiSelectChild(fieldName, target, id, subId){
+// Populate the multi-select with user-specified cars.
+function populateCars() {
 
-	var targetId = "#" +target;
+	// Empty the container before populating it
+	$("#car-list").empty();
+	let mc_value = $("#car-make").val() + "";
+
 	$.ajax({
 		type: "GET",
-		url: "/populateUI",
+		url: "/populateCars",
+		data: {make: mc_value},
+		contentType: "String",
+
 		success: function(data){
-			$.each(data[id], function(i, obj){
-				$(targetId).append("<div class=\"multi-select-element\"></div>");
-				var objName = obj.name;
-				var trimmed = objName.replace(/ /g, "");
-				var ind = i+1;
 
-				$(targetId +" div.multi-select-element:nth-of-type(" +ind +")").append("<input id=\"" +trimmed +"\" name=\"" +trimmed +"\" type=\"checkbox\"/> <label class=\"multi-label\" for=\"" +trimmed +"\">" +objName +"</label> <a class=\"dropdown-toggle\" type=\"button\"></a>");
+			// Now that we have the data, create selection options for each
+			$.each(data, function(i, car){
 
-				$(targetId +" div.multi-select-element:nth-of-type(" +ind +")").append("<div name=\"" +subId +"\" class=\"form-control multi-select\"></div>");
+				let carId = car._id;
+				let carModel = car.model;
 
-				$.each(obj[subId], function(j, subObj){
-					trimmed = subObj.replace(/ /g, "");
+				// For boilerplate div, see index.ejs
+				$("#car-list").append("<div id=\"" +carId +"\" class=\"option\"></div>");
 
-					$(targetId +" div.multi-select-element:nth-of-type(" +ind +") div.multi-select").append("<input id=\"" +trimmed +"\" type=\"checkbox\"/> <label class=\"multi-label\" for=\"" +trimmed +"\">" +subObj +"</label><br>");
-				});
+				$("#" +carId).append("<img src=\"images/" +carId +".png\" alt=\"" +mc_value + " " +carModel +" image\" class=\"img-thumbnail\" />");
+
+				$("#" +carId).append("<h4>" +mc_value + " " +carModel +"</h4>");
 
 			});
 		},
 		error: function(err){
-			console.log(err);
-			$(targetId).append("<p>:( A connection error occurred. Please try reloading the page.</p>");
+			console.log(err.body);
+			$("#car-list").append("<p>:( An AJAX error occurred. Please try reloading the page or contacting the administrators.</p>");
 		}
 	});
 	/*for(var i=1; i<=length; i++){
