@@ -13,6 +13,8 @@ widget_width = parseInt(widget_width, 10);
 widget_width -= 50;
 
 $(function() {
+	$(".spinner-wrapper").hide();
+	$("#car-make").val("default");
 });
 
 // Toggle green background for the currently selected view option (individual/organization)
@@ -99,7 +101,7 @@ $("#graphType").change(function () {
 	} else {
 		useFuture = true;
 	}
-	clearGraph();
+	clearGraph(-1);
 	updatePS()
 	updateFA();
 });
@@ -110,7 +112,7 @@ $(window).resize(function(){
 	widget_width = widget_width.substr(0, widget_width.length - 2);
 	widget_width = parseInt(widget_width, 10);
 	widget_width -= 50;
-	clearGraph();
+	clearGraph(-1);
 	updatePS();
 	updateFA();
 });

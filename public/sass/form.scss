@@ -211,11 +211,36 @@ input:checked + .pill:before {
 	transform: translateX(27px);
 }
 
-/* Rounded sliders */
+/**************************** Rounded sliders ***************************/
 .pill.round {
 	border-radius: 19px;
 }
 
 .pill.round:before {
 	border-radius: 50%;
+}
+
+/******************* Loading Spinner Styles and Animation ******************/
+.spinner-wrapper {
+	display: inline;
+	* {
+		display: inline-block;
+	}
+}
+
+.spinner {
+	height: 20px;
+	width: 20px;
+	border: solid 5px;
+	border-left-color: $green;
+	border-top-color: #ccc;
+	border-right-color: #ccc;
+	border-bottom-color: #ccc;
+	border-radius: 50%;
+	animation: spin 1s infinite cubic-bezier(.58,-0.79,.43,1.9);
+}
+
+@keyframes spin{
+	0%{transform:rotate(0deg);}
+	100%{transform:rotate(360deg);}
 }

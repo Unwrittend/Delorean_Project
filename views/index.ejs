@@ -37,6 +37,7 @@
 </head>
 <body>
 <!-- Main Navigation -->
+<!--================================================================================================================-->
 <nav class="navbar navbar-expand-md navbar-light">
     <a class="screen-reader-only" href="#article">Skip to Content</a>
     <a class="navbar-brand" href="/"><img class="navbar-brand-img" src="images/delorean_logo_text_transparent.png"/></a>
@@ -60,9 +61,11 @@
     </div>
 </nav>
 <!-- Content (sr-only link jumps here) -->
+<!--=================================================================================================================-->
 <main id="article" class="container-fluid content">
 
     <!-- Buttons to decide whether client wants Individual or Organizer View -->
+    <!--=============================================================================================================-->
     <section class="view-toggle">
         <h4>Select Mode:</h4>
         <button id="ind-btn" class="btn" onclick="switchToIndiv()">Individual</button>
@@ -70,8 +73,10 @@
     </section>
 
     <!-- The actual form -->
+    <!--=============================================================================================================-->
     <form class="row main-form">
         <!-- Map Section (For now, map is from Mapbox, but it may be filled with Google Maps instead) -->
+        <!--=========================================================================================================-->
         <div class="grid-item col-lg-12">
             <div id="map" class="form-group">
                 <label>Map</label>
@@ -91,12 +96,14 @@
         </div>
 
         <!-- Left Column -->
+        <!--=========================================================================================================-->
         <div class="grid-item col-lg-4">
             <div id="mc" class="form-group">
                 <!-- NodeJS populates all the options -->
                 <label for="car-make">Vehicle Make/Model</label>
-                <select id="car-make" class="form-select" name="car-make" onchange="populateCars()">
-                    <option value="default">--Select Make--</option>
+                <span id="car-spinner" class="spinner-wrapper"><div class="spinner"></div><em>Loading</em></span>
+                <select id="car-make" class="form-select" name="car-make" oninput="populateCars()">
+                    <option value="default" selected disabled hidden>--Select Make--</option>
                     <% makeList.forEach(make => { %>
                     <option value="<%= make %>"><%= make %></option>
                     <% }); %>
@@ -112,9 +119,11 @@
         </div>
 
         <!-- Center Column  -->
+        <!--=========================================================================================================-->
         <div class="grid-item col-lg-4">
 
             <!-- Approximate Population (Range, 1000-X) -->
+            <!--=====================================================================================================-->
             <!-- The ID is there because the range of the slider will be generated dynamically -->
             <!--div id="population" class="form-group">
                 <label for="popSlider">Approximate Population</label>
@@ -125,6 +134,7 @@
             </div-->
 
             <!-- Minimum State of Charge (Range, 0-100) -->
+            <!--=====================================================================================================-->
             <div class="form-group">
                 <label for="msocSlider">Minimum State of Charge</label>
                 <input type="range" name="msoc" id="msocSlider" class="form-control slider" min="0" max="100" oninput="msocText.value = msocSlider.value" />
@@ -134,6 +144,7 @@
             </div>
 
             <!-- Hours Charging (Range, 0-24) (only show in  -->
+            <!--=====================================================================================================-->
             <div id="hours-panel" class="form-group d-none">
                 <label for="slider">Hours Charging</label>
                 <div id="hours-group">
@@ -145,6 +156,7 @@
             </div>
 
             <!-- Opt-in Percentage (Range, 0-100) (only show in organization view) -->
+            <!--=====================================================================================================-->
             <div id="optin-panel" class="form-group">
                 <label for="optinSlider">Opt-In Percentage</label>
                 <input type="range" name="optin" id="optinSlider" class="form-control slider" min="0" max="100" oninput="optinText.value = optinSlider.value" />
@@ -154,6 +166,7 @@
             </div>
 
             <!-- Peak Shaving (Graph) NOTE: This will be displayed on sizes: LG, MD -->
+            <!--=====================================================================================================-->
             <!--div id="peak-lg" class="form-group form-result d-none d-lg-block d-xl-block">
                 <label>Peak Shaving</label>
                 <img class="img-fluid" src="http://picsum.photos/500" alt="filler" />
@@ -162,23 +175,28 @@
         </div>
 
         <!-- Right Column (Mostly graphs &c. -->
+        <!--=========================================================================================================-->
         <div class="grid-item col-lg-4">
 
             <!-- Return on Investment (Text, USD) -->
+            <!--=====================================================================================================-->
             <div class="form-group form-result">
                 <label>ROI</label>
                 <h3 class="text-center">$<span id="indiv-roi" class="d-none"></span><span id="flt-roi"></span></h3>
             </div>
 
-            <!-- Stores energy (kWh) -->
+            <!-- Stored energy (kWh) -->
+            <!--=====================================================================================================-->
             <div class="form-group form-result" id="kwh-panel">
                 <label>Max Energy Stored in Fleet</label>
                 <h3 class="text-center"><span id="fleet-capacity"></span>kWh</h3>
             </div>
 
             <!-- Peak Shaving (Graph) -->
+            <!--=====================================================================================================-->
             <div class="form-group form-result">
                 <label>Money Saved per Month</label>
+                <span id="graph-spinner" class="spinner-wrapper"><div class="spinner"></div><em>Loading</em></span>
                 <div id="app-ps" class="app">
                     <div id="chart-ps" class="chart">
                         <svg id="svg-ps"></svg>
@@ -187,10 +205,10 @@
                         <ul></ul>
                     </div>
                 </div>
-                <!--img class="img-fluid" src="http://picsum.photos/500" alt="filler" /-->
             </div>
 
             <!-- Battery Degradation (Graph) -->
+            <!--=====================================================================================================-->
             <div class="form-group form-result">
                 <label>Fleet Availability / Time</label>
                 <br>
@@ -200,7 +218,6 @@
                     <span class="pill round"></span>
                 </label>
                 <label class="switch-label">Future</label>
-                <!--img class="img-fluid" src="http://picsum.photos/500" alt="filler" /-->
                 <div id="app-fa" class="app">
                     <div id="chart-fa" class="chart">
                         <svg id="svg-fa"></svg>
@@ -209,6 +226,7 @@
             </div>
 
             <!-- Cars Required (Graph) -->
+            <!--=====================================================================================================-->
             <!--div class="form-group form-result">
                 <label>Cars Required</label>
                 <img class="img-fluid" src="http://picsum.photos/500" alt="filler" />
@@ -225,6 +243,7 @@
     </form>
 
     <!-- Footer -->
+    <!--=============================================================================================================-->
     <footer>
         <hr>
         <ul>

@@ -1,11 +1,20 @@
 // JQuery Document
 
-// Populate the multi-select with user-specified cars.
+// Populate the multi-select with user-specified cars. Triggered when the dropdown for manufacturer is changed
 function populateCars() {
 
 	// Empty the container before populating it
 	$("#car-list").empty();
+	$(".err").remove();
+
 	let mc_value = $("#car-make").val() + "";
+	console.log(mc_value);
+	if(mc_value == "default") {
+		return;
+	}
+
+	// Show the loading spinner
+	$("#car-spinner").show(100);
 
 	$.ajax({
 		type: "GET",
@@ -31,16 +40,15 @@ function populateCars() {
 
 			// Attach click event handler to the newly created elements
 			$(document).on("click", ".option", toggleMCSelected);
+
+			$("#car-spinner").hide(100);
 		},
+
+		// Provide a descriptive error message
 		error: function(err){
+			$("#car-spinner").hide(100);
 			console.log(err.body);
-			$("#car-list").append("<p>:( An AJAX error occurred. Please try reloading the page or contacting the administrators.</p>");
+			$("#car-list").append("<p class=\"err\">:( A server error occurred. Please try reloading the page or contacting the administrators.</p>");
 		}
 	});
-	/*for(var i=1; i<=length; i++){
-		var content = fieldName +" " +i;
-		var nameId = fieldName +i;
-		var addfield = "<div class=\"multi-select-element\"><input id=\"" +nameId +"\" name=\"" +nameId +"\" type=\"checkbox\"/> <label class=\"multi-label multi-label-full\" for=\"" +nameId +"\">" +content +"</label></div>";
-		$(target).append(addfield);
-	}*/
 }

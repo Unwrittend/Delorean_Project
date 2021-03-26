@@ -1,8 +1,17 @@
 // D3JS Document
 
-function clearGraph() {
-	$("#svg-ps").empty();
-	$("#svg-fa").empty();
+// Clear graph based on id. If -1, clear all.
+function clearGraph(id) {
+	if(id === 0) {
+		$("#svg-ps").empty();
+	}
+	else if(id === 1) {
+		$("#svg-fa").empty();
+	}
+	else if(id === -1) {
+		$("#svg-ps").empty();
+		$("#svg-fa").empty();
+	}
 }
 
 /** *************************************************************************** **/

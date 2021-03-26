@@ -59,7 +59,7 @@ $("#zip").change(function(){
 	flt_roi_field.text(flt_profit);
 	indiv_roi_field.text(indiv_profit);
 	flt_cap_field.text((battery_capacity*veh_pop).toFixed(0))
-	clearGraph();
+	clearGraph(0);
 	updatePS();
 	updateFA();
 });
@@ -67,7 +67,10 @@ $("#zip").change(function(){
 // When multiple choice is changed, update graphs. This function is called in app.js
 function updateGraphs(){
 	// Clear graphs and show spinner
-	clearGraph();
+	clearGraph(0);
+	$(".err").remove();
+
+	$("#graph-spinner").show(100);
 
 	// Get id of selected vehicle
 	vehicle_type = $("#car-list .selected").attr("id");
@@ -101,10 +104,13 @@ function updateGraphs(){
 			// Update graphs
 			updatePS();
 			updateFA();
+
+			$("#graph-spinner").hide(100);
 		},
 
 		error: function(err) {
-			alert("Sorry, an AJAX error occurred. Please reload the page or contact the administrators.");
+			$("#graph-spinner").hide(100);
+			$("#chart-ps").prepend("<p class=\"err\">:( A server error occurred. Please try reloading the page or contacting the administrators.</p>");
 			console.log(err);
 		}
 	});
@@ -126,7 +132,7 @@ $("#msocText, #msocSlider").change(function(){
 	flt_roi_field.text(flt_profit.toFixed(2));
 	indiv_roi_field.text(indiv_profit.toFixed(2));
 	flt_cap_field.text((battery_capacity*veh_pop).toFixed(0))
-	clearGraph();
+	clearGraph(0);
 	updatePS();
 	updateFA();
 });
@@ -149,7 +155,7 @@ $("#optinText, #optinSlider").change(function(){
 	flt_roi_field.text(flt_profit.toFixed(2));
 	indiv_roi_field.text(indiv_profit.toFixed(2));
 	flt_cap_field.text((battery_capacity*veh_pop).toFixed(0))
-	clearGraph();
+	clearGraph(0);
 	updatePS();
 	updateFA();
 });
