@@ -85,36 +85,25 @@ app.get("/getCarById", (req, res) => {
 	});
 });
 
+// In case request cannot be processed, show the 404 page
+app.use(function(req, res){
+	res.render("404");
+});
+
+
 app.listen(4000, function() {
 	console.log("Server is running");
 });
-/*
-function iterateFunc(doc) {
-	console.log(JSON.stringify(doc.model, null, 4));
-	client.close();
-}
 
-function errorFunc(error) {
-	console.log(error);
-	client.close();
-}
-
-const MongoClient = require('mongodb').MongoClient;
-const uri = "mongodb+srv://pranav:delorean@cluster0.joafk.mongodb.net/delorean?retryWrites=true&w=majority";
-
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-
-const mq = "BMW";
-var q = {};
-q.make = mq;
-
-client.connect(err => {
-	// Get database and from there, get collection
-	const collection = client.db("delorean").collection('Vehicles');
-
-	// Get JSON objects containing every match for the search query
-	var cursor = collection.find(q);
-	cursor.forEach(iterateFunc, errorFunc);
-
+//------------------------------------------  CPanel Server Code
+/**
+var http = require('http');
+var server = http.createServer(function(req, res) {
+	res.writeHead(200, {'Content-Type': 'text/plain'});
+	var message = 'It works!\n',
+		version = 'NodeJS ' + process.versions.node + '\n',
+		response = [message, version].join('\n');
+	res.end(response);
 });
+server.listen(4000);
 */
