@@ -10,7 +10,7 @@ const ejs = require("ejs");
 app.set("view engine", "ejs");
 
 // Connect to DeLorean Database
-mongoose.connect("mongodb+srv://pranav:delorean@cluster0.joafk.mongodb.net/delorean?retryWrites=true&w=majority");
+mongoose.connect("mongodb+srv://[username]:[password]@cluster0.joafk.mongodb.net/delorean?retryWrites=true&w=majority");
 
 // Schema for the Vehicles collection within DeLorean database
 let vehiclesSchema = mongoose.Schema,
@@ -35,12 +35,15 @@ vehiclesSchema = new mongoose.Schema ({
 
 // Create model for the Vehicles collection
 const Vehicles = mongoose.model("Vehicles", vehiclesSchema, "Vehicles");
-
+Vehicles.count(function(err, count) {
+	console.log(count);
+});
 // Load static folders that do not contain any NodeJS
 app.use(express.static(__dirname + "/public/"));
 
 // Load index.ejs
 app.get("/", (req, res) => {
+
 	Vehicles.find({}, {}, {
 		sort: {make: 1}
 	}, function(err, cars) {

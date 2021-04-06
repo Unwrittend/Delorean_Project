@@ -15,6 +15,7 @@ widget_width -= 50;
 $(function() {
 	$(".spinner-wrapper").hide();
 	$("#car-make").val("default");
+	updateFA();
 });
 
 // Toggle green background for the currently selected view option (individual/organization)
@@ -94,15 +95,19 @@ hours2.change(function(){
 	slider.slider( "values", 1, hours2.val().substring(0, 1) );
 });
 
+// Update Fleet Availability graph when the graph type is changed.
 var useFuture = false;
 $("#graphType").change(function () {
+	// If we do not want to show the future graph:
 	if (useFuture) {
+		clearGraph(1);
 		useFuture = false;
-	} else {
+	}
+	// If we do want to overlay the future graph:
+	else {
 		useFuture = true;
 	}
-	clearGraph(-1);
-	updatePS()
+
 	updateFA();
 });
 

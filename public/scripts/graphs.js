@@ -94,7 +94,7 @@ function updateFA() {
 		const CHART_WIDTH_FA = widget_width - MARGIN_FA.right - MARGIN_FA.left;
 		const CHART_HEIGHT_FA = 400 - MARGIN_FA.top - MARGIN_FA.bottom;
 
-		console.log(data);
+		//console.log(data);
 
 		/*stuffJson = [];
 		for (var i = 0; i < moreStuff.length; i++) {
