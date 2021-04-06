@@ -5,7 +5,6 @@ function populateCars() {
 
 	// Empty the container before populating it
 	$("#car-list").empty();
-	$(".err").remove();
 
 	let mc_value = $("#car-make").val() + "";
 	console.log(mc_value);
@@ -23,6 +22,9 @@ function populateCars() {
 		contentType: "String",
 
 		success: function(data){
+
+			// We call this line in both the success callback and the error callback so there are no duplicate messages
+			$(".err").remove();
 
 			// Now that we have the data, create selection options for each
 			$.each(data, function(i, car){
@@ -48,6 +50,9 @@ function populateCars() {
 		error: function(err){
 			$("#car-spinner").hide(100);
 			console.log(err.body);
+
+			// We call this line in both the success callback and the error callback so there are no duplicate messages
+			$(".err").remove();
 			$("#car-list").append("<p class=\"err\">:( A server error occurred. Please try reloading the page or contacting the administrators.</p>");
 		}
 	});

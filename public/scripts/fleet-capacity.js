@@ -68,7 +68,6 @@ $("#zip").change(function(){
 function updateGraphs(){
 	// Clear graphs and show spinner
 	clearGraph(0);
-	$(".err").remove();
 
 	$("#graph-spinner").show(100);
 
@@ -101,7 +100,8 @@ function updateGraphs(){
 			indiv_roi_field.text(indiv_profit.toFixed(2));
 			flt_cap_field.text((battery_capacity*veh_pop).toFixed(0))
 
-			// Update graphs
+			// We call this line in both the success callback and the error callback so there are no duplicate messages
+			$(".err").remove();
 			updatePS();
 
 			$("#graph-spinner").hide(100);
@@ -109,6 +109,9 @@ function updateGraphs(){
 
 		error: function(err) {
 			$("#graph-spinner").hide(100);
+
+			// We call this line in both the success callback and the error callback so there are no duplicate messages
+			$(".err").remove();
 			$("#chart-ps").prepend("<p class=\"err\">:( A server error occurred. Please try reloading the page or contacting the administrators.</p>");
 			console.log(err);
 		}
@@ -118,6 +121,9 @@ function updateGraphs(){
 // When MSOC inputs are changed, update variable value
 $("#msocText, #msocSlider").change(function(){
 	msoc = $("#msocText").val()/100;				//is a percentage;
+	clearGraph(0);
+
+	// Only update the graphs if a car is selected.
 	if( vehicle_type !== undefined ) {
 		calc_veh_pop();
 		calc_flt_cap();
@@ -130,8 +136,7 @@ $("#msocText, #msocSlider").change(function(){
 
 		flt_roi_field.text(flt_profit.toFixed(2));
 		indiv_roi_field.text(indiv_profit.toFixed(2));
-		flt_cap_field.text((battery_capacity * veh_pop).toFixed(0))
-		clearGraph(0);
+		flt_cap_field.text((battery_capacity * veh_pop).toFixed(0));
 		updatePS();
 	}
 });
@@ -139,7 +144,9 @@ $("#msocText, #msocSlider").change(function(){
 // When Opt-in inputs are changed, update variable value
 $("#optinText, #optinSlider").change(function(){
 	opt_in = $("#optinText").val()/100;		//is a percentage
+	clearGraph(0);
 
+	// Only update the graphs if a car is selected.
 	if( vehicle_type !== undefined ) {
 		calc_veh_pop();
 		calc_flt_cap();
@@ -156,7 +163,6 @@ $("#optinText, #optinSlider").change(function(){
 		indiv_roi_field.text(indiv_profit.toFixed(2));
 		flt_cap_field.text((battery_capacity * veh_pop).toFixed(0));
 
-		clearGraph(0);
 		updatePS();
 	}
 });
