@@ -35,9 +35,7 @@ vehiclesSchema = new mongoose.Schema ({
 
 // Create model for the Vehicles collection
 const Vehicles = mongoose.model("Vehicles", vehiclesSchema, "Vehicles");
-Vehicles.count(function(err, count) {
-	console.log(count);
-});
+
 // Load static folders that do not contain any NodeJS
 app.use(express.static(__dirname + "/public/"));
 

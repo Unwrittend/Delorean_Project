@@ -10879,6 +10879,15 @@ select.form-select:focus {
   color: black;
 }
 
+.icon-info {
+  background-image: url("../images/info_icon.svg");
+  height: 25px;
+  width: 25px;
+  display: inline-block;
+  margin-left: 5px;
+  margin-bottom: -3px;
+}
+
 .switch-label {
   font-size: 20px !important;
 }

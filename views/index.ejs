@@ -12,7 +12,7 @@
     <!-- All Bootstrap styles are embedded in this stylesheet -->
     <link href="sass/style.css" rel="stylesheet" type="text/css" />
 
-    <!-- Import jQuery, PopperJS (For bootstrap effects), Bootstrap's own JS library, and jQuery UI (local file -- not remote) -->
+    <!-- Import jQuery, PopperJS (For bootstrap effects), Bootstrap's own JS library, jQuery UI (local file -- not remote), and AJAX -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -80,6 +80,7 @@
         <div class="grid-item col-lg-12">
             <div id="map" class="form-group">
                 <label>Map</label>
+                <a href="#" class="icon-info"></a>
                 <input type="text" name="zip" id="zip" class="form-control input-text" value="95050" placeholder="Zip Code" />
                 <div id="map-container">
                     <script>
@@ -101,7 +102,12 @@
             <div id="mc" class="form-group">
                 <!-- NodeJS populates all the options -->
                 <label for="car-make">Vehicle Make/Model</label>
+
+                <!-- info icon and loading spinner -->
+                <a href="#" class="icon-info"></a>
+                <span class="ui-icon ui-icon-info"></span>
                 <span id="car-spinner" class="spinner-wrapper"><div class="spinner"></div><em>Loading</em></span>
+
                 <select id="car-make" class="form-select" name="car-make" oninput="populateCars()">
                     <option value="default" selected disabled hidden>--Select Make--</option>
                     <% makeList.forEach(make => { %>
@@ -143,10 +149,11 @@
                 <input type="text" name="msoc" id="msocText" class="form-control input-text" value="50" oninput="msocSlider.value = msocText.value" />
             </div>
 
-            <!-- Hours Charging (Range, 0-24) (only show in  -->
+            <!-- Hours Charging (Range, 0-24) (only show in individual view) -->
             <!--=====================================================================================================-->
             <div id="hours-panel" class="form-group d-none">
                 <label for="slider">Hours Charging</label>
+                <a href="#" class="icon-info"></a>
                 <div id="hours-group">
                     <input id="hours-1" class="form-control input-text" type="time" /> - <input id="hours-2" class="form-control input-text" type="time" />
                     <div class="hours-wrapper">
@@ -211,6 +218,7 @@
             <!--=====================================================================================================-->
             <div class="form-group form-result">
                 <label>Fleet Availability / Time</label>
+                <a href="#" class="icon-info"></a>
                 <br>
                 <label class="switch-label">Present</label>
                 <label class="switch">
