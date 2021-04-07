@@ -35,7 +35,7 @@ function populateCars() {
 				// For boilerplate div, see index.ejs
 				$("#car-list").append("<div id=\"" +carId +"\" class=\"option\"></div>");
 
-				$("#" +carId).append("<img src=\"images/" +carId +".png\" alt=\"" +mc_value + " " +carModel +" image\" class=\"img-thumbnail\" />");
+				$("#" +carId).append("<img src=\"images/vehicles" +carId +".png\" alt=\"" +mc_value + " " +carModel +" image\" class=\"img-thumbnail\" />");
 
 				$("#" +carId).append("<h4>" +mc_value + " " +carModel +"</h4>");
 			});
