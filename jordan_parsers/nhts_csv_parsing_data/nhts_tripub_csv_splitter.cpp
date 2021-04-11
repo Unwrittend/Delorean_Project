@@ -14,10 +14,22 @@
 #include <filesystem> // platform-independant directory creation
 
 /******************************************************************************
-* FILE WRITING HELPER FUNCTION
+* CONSTANTS
 ******************************************************************************/
 
 #define GENERATED_FILEPATH "NHTS_SPLIT_CSV_FILES/trippub"
+
+#define CSV_FILEPATH "NHTS_CSV_FILES/trippub.csv"
+
+#define LINES_PER_GENERATED_FILE 100000
+
+#define TOTAL_LINES_IN_TRIPUB 923572
+
+#define TOTAL_GENERATED_FILES (TOTAL_LINES_IN_TRIPUB/LINES_PER_GENERATED_FILE)+1
+
+/******************************************************************************
+* FILE WRITING HELPER FUNCTION
+******************************************************************************/
 
 void generate_file(FILE* read) {
   static int filenumber = 0;
@@ -36,14 +48,6 @@ void generate_file(FILE* read) {
 /******************************************************************************
 * MAIN EXECUTION
 ******************************************************************************/
-
-#define CSV_FILEPATH "NHTS_CSV_FILES/trippub.csv"
-
-#define LINES_PER_GENERATED_FILE 100000
-
-#define TOTAL_LINES_IN_TRIPUB 923572
-
-#define TOTAL_GENERATED_FILES (TOTAL_LINES_IN_TRIPUB/LINES_PER_GENERATED_FILE)+1
 
 int main() {
   std::filesystem::create_directory("NHTS_SPLIT_CSV_FILES");
