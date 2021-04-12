@@ -5,18 +5,30 @@
 
 // The population and MSOC inputs require constant factors so the sliders work properly
 // Sliders go from 1-100. Factors make it easier to manage the maximum and minimum values
-var popConstant = 1000;
+let popConstant = 1000;
 
-var widget_width = $(".form-result").css("width");
+let widget_width = $(".form-result").css("width");
 widget_width = widget_width.substr(0, widget_width.length - 2);
 widget_width = parseInt(widget_width, 10);
 widget_width -= 50;
 
-$(function() {
-	$(".spinner-wrapper").hide();
-	$("#car-make").val("default");
-	updateFA();
-});
+// Set a red border and print an error message
+function throwError(obj, message) {
+	let objId = $(obj).attr("id");
+	$(obj).addClass("invalid");
+
+	// Check if error message already was printed. If not, print it.
+	if( $("#" +objId +"Err").length == 0 ) {
+		$(obj).after("<span id=\"" + objId + "Err\">" + message + "</span>");
+	}
+}
+
+// Clear the error message and border
+function clearError(obj) {
+	let objId = $(obj).attr("id");
+	$(obj).removeClass("invalid");
+	$("#" +objId +"Err").remove();
+}
 
 // Toggle green background for the currently selected view option (individual/organization)
 $(".view-toggle button").click(function (){
@@ -52,7 +64,10 @@ function switchToOrg() {
 const slider = $("#slider");
 const hours1 = $("#hours-1");
 const hours2 = $("#hours-2");
-var hrs1, hrs2;
+let hrs1, hrs2;
+let h_inp1, h_inp2;
+let mins1, mins2;
+let msg;
 
 slider.slider({
 	min: 0,
@@ -83,20 +98,57 @@ slider.slider({
 	}
 });
 
-hours1.val( "0" + slider.slider( "values", 0 ) + ":00" );
-hours2.val( slider.slider( "values", 1 ) + ":00" );
-
 /* Change the slider values when the time fields are changed */
 hours1.change(function(){
-	slider.slider( "values", 0, hours1.val().substring(0, 1) );
+	h_inp1 = hours1.val(); // String in 24-hr time format
+	h_inp2 = hours2.val(); // String in 24-hr time format
+	hrs1 = parseInt(h_inp1.substring(0, 2));	// Number containing hour
+	mins1 = parseInt(h_inp1.substring(3, 5));	// Number containing minutes
+
+	// Form validation. If invalid input is given, run the error handler
+	if(hrs1 >= parseInt(h_inp2.substring(0, 2)) ) {
+		msg = "Please select a valid time";
+		throwError(this, msg);
+	}
+	else {
+		// If input is valid, remove any error styles if they were displayed
+		clearError(this);
+
+		if (mins1 > 30) {
+			slider.slider("values", 0, (hrs1 + 1).toString());
+		} else {
+			slider.slider("values", 0, (hrs1).toString());
+		}
+	}
+
 });
 
 hours2.change(function(){
-	slider.slider( "values", 1, hours2.val().substring(0, 1) );
+	h_inp1 = hours1.val(); // String in 24-hr time format
+	h_inp2 = hours2.val(); // String in 24-hr time format
+	hrs2 = parseInt(h_inp2.substring(0, 2)); 	// Number containing hour
+	mins2 = parseInt(h_inp2.substring(3, 5)); 	// Number containing minutes
+
+	// Form validation. If invalid input is given, run the error handler
+	if(hrs2 <= parseInt(h_inp1.substring(0, 2)) ) {
+		msg = "Please select a valid time";
+		throwError(this, msg);
+	}
+	else{
+		// If input is valid, remove the error styles if they were displayed
+		clearError(this);
+
+		if(mins2 > 30) {
+			slider.slider( "values", 1, (hrs2+1).toString() );
+		}
+		else {
+			slider.slider("values", 1, (hrs2).toString());
+		}
+	}
 });
 
 // Update Fleet Availability graph when the graph type is changed.
-var useFuture = false;
+let useFuture = false;
 $("#graphType").change(function () {
 	// If we do not want to show the future graph:
 	if (useFuture) {
@@ -120,4 +172,14 @@ $(window).resize(function(){
 	clearGraph(-1);
 	updatePS();
 	updateFA();
+});
+
+$(function() {
+	$(".spinner-wrapper").hide();
+	$("#car-make").val("default");
+	updateFA();
+
+	// Set default times
+	hours1.val( "0" + slider.slider( "values", 0 ) + ":00" );
+	hours2.val( slider.slider( "values", 1 ) + ":00" );
 });
