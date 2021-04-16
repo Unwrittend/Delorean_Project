@@ -10826,6 +10826,16 @@ main.content {
   box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 .invalid, .invalid:focus {
   border: solid #dc3545 3px;
   background-color: #ffa7a7;

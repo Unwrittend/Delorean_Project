@@ -74,7 +74,7 @@
 
     <!-- The actual form -->
     <!--=============================================================================================================-->
-    <form class="row main-form">
+    <div class="row main-form">
         <!-- Map Section (For now, map is from Mapbox, but it may be filled with Google Maps instead) -->
         <!--=========================================================================================================-->
         <div class="grid-item col-lg-12">
@@ -143,10 +143,10 @@
             <!--=====================================================================================================-->
             <div class="form-group">
                 <label for="msocSlider">Minimum State of Charge</label>
-                <input type="range" name="msoc" id="msocSlider" class="form-control slider" min="0" max="100" oninput="msocText.value = msocSlider.value" />
+                <input type="range" name="msoc" id="msocSlider" class="form-control slider" min="0" max="100" oninput="bindInputs($(this), $('#msocText'))" />
                 <span class="align-left">0&#37;</span><span class="align-right">100&#37;</span>
                 <br><br>
-                <input type="text" name="msoc" id="msocText" class="form-control input-text" value="50" oninput="msocSlider.value = msocText.value" />
+                <input type="number" name="msoc" id="msocText" class="form-control input-text" value="50" min="0" max="100" oninput="bindInputs($(this), $('#msocSlider'))" />
             </div>
 
             <!-- Hours Charging (Range, 0-24) (only show in individual view) -->
@@ -155,7 +155,8 @@
                 <label for="slider">Hours Charging</label>
                 <a href="#" class="icon-info"></a>
                 <div id="hours-group">
-                    <input id="hours-1" class="form-control input-text" type="time" /> - <input id="hours-2" class="form-control input-text" type="time" />
+                    <input id="hours-1" class="form-control input-text" type="time" /> -
+                    <input id="hours-2" class="form-control input-text" type="time" data-toggle="popover" title="Error" data-content="Please give a valid time" />
                     <div class="hours-wrapper">
                         <div id="slider"></div>
                     </div>
@@ -166,10 +167,10 @@
             <!--=====================================================================================================-->
             <div id="optin-panel" class="form-group">
                 <label for="optinSlider">Opt-In Percentage</label>
-                <input type="range" name="optin" id="optinSlider" class="form-control slider" min="0" max="100" oninput="optinText.value = optinSlider.value" />
+                <input type="range" name="optin" id="optinSlider" class="form-control slider" min="0" max="100" oninput="bindInputs($(this), $('#optinText'))" />
                 <span class="align-left">0&#37;</span><span class="align-right">100&#37;</span>
                 <br><br>
-                <input type="text" name="optin" id="optinText" class="form-control input-text" value="50" oninput="optinSlider.value = optinText.value" />
+                <input type="number" name="optin" id="optinText" class="form-control input-text" value="50" min="0" max="100" oninput="bindInputs($(this), $('#optinSlider'))" />
             </div>
 
             <!-- Peak Shaving (Graph) NOTE: This will be displayed on sizes: LG, MD -->
@@ -248,7 +249,7 @@
 
         </div>
 
-    </form>
+    </div>
 
     <!-- Footer -->
     <!--=============================================================================================================-->

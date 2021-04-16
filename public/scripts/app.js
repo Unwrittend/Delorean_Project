@@ -18,16 +18,20 @@ function throwError(obj, message) {
 	$(obj).addClass("invalid");
 
 	// Check if error message already was printed. If not, print it.
-	if( $("#" +objId +"Err").length == 0 ) {
-		$(obj).after("<span id=\"" + objId + "Err\">" + message + "</span>");
-	}
+	/*if( $("#" +objId +"Err").length == 0 ) {
+		$(obj).after("<p id=\"" + objId + "Err\">" + message + "</p>");
+	}*/
+	//$(obj).tooltip({trigger: "focus"});
+	$(obj).popover({trigger: "manual"});
+	$(obj).popover("show");
 }
 
 // Clear the error message and border
 function clearError(obj) {
 	let objId = $(obj).attr("id");
 	$(obj).removeClass("invalid");
-	$("#" +objId +"Err").remove();
+	//$("#" +objId +"Err").remove();
+	$(obj).popover("hide");
 }
 
 // Toggle green background for the currently selected view option (individual/organization)
@@ -60,7 +64,23 @@ function switchToOrg() {
 	$("#kwh-panel").removeClass("d-none");
 }
 
-// Setup for the jQuery UI Slider
+/*****************  Validation for percentage fields  ********************/
+function bindInputs(source, dest) {
+	//console.log(source.val());
+	//source = $(source);
+	//dest = $(dest);
+	if(parseInt(source.val()) > parseInt(source.attr("max")) || parseInt(source.val()) < parseInt(source.attr("min"))) {
+		let msg = "Please give a value between 1 and 100";
+		throwError(source, msg);
+	}
+	else {
+		clearError(source);
+		dest.val(source.val());
+	}
+}
+
+/***************** Setup for the jQuery UI Slider ********************/
+
 const slider = $("#slider");
 const hours1 = $("#hours-1");
 const hours2 = $("#hours-2");
@@ -98,7 +118,7 @@ slider.slider({
 	}
 });
 
-/* Change the slider values when the time fields are changed */
+// Change the slider values when the time fields are changed
 hours1.change(function(){
 	h_inp1 = hours1.val(); // String in 24-hr time format
 	h_inp2 = hours2.val(); // String in 24-hr time format
@@ -146,6 +166,8 @@ hours2.change(function(){
 		}
 	}
 });
+
+/*********************  Update Graphs  *****************************/
 
 // Update Fleet Availability graph when the graph type is changed.
 let useFuture = false;

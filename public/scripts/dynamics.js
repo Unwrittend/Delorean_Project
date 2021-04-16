@@ -7,7 +7,7 @@ function populateCars() {
 	$("#car-list").empty();
 
 	let mc_value = $("#car-make").val() + "";
-	console.log(mc_value);
+
 	if(mc_value == "default") {
 		return;
 	}
