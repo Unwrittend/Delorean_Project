@@ -1,0 +1,47 @@
+@charset "UTF-8";
+// Project DeLorean
+// SCSS Document
+// This document contains all custom variable names
+
+// Import all Bootstrap styles
+
+// Global Colors
+// -- Theme
+$black:			rgb(0, 0, 0);
+$black-shadow:	rgba(0, 0, 0, 0.75);
+$blue:			rgb(102, 174, 226);
+$grey:			rgb(245, 245, 245);
+$green:			rgb(57, 181, 74);
+$orange: 		rgb(251, 196, 15);
+$orange-dark: 	rgb(164, 123, 0);
+$white:			rgb(255, 255, 255);
+
+// Global Fonts
+// -- Theme
+$font-family-sans-serif: 	soleil, sans-serif;
+$h2-font-size: 				26px;
+$h4-font-size:				22px;
+
+//Body
+$body-bg: 		rgb(245, 245, 245);
+$body-color: 	#0a0a0a;
+
+// Borders
+$radius-container: 10px;
+
+// Navigation
+$nav-bkg-color:						$body-bg;
+$navbar-dark-color:					$white;
+$navbar-dark-hover-color:			$grey;
+$navbar-dark-active-color:			$orange;
+$navbar-dark-disabled-color:		$orange-dark;
+$navbar-dark-toggler-border-color:	$orange;
+$nav-link-color:					#217a2e;
+
+// Interactives
+// Input = the widget
+// Inter = the interactive things the user can use
+$inter-bkg-color: 		$green;
+$input-bkg-color:		rgb(220, 220, 220);
+$btn-bkg-color: 		$body-bg;
+$btn-border-color:		rgb(190, 190, 190);

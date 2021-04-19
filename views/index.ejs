@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" initial-scale="1" />
+
+    <!-- Link to remote font -->
+    <link rel="stylesheet" href="https://use.typekit.net/ahh6uys.css">
+
+    <link href="sass/jquery-ui.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- All Bootstrap styles are embedded in this stylesheet -->
+    <link href="sass/style.css" rel="stylesheet" type="text/css" />
+
+    <!-- Import jQuery, PopperJS (For bootstrap effects), Bootstrap's own JS library, jQuery UI (local file -- not remote), and AJAX -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="scripts/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+
+    <!-- Import Mapbox API -->
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js"></script>
+
+    <!-- Import d3JS files -->
+    <script src="https://d3js.org/d3.v6.min.js" defer></script>
+    <script src="https://d3js.org/d3-scale.v3.min.js" defer></script>
+    <script src="https://d3js.org/d3-axis.v1.min.js" defer></script>
+
+    <!-- Our custom scripts. App = generic functionality; fleet-capacity = calculations; graphs = D3JS; dynamics = AJAX -->
+    <script src="scripts/app.js" defer></script>
+    <script src="scripts/fleet-capacity.js" defer></script>
+    <script src="scripts/graphs.js" defer></script>
+    <script src="scripts/dynamics.js" defer></script>
+
+    <title>Project DeLorean</title>
+</head>
+<body>
+<!-- Main Navigation -->
+<!--================================================================================================================-->
+<nav class="navbar navbar-expand-md navbar-light">
+    <a class="screen-reader-only" href="#article">Skip to Content</a>
+    <a class="navbar-brand" href="/"><img class="navbar-brand-img" src="images/delorean_logo_text_transparent.png"/></a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Project</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">About</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!-- Content (sr-only link jumps here) -->
+<!--=================================================================================================================-->
+<main id="article" class="container-fluid content">
+
+    <!-- Buttons to decide whether client wants Individual or Organizer View -->
+    <!--=============================================================================================================-->
+    <section class="view-toggle">
+        <h4>Select Mode:</h4>
+        <button id="ind-btn" class="btn" onclick="switchToIndiv()">Individual</button>
+        <button id="org-btn" class="btn selected" onclick="switchToOrg()">Organizer</button>
+    </section>
+
+    <!-- The actual form -->
+    <!--=============================================================================================================-->
+    <div class="row main-form">
+        <!-- Map Section (For now, map is from Mapbox, but it may be filled with Google Maps instead) -->
+        <!--=========================================================================================================-->
+        <div class="grid-item col-lg-12">
+            <div id="map" class="form-group">
+                <label>Map</label>
+                <a href="#" class="icon-info"></a>
+                <input type="text" name="zip" id="zip" class="form-control input-text" value="95050" placeholder="Zip Code" />
+                <div id="map-container">
+                    <script>
+						mapboxgl.accessToken = 'pk.eyJ1IjoiYXJqdW5jaGltbmkiLCJhIjoiY2tsZTVnMGc4MWJjYTJvcXRpcGF3Ymt0MCJ9.NsWvjwV6q2X_sqWWANxOdQ';
+						var map = new mapboxgl.Map({
+							container: 'map-container', // container id
+							style: 'mapbox://styles/mapbox/streets-v11', // style URL
+							center: [-74.5, 40], // starting position [lng, lat]
+							zoom: 9, // starting zoom
+						});
+                    </script>
+                </div>
+            </div>
+        </div>
+
+        <!-- Left Column -->
+        <!--=========================================================================================================-->
+        <div class="grid-item col-lg-4">
+            <div id="mc" class="form-group">
+                <!-- NodeJS populates all the options -->
+                <label for="car-make">Vehicle Make/Model</label>
+
+                <!-- info icon and loading spinner -->
+                <a href="#" class="icon-info"></a>
+                <span class="ui-icon ui-icon-info"></span>
+                <span id="car-spinner" class="spinner-wrapper"><div class="spinner"></div><em>Loading</em></span>
+
+                <select id="car-make" class="form-select" name="car-make" oninput="populateCars()">
+                    <option value="default" selected disabled hidden>--Select Make--</option>
+                    <% makeList.forEach(make => { %>
+                    <option value="<%= make %>"><%= make %></option>
+                    <% }); %>
+                </select>
+
+                <!-- JQuery populates all the choices -->
+                <div id="car-list" class="multi-choice">
+                    <!-- Boilerplate option
+                    <div id="[car id]" class="option"><img src="images/[car id].png" alt="[car make] [car model] image" class="img-thumbnail" /><h4>[car make] [car model]</h4></div>
+                    -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Center Column  -->
+        <!--=========================================================================================================-->
+        <div class="grid-item col-lg-4">
+
+            <!-- Approximate Population (Range, 1000-X) -->
+            <!--=====================================================================================================-->
+            <!-- The ID is there because the range of the slider will be generated dynamically -->
+            <!--div id="population" class="form-group">
+                <label for="popSlider">Approximate Population</label>
+                <input type="range" name="population" id="popSlider" class="form-control slider" min="1" max="1000" oninput="popText.value = popSlider.value*popConstant" />
+                <span class="align-left">1,000</span><span class="align-right">1,000,000</span>
+                <br><br>
+                <input type="text" name="population" id="popText" class="form-control input-text" value="500000" oninput="popSlider.value = popText.value/popConstant" />
+            </div-->
+
+            <!-- Minimum State of Charge (Range, 0-100) -->
+            <!--=====================================================================================================-->
+            <div class="form-group">
+                <label for="msocSlider">Minimum State of Charge</label>
+                <input type="range" name="msoc" id="msocSlider" class="form-control slider" min="0" max="100" oninput="bindInputs($(this), $('#msocText'))" />
+                <span class="align-left">0&#37;</span><span class="align-right">100&#37;</span>
+                <br><br>
+                <input type="number" name="msoc" id="msocText" class="form-control input-text" value="50" min="0" max="100" oninput="bindInputs($(this), $('#msocSlider'))" />
+            </div>
+
+            <!-- Hours Charging (Range, 0-24) (only show in individual view) -->
+            <!--=====================================================================================================-->
+            <div id="hours-panel" class="form-group d-none">
+                <label for="slider">Hours Charging</label>
+                <a href="#" class="icon-info"></a>
+                <div id="hours-group">
+                    <input id="hours-1" class="form-control input-text" type="time" /> -
+                    <input id="hours-2" class="form-control input-text" type="time" data-toggle="popover" title="Error" data-content="Please give a valid time" />
+                    <div class="hours-wrapper">
+                        <div id="slider"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Opt-in Percentage (Range, 0-100) (only show in organization view) -->
+            <!--=====================================================================================================-->
+            <div id="optin-panel" class="form-group">
+                <label for="optinSlider">Opt-In Percentage</label>
+                <input type="range" name="optin" id="optinSlider" class="form-control slider" min="0" max="100" oninput="bindInputs($(this), $('#optinText'))" />
+                <span class="align-left">0&#37;</span><span class="align-right">100&#37;</span>
+                <br><br>
+                <input type="number" name="optin" id="optinText" class="form-control input-text" value="50" min="0" max="100" oninput="bindInputs($(this), $('#optinSlider'))" />
+            </div>
+
+            <!-- Peak Shaving (Graph) NOTE: This will be displayed on sizes: LG, MD -->
+            <!--=====================================================================================================-->
+            <!--div id="peak-lg" class="form-group form-result d-none d-lg-block d-xl-block">
+                <label>Peak Shaving</label>
+                <img class="img-fluid" src="http://picsum.photos/500" alt="filler" />
+            </div-->
+
+        </div>
+
+        <!-- Right Column (Mostly graphs &c. -->
+        <!--=========================================================================================================-->
+        <div class="grid-item col-lg-4">
+
+            <!-- Return on Investment (Text, USD) -->
+            <!--=====================================================================================================-->
+            <div class="form-group form-result">
+                <label>ROI</label>
+                <h3 class="text-center">$<span id="indiv-roi" class="d-none"></span><span id="flt-roi"></span></h3>
+            </div>
+
+            <!-- Stored energy (kWh) -->
+            <!--=====================================================================================================-->
+            <div class="form-group form-result" id="kwh-panel">
+                <label>Max Energy Stored in Fleet</label>
+                <h3 class="text-center"><span id="fleet-capacity"></span>kWh</h3>
+            </div>
+
+            <!-- Peak Shaving (Graph) -->
+            <!--=====================================================================================================-->
+            <div class="form-group form-result">
+                <label>Money Saved per Month</label>
+                <span id="graph-spinner" class="spinner-wrapper"><div class="spinner"></div><em>Loading</em></span>
+                <div id="app-ps" class="app">
+                    <div id="chart-ps" class="chart">
+                        <svg id="svg-ps"></svg>
+                    </div>
+                    <div id="data">
+                        <ul></ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Battery Degradation (Graph) -->
+            <!--=====================================================================================================-->
+            <div class="form-group form-result">
+                <label>Fleet Availability / Time</label>
+                <a href="#" class="icon-info"></a>
+                <br>
+                <label class="switch-label">Present</label>
+                <label class="switch">
+                    <input type="checkbox" id="graphType">
+                    <span class="pill round"></span>
+                </label>
+                <label class="switch-label">Future</label>
+                <div id="app-fa" class="app">
+                    <div id="chart-fa" class="chart">
+                        <svg id="svg-fa"></svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cars Required (Graph) -->
+            <!--=====================================================================================================-->
+            <!--div class="form-group form-result">
+                <label>Cars Required</label>
+                <img class="img-fluid" src="http://picsum.photos/500" alt="filler" />
+            </div-->
+
+            <!-- Peak Shaving (Graph) NOTE: This will be displayed on sizes: SM, XS -->
+            <!--div class="form-group form-result d-block d-lg-none d-xl-none">
+                <label>Peak Shaving</label>
+                <img class="img-fluid" src="http://picsum.photos/500" alt="filler" />
+            </div-->
+
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <!--=============================================================================================================-->
+    <footer>
+        <hr>
+        <ul>
+            <li>Lipsum</li>
+        </ul>
+    </footer>
+
+</main>
+
+</body>
+</html>
