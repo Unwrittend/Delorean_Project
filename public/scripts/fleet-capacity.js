@@ -66,56 +66,32 @@ $("#zip").change(function(){
 
 // When multiple choice is changed, update graphs. This function is called in app.js
 function updateGraphs(){
-	// Clear graphs and show spinner
+	// Clear graphs
 	clearGraph(0);
-
-	$("#graph-spinner").show(100);
 
 	// Get id of selected vehicle
 	vehicle_type = $("#car-list .selected").attr("id");
 	//console.log(vehicle_type);
 
-	// Ask server.js to give us a car object based on the currently selected one's ID
-	$.ajax({
-		type: "GET",
-		url: "/getCarById",
-		data: {_id: vehicle_type},
-		contentType: "Number",
+	//console.log(data.batteryKWhCapacity);
+	battery_capacity = $("#car-list .selected div h6").attr("property");
 
-		success: function (data) {
-			//console.log(data.batteryKWhCapacity);
-			battery_capacity = data.batteryKWhCapacity;
+	calc_veh_pop();
+	calc_flt_cap();
+	flt_tou_profit[0].revenue = calc_revenue_pge_tou("Winter", 15);		//index 0 is winter
+	flt_tou_profit[1].revenue = calc_revenue_pge_tou("Summer", 15);		//index 1 is summer
+	flt_profit = Math.round(calc_annual_profit(flt_tou_profit[0].revenue, flt_tou_profit[1].revenue,
+		PGE_TOU_D.winter_length, PGE_TOU_D.summer_length));
+	indiv_profit = Math.round(calc_annual_profit(flt_tou_profit[0].revenue/veh_pop, flt_tou_profit[1].revenue/veh_pop,
+		PGE_TOU_D.winter_length, PGE_TOU_D.summer_length));
 
-			calc_veh_pop();
-			calc_flt_cap();
-			flt_tou_profit[0].revenue = calc_revenue_pge_tou("Winter", 15);		//index 0 is winter
-			flt_tou_profit[1].revenue = calc_revenue_pge_tou("Summer", 15);		//index 1 is summer
-			flt_profit = Math.round(calc_annual_profit(flt_tou_profit[0].revenue, flt_tou_profit[1].revenue,
-				PGE_TOU_D.winter_length, PGE_TOU_D.summer_length));
-			indiv_profit = Math.round(calc_annual_profit(flt_tou_profit[0].revenue/veh_pop, flt_tou_profit[1].revenue/veh_pop,
-				PGE_TOU_D.winter_length, PGE_TOU_D.summer_length));
+	// Populate spans in HTML with the values
+	flt_roi_field.text(flt_profit.toFixed(2));
+	indiv_roi_field.text(indiv_profit.toFixed(2));
+	flt_cap_field.text((battery_capacity*veh_pop).toFixed(0))
 
-			// Populate spans in HTML with the values
-			flt_roi_field.text(flt_profit.toFixed(2));
-			indiv_roi_field.text(indiv_profit.toFixed(2));
-			flt_cap_field.text((battery_capacity*veh_pop).toFixed(0))
+	updatePS();
 
-			// We call this line in both the success callback and the error callback so there are no duplicate messages
-			$(".err").remove();
-			updatePS();
-
-			$("#graph-spinner").hide(100);
-		},
-
-		error: function(err) {
-			$("#graph-spinner").hide(100);
-
-			// We call this line in both the success callback and the error callback so there are no duplicate messages
-			$(".err").remove();
-			$("#chart-ps").prepend("<p class=\"err\">:( A server error occurred. Please try reloading the page or contacting the administrators.</p>");
-			console.log(err);
-		}
-	});
 }
 
 // When MSOC inputs are changed, update variable value

@@ -10854,6 +10854,7 @@ input[type=number] {
   border-radius: 10px;
   margin-bottom: 10px;
   padding: 5px;
+  display: flex;
   cursor: pointer;
   -webkit-transition: linear 0.2s;
   -moz-transition: linear 0.2s;
@@ -10865,11 +10866,14 @@ input[type=number] {
   line-height: 100px;
   background: white;
   border-color: white;
+  text-align: left;
 }
-.option h4, .option .h4 {
+.option div {
+  flex: 1;
   text-align: right;
-  float: right;
-  line-height: 100px;
+}
+.option div h4, .option div .h4 {
+  margin-top: 10px;
 }
 
 .option:hover {

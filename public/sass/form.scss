@@ -138,6 +138,7 @@ input[type=number] {
 	border-radius: 10px;
 	margin-bottom: 10px;
 	padding: 5px;
+	display: flex;
 	cursor: pointer;
 	-webkit-transition: linear 0.2s;
 	-moz-transition: linear 0.2s;
@@ -149,12 +150,18 @@ input[type=number] {
 		line-height: 100px;
 		background: $white;
 		border-color: $white;
+		text-align: left;
 	}
 
-	h4 {
+	div {
+		//text-align: right;
+		//float: right;
+		flex: 1;
 		text-align: right;
-		float: right;
-		line-height: 100px;
+
+		h4 {
+			margin-top: 10px; // Arbitrary -- seems to work in most cases
+		}
 	}
 
 }

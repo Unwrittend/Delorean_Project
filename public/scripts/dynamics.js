@@ -31,13 +31,13 @@ function populateCars() {
 
 				let carId = car._id;
 				let carModel = car.model;
-
+				let carBattery = car.batteryKWhCapacity;
 				// For boilerplate div, see index.ejs
 				$("#car-list").append("<div id=\"" +carId +"\" class=\"option\"></div>");
 
-				$("#" +carId).append("<img src=\"images/vehicles/" +carId +".png\" alt=\"" +mc_value + " " +carModel +" image\" class=\"img-thumbnail\" />");
+				$("#" +carId).append("<img src=\"images/vehicles/" +carId +".png\" alt=\"image\" class=\"img-thumbnail\" />");
 
-				$("#" +carId).append("<h4>" +mc_value + " " +carModel +"</h4>");
+				$("#" +carId).append("<div><h4>" +mc_value + " " +carModel +"</h4><h6 property=\"" +carBattery +"\">Battery: " +carBattery +" kWh</h6></div>");
 			});
 
 			// Attach click event handler to the newly created elements
