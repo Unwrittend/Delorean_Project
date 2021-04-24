@@ -5,12 +5,13 @@
 
 // The population and MSOC inputs require constant factors so the sliders work properly
 // Sliders go from 1-100. Factors make it easier to manage the maximum and minimum values
-let popConstant = 1000;
 
 let widget_width = $(".form-result").css("width");
 widget_width = widget_width.substr(0, widget_width.length - 2);
 widget_width = parseInt(widget_width, 10);
 widget_width -= 50;
+
+let mode = 1;
 
 // Set a red border and print an error message
 function throwError(obj, message) {
@@ -28,10 +29,10 @@ function throwError(obj, message) {
 
 // Clear the error message and border
 function clearError(obj) {
-	let objId = $(obj).attr("id");
-	$(obj).removeClass("invalid");
+	//let objId = $(obj).attr("id");
+	$(".invalid").removeClass("invalid");
 	//$("#" +objId +"Err").remove();
-	$(obj).popover("hide");
+	//$(obj).popover("hide");
 }
 
 // Toggle green background for the currently selected view option (individual/organization)
@@ -44,7 +45,7 @@ $(".view-toggle button").click(function (){
 function toggleMCSelected() {
 	$(".option").removeClass("selected");
 	$(this).addClass("selected");
-	updateGraphs();
+	validateAndUpdate();
 }
 
 // Next 2 functions are for the mode toggle
@@ -54,6 +55,7 @@ function switchToIndiv() {
 	$("#flt-roi").addClass("d-none");
 	$("#indiv-roi").removeClass("d-none");
 	$("#kwh-panel").addClass("d-none");
+	mode = 0;
 }
 
 function switchToOrg() {
@@ -62,21 +64,13 @@ function switchToOrg() {
 	$("#flt-roi").removeClass("d-none");
 	$("#indiv-roi").addClass("d-none");
 	$("#kwh-panel").removeClass("d-none");
+	mode = 1;
 }
 
-/*****************  Validation for percentage fields  ********************/
+/*****************  Bind sliders and text fields  ********************/
 function bindInputs(source, dest) {
-	//console.log(source.val());
-	//source = $(source);
-	//dest = $(dest);
-	if(parseInt(source.val()) > parseInt(source.attr("max")) || parseInt(source.val()) < parseInt(source.attr("min"))) {
-		let msg = "Please give a value between 1 and 100";
-		throwError(source, msg);
-	}
-	else {
-		clearError(source);
-		dest.val(source.val());
-	}
+	dest.val(source.val());
+	validateAndUpdate();
 }
 
 /***************** Setup for the jQuery UI Slider ********************/
@@ -195,6 +189,48 @@ $(window).resize(function(){
 	updatePS();
 	updateFA();
 });
+
+/*********************  Validation  *****************************/
+function validateAndUpdate() {
+	clearError();
+
+	let valid = true;
+	let msoc = $("#msocText");
+
+	/**  Common Stuff  **/
+	// If no car is selected
+	if(! $("#car-list .selected").length) {
+		valid = false;
+		throwError($("#car-make"), "Please select a car");
+	}
+
+	// If MSOC text box value is out of range
+	if( parseInt(msoc.val()) > parseInt(msoc.attr("max")) || parseInt(msoc.val()) < parseInt(msoc.attr("min")) ) {
+		valid = false;
+		throwError(msoc, "Invalid input");
+	}
+
+	// If in organizer view:
+	if(mode === 1) {
+		let optin = $("#optinText");
+
+		// If opt-in text box is out of range
+		if( parseInt(optin.val()) > parseInt(optin.attr("max")) || parseInt(optin.val()) < parseInt(optin.attr("min")) ) {
+			valid = false;
+			throwError(optin, "Invalid input");
+		}
+	}
+	// If in individual view:
+	else if(mode === 0) {}
+
+	// At this point, check if we can update the graphs
+	if(valid) {
+		console.log("Update!");
+	}
+	else {
+		console.log("Failed.");
+	}
+}
 
 $(function() {
 	$(".spinner-wrapper").hide();
