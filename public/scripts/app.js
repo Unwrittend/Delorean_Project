@@ -15,22 +15,11 @@ let mode = 1;
 function throwError(obj, message) {
 	let objId = $(obj).attr("id");
 	$(obj).addClass("invalid");
-
-	// Check if error message already was printed. If not, print it.
-	/*if( $("#" +objId +"Err").length == 0 ) {
-		$(obj).after("<p id=\"" + objId + "Err\">" + message + "</p>");
-	}*/
-	//$(obj).tooltip({trigger: "focus"});
-	$(obj).popover({trigger: "manual"});
-	$(obj).popover("show");
 }
 
 // Clear the error message and border
 function clearError(obj) {
-	//let objId = $(obj).attr("id");
 	$(".invalid").removeClass("invalid");
-	//$("#" +objId +"Err").remove();
-	//$(obj).popover("hide");
 }
 
 // Toggle green background for the currently selected view option (individual/organization)
@@ -182,7 +171,7 @@ $(window).resize(function(){
 	widget_width = parseInt(widget_width, 10);
 	widget_width -= 50;
 	clearGraph(-1);
-	updatePS();
+	validateAndUpdate();
 	updateFA();
 });
 
