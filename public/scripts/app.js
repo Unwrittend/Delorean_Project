@@ -2,9 +2,7 @@
 // JavaScript Document
 
 // This document contains basic functions for the website's interactive elements.
-
-// The population and MSOC inputs require constant factors so the sliders work properly
-// Sliders go from 1-100. Factors make it easier to manage the maximum and minimum values
+// For elements that change on page load, see bottom of this file
 
 let widget_width = $(".form-result").css("width");
 widget_width = widget_width.substr(0, widget_width.length - 2);
@@ -74,7 +72,6 @@ function bindInputs(source, dest) {
 }
 
 /***************** Setup for the jQuery UI Slider ********************/
-
 const slider = $("#slider");
 const hours1 = $("#hours-1");
 const hours2 = $("#hours-2");
@@ -161,8 +158,7 @@ hours2.change(function(){
 	}
 });
 
-/*********************  Update Graphs  *****************************/
-
+/*********************  Graph Types/Format  *****************************/
 // Update Fleet Availability graph when the graph type is changed.
 let useFuture = false;
 $("#graphType").change(function () {
@@ -226,12 +222,14 @@ function validateAndUpdate() {
 	// At this point, check if we can update the graphs
 	if(valid) {
 		console.log("Update!");
+		updateGraphs();
 	}
 	else {
 		console.log("Failed.");
 	}
 }
 
+/*********************  Other stuff to run on page load  *****************************/
 $(function() {
 	$(".spinner-wrapper").hide();
 	$("#car-make").val("default");
