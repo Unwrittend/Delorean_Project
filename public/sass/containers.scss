@@ -81,6 +81,45 @@ main.content {
 	label {
 		font-size: $h2-font-size;
 	}
+
+	label.small-label {
+		font-size: $h6-font-size;
+	}
+}
+
+.checkbox-wrapper {
+	label {
+		margin-bottom: 5px;
+		padding: $btn-padding-y;
+		border: 1px solid $btn-border-color;
+		border-radius: $input-border-radius;
+		background-color: $input-bkg-color;
+		-webkit-transition: linear 0.2s;
+		-moz-transition: linear 0.2s;
+	}
+	label:after {
+		content: "off";
+	}
+
+	label:hover {
+		cursor: pointer;
+		filter: drop-shadow(0px 3px 3px $black-shadow);
+		-webkit-transition: linear 0.2s;
+		-moz-transition: linear 0.2s;
+	}
+
+	input {
+		display: none;
+	}
+
+	input:checked + label {
+		background-color: $green;
+		border-color: $green;
+		color: $body-bg;
+	}
+	input:checked + label:after {
+		content: "on";
+	}
 }
 
 .form-input {

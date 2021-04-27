@@ -198,54 +198,6 @@ select.form-select:focus {
 	margin-bottom: -3px;
 }
 
-// Pill switch
-.switch-label{
-	font-size: 20px !important;
-}
-
-.switch {
-	position: relative;
-	display: inline-block;
-	width: 50px;
-	height: 23px;
-	top: 10px;
-}
-
-.switch input {
-	opacity: 0;
-	width: 0;
-	height: 0;
-}
-
-.pill {
-	position: absolute;
-	cursor: pointer;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	background-color: $input-bkg-color;
-	-webkit-transition: .4s;
-	transition: .4s;
-}
-
-.pill:before {
-	position: absolute;
-	content: "";
-	height: 23px;
-	width: 23px;
-	background-color: $green;
-	border: 1px solid $input-bkg-color;
-	-webkit-transition: .4s;
-	transition: .4s;
-}
-
-input:checked + .pill:before {
-	-webkit-transform: translateX(27px);
-	-ms-transform: translateX(27px);
-	transform: translateX(27px);
-}
-
 /**************************** Rounded sliders ***************************/
 .pill.round {
 	border-radius: $radius-container;

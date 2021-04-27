@@ -212,7 +212,7 @@
             <!--=============================================================================================-->
             <div class="form-group form-result" id="kwh-panel">
                 <label>Max Energy Stored in Fleet</label>
-                <h3 class="text-center"><span id="fleet-capacity"></span>kWh</h3>
+                <h3 class="text-center"><span id="fleet-capacity"></span> kWh</h3>
             </div>
 
             <!-- Peak Shaving (Graph) -->
@@ -236,12 +236,10 @@
                 <label>Fleet Availability / Time</label>
                 <a href="#" class="icon-info"></a>
                 <br>
-                <label class="switch-label">Present</label>
-                <label class="switch">
-                    <input type="checkbox" id="graphType">
-                    <span class="pill round"></span>
-                </label>
-                <label class="switch-label">Future</label>
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="graphType" class="form-check-label" checked="" />
+                    <label class="small-label" for="graphType">Future Graph: </label>
+                </div>
                 <div id="app-fa" class="app">
                     <div id="chart-fa" class="chart">
                         <svg id="svg-fa"></svg>

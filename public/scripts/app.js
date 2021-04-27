@@ -222,6 +222,9 @@ function validateAndUpdate() {
 $(function() {
 	$(".spinner-wrapper").hide();
 	$("#car-make").val("default");
+
+	// Set the future-graph toggle to false
+	$("#graphType").prop("checked", false);
 	updateFA();
 
 	// Set default times
