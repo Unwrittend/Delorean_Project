@@ -1,0 +1,281 @@
+@charset "UTF-8";
+// Project DeLorean
+// SCSS Document
+// This document contains all styles for form elements.
+
+// Styles for the slider inputs
+.slider {
+	-webkit-appearance: none;
+	width: 90%;
+	height: 5px;
+	outline: none;
+	opacity: 0.7;
+	margin: 30px 0 0 5%;
+	padding: 1px;
+}
+
+.slider:focus {
+	-webkit-appearance: none;
+	outline: none;
+	opacity: 0.7;
+}
+
+.slider::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 20px;
+	height: 20px;
+	background: $inter-bkg-color;
+	cursor: pointer;
+	border-radius: 50%;
+}
+
+.slider::-moz-range-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 20px;
+	height: 20px;
+	background: $inter-bkg-color;
+	cursor: pointer;
+	border-radius: 50%;
+}
+
+// Styles for the text-entry fields (bound to the sliders)
+.input-text {
+	width: auto;
+	text-align: center;
+	margin-left: 27%;
+	color: $black;
+}
+
+.input-text:focus {
+	color: $black;
+}
+
+// Labels for the sliders
+.align-left {
+	margin-left: 10px;
+	text-align: left;
+	float: left;
+}
+
+.align-right {
+	margin-right: 10px;
+	text-align: right;
+	float: right;
+}
+
+// Styles used for hours slider (modified jQuery UI)
+.ui-widget-header {
+	background-color: $inter-bkg-color;
+}
+
+.hours-wrapper {
+	margin-left: 5%;
+	width: 90%;
+}
+
+.ui-slider {
+	border-radius: 5px;
+	margin-top: 20px;
+
+	.ui-slider-handle {
+		width: 23px;
+		height: 23px;
+		top: -.4em;
+		border: $input-border-width solid $input-border-color;
+		border-radius: 50%;
+		background-color: $inter-bkg-color;
+	}
+}
+
+.ui-slider-handle:hover {
+	cursor: pointer;
+}
+
+.ui-slider-handle:focus {
+	color: black;
+	border-color: #86b7fe;
+	outline: 0;
+	box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+// Get rid of arrows in number input fields
+// Chrome, Safari, Edge, Opera
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+// Firefox
+input[type=number] {
+	-moz-appearance: textfield;
+}
+
+// For inputs with invalid values
+.invalid, .invalid:focus {
+	border: solid $red 3px;
+	background-color: #ffa7a7;
+}
+
+// Styling the inputs that correspond with the jQuery UI slider
+#hours-1, #hours-2 {
+	display: inline;
+	margin-left: 0px;
+	margin-top: 20px;
+}
+
+// Styles for the multiple choice input
+.multi-choice {
+	//Nothing here yet
+}
+
+.option {
+	height: 110px;
+	width: 100%;
+	background: $btn-bkg-color;
+	border-radius: 10px;
+	margin-bottom: 10px;
+	padding: 5px;
+	display: flex;
+	cursor: pointer;
+	-webkit-transition: linear 0.2s;
+	-moz-transition: linear 0.2s;
+
+	img {
+		max-height: 100px;
+		width: auto;
+		min-width: 100px;
+		line-height: 100px;
+		background: $white;
+		border-color: $white;
+		text-align: left;
+	}
+
+	div {
+		//text-align: right;
+		//float: right;
+		flex: 1;
+		text-align: right;
+
+		h4 {
+			margin-top: 10px; // Arbitrary -- seems to work in most cases
+		}
+	}
+
+}
+
+.option:hover {
+	filter: drop-shadow(0px 3px 3px $black-shadow);
+	-webkit-transition: linear 0.2s;
+	-moz-transition: linear 0.2s;
+}
+
+// Styles for the select menu (used in the Vehicle Select menu)
+.selected {
+	background-color: $inter-bkg-color;//#4ab558;
+	border-color: transparent;
+	filter: drop-shadow(0px 3px 3px $black-shadow);
+}
+
+select.form-select {
+	margin-bottom: 7px;
+	cursor: pointer;
+	color: $black;
+}
+
+select.form-select:focus {
+	color: $black;
+}
+
+.icon-info {
+	background-image: url("../images/info_icon.svg");
+	height: 25px;
+	width: 25px;
+	display: inline-block;
+	margin-left: 5px;
+	margin-bottom: -3px;
+}
+
+// Pill switch
+.switch-label{
+	font-size: 20px !important;
+}
+
+.switch {
+	position: relative;
+	display: inline-block;
+	width: 50px;
+	height: 23px;
+	top: 10px;
+}
+
+.switch input {
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+
+.pill {
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: $input-bkg-color;
+	-webkit-transition: .4s;
+	transition: .4s;
+}
+
+.pill:before {
+	position: absolute;
+	content: "";
+	height: 23px;
+	width: 23px;
+	background-color: $green;
+	border: 1px solid $input-bkg-color;
+	-webkit-transition: .4s;
+	transition: .4s;
+}
+
+input:checked + .pill:before {
+	-webkit-transform: translateX(27px);
+	-ms-transform: translateX(27px);
+	transform: translateX(27px);
+}
+
+/**************************** Rounded sliders ***************************/
+.pill.round {
+	border-radius: $radius-container;
+}
+
+.pill.round:before {
+	border-radius: 50%;
+}
+
+/******************* Loading Spinner Styles and Animation ******************/
+.spinner-wrapper {
+	display: inline;
+	* {
+		display: inline-block;
+	}
+}
+
+.spinner {
+	height: 20px;
+	width: 20px;
+	border: solid 5px;
+	border-left-color: $green;
+	border-top-color: #ccc;
+	border-right-color: #ccc;
+	border-bottom-color: #ccc;
+	border-radius: 50%;
+	animation: spin 1s infinite cubic-bezier(.58,-0.79,.43,1.9);
+}
+
+@keyframes spin{
+	0%{transform:rotate(0deg);}
+	100%{transform:rotate(360deg);}
+}
