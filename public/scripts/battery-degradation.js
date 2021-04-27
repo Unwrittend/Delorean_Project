@@ -1,5 +1,6 @@
 //Author: Chris Pitterle
 //Created: 4/12/21
+//Last Update: 4/26/21
 
 
 /*
@@ -55,6 +56,36 @@ function veh_capacity_fade(cell_cap, max_rated_cell_cap, CF_factor = .8) {
 function veh_power_fade(internal_res, charge_transfer_res, init_internal_res, init_charge_transfer_res, PF_factor) {
     return (1 / (PF_factor - 1)) * (((internal_res + charge_transfer_res) / (init_charge_transfer_res + init_internal_res)) - 1);
     //TODO: Needs to calc what internal and charge transfer res
+}
+
+//Algorithm from Cordoba-Arenas et al. 2015
+/**
+ * 
+ * @param {*} SOC_min = the minimum SOC 
+ * @param {*} Ah = Ampere-hour throughput ie the total current to the battery over time T (do we control this? Let's say the CR [ie C] is 1C == 2A)
+ * @param {*} tempurature = tempurature of the cells in the vehicle (Unit: Kelvin)
+ * @param {*} time_cd = time in charge depleting mode (Hybrid only. If full EV, set to 1)
+ * @param {*} time_cs = time in charge sustain mode (Hybrid only. If full EV, set to 0)
+ * @returns Q_loss-cycle
+ */
+function calc_cf(SOC_min, Ah, tempurature, time_cd = 1, time_cs = 0) {
+    //constants
+    var a_c = 137,
+        B_c = 420,
+        y_c = 9610,
+        b_c = 0.34,
+        c_c = 3,
+        E_a = 22406,    //Unit: J/mol
+        R = 8.314,      //Unit: J/(mol*K)
+        z = 0.48;
+    
+    var ratio = time_cd / (time_cd + time_cs);
+
+    return (a_c + B_c * (Math.pow(ratio, b_c)) + y_c * Math.pow(SOC_min - 0.25)) * Math.E((-E_a / (R * tempurature))) * Math.pow(Ah, z);
+}
+
+function calc_pf() {
+    
 }
 
 /**
