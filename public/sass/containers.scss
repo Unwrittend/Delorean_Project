@@ -39,8 +39,7 @@ main.content {
 }
 
 .btn {
-	background: $btn-bkg-color;
-	border-radius: 0;
+	background: $input-bkg-color;
 	border-color: $btn-border-color;
 	color: $body-color;
 	-webkit-transition: linear 0.2s;
@@ -90,10 +89,6 @@ main.content {
 .checkbox-wrapper {
 	label {
 		margin-bottom: 5px;
-		padding: $btn-padding-y;
-		border: 1px solid $btn-border-color;
-		border-radius: $input-border-radius;
-		background-color: $input-bkg-color;
 		-webkit-transition: linear 0.2s;
 		-moz-transition: linear 0.2s;
 	}
@@ -113,6 +108,7 @@ main.content {
 	}
 
 	input:checked + label {
+		filter: drop-shadow(0px 3px 3px $black-shadow);
 		background-color: $green;
 		border-color: $green;
 		color: $body-bg;
@@ -159,4 +155,16 @@ main.content {
 // Style for the Peak Shaving Graph shown on large displays (in the center column)
 #peak-lg {
 	width: 94%;
+}
+
+footer {
+	background-color: $footer-bkg-color;
+	color: $footer-color;
+	margin-bottom: -20px;
+	padding: 15px;
+
+	address {
+		width: 100%;
+		text-align: center;
+	}
 }

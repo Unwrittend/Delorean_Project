@@ -66,12 +66,13 @@
 
     <!-- Buttons to decide whether client wants Individual or Organizer View -->
     <!--==================================================================================================-->
-    <section class="view-toggle">
-        <h4>Select Mode:</h4>
-        <button id="ind-btn" class="btn" onclick="switchToIndiv()">Individual</button>
-        <button id="org-btn" class="btn selected" onclick="switchToOrg()">Organizer</button>
-    </section>
-
+    <div class="row d-flex justify-content-center text-center">
+        <section class="view-toggle col-4">
+            <h1 class="text-center">Is V2G Right For You?</h1>
+            <button id="ind-btn" class="btn" onclick="switchToIndiv()">Individual</button>
+            <button id="org-btn" class="btn selected" onclick="switchToOrg()">Organizer</button>
+        </section>
+    </div>
     <!-- The actual form -->
     <!--=============================================================================================================-->
     <div class="row main-form">
@@ -224,9 +225,6 @@
                     <div id="chart-ps" class="chart">
                         <svg id="svg-ps"></svg>
                     </div>
-                    <div id="data">
-                        <ul></ul>
-                    </div>
                 </div>
             </div>
 
@@ -238,7 +236,7 @@
                 <br>
                 <div class="checkbox-wrapper">
                     <input type="checkbox" id="graphType" class="form-check-label" checked="" />
-                    <label class="small-label" for="graphType">Future Graph: </label>
+                    <label class="btn small-label" for="graphType">Future Graph: </label>
                 </div>
                 <div id="app-fa" class="app">
                     <div id="chart-fa" class="chart">
@@ -264,16 +262,15 @@
 
     </div>
 
-    <!-- Footer -->
-    <!--=============================================================================================================-->
-    <footer>
-        <hr>
-        <ul>
-            <li>Lipsum</li>
-        </ul>
-    </footer>
-
 </main>
+<!-- Footer -->
+<!--=============================================================================================================-->
+<footer>
+    <% const year = new Date().getFullYear(); %>
+    <address>Copyright &#169; <%= year %> Project DeLorean.</address>
+    <address>EPIC Labs</address>
+    <address>Santa Clara University</address>
+</footer>
 
 </body>
 </html>

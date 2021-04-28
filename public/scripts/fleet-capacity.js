@@ -89,10 +89,10 @@ function updateGraphs(){
 	indiv_profit = Math.round(calc_annual_profit(flt_tou_profit[0].revenue/veh_pop, flt_tou_profit[1].revenue/veh_pop,
 		PGE_TOU_D.winter_length, PGE_TOU_D.summer_length));
 
-	// Populate spans in HTML with the values
-	flt_roi_field.text(flt_profit.toFixed(2));
-	indiv_roi_field.text(indiv_profit.toFixed(2));
-	flt_cap_field.text((battery_capacity*veh_pop).toFixed(0))
+	// Populate spans in HTML with the values, separated with commas (e.g. 1,000,000)
+	flt_roi_field.text(flt_profit.toLocaleString());
+	indiv_roi_field.text(indiv_profit.toLocaleString());
+	flt_cap_field.text((battery_capacity*veh_pop).toLocaleString());
 
 	updatePS();
 
