@@ -8,10 +8,11 @@ Script's goal: Calculate EV Battery Degradation using Uddin's algorithms.
     Used equivalent circuit model (ECM) for CF and PF algorithms.
 
 Algorithms used:
-    - Capacity Fade: CF = 1 - (Q - u_CF * Q_rated)/(Q_rated - u_CF * Q_rated)
-    - Power Fade: PF = 1 / {u_PF - 1} * {[(R_0 + R_CT) / (R_0(0) + R_CT(0))] - 1}
-    - conversion to cost: max[CF x $_batt, PF x $_batt]
-    - Battery Management System (BMS)
+    - Capacity Fade: CF = 1 - (Q - u_CF * Q_rated)/(Q_rated - u_CF * Q_rated)           --Uddin et al 2017
+    - Power Fade: PF = 1 / {u_PF - 1} * {[(R_0 + R_CT) / (R_0(0) + R_CT(0))] - 1}       --Uddin et al 2017
+    - conversion to cost: max[CF x $_batt, PF x $_batt]                                 --Uddin et al 2017
+    - Battery Management System (BMS)                                                   --Uddin et al 2017
+
 */
 
 /**
@@ -26,7 +27,8 @@ function convert_batt_degrad_to_dollar(batt_price, CF, PF) {
 }
 
 /**
- * Calculates the EV's current capacity fade
+ * Algorithm from Uddin et al. 2017
+ * Calculates the EV's current capacity fade if you know the max cap and current cap
  * 
  * Algorithm: CF = 1 - (cell_cap - CF_factor * max_rated_cell_cap) / (max_rated_cell_cap - CF_factor * max_rated_cell_cap);
  * 
@@ -42,7 +44,8 @@ function veh_capacity_fade(cell_cap, max_rated_cell_cap, CF_factor = .8) {
 }
 
 /**
- * Calculates the power fade of a EV battery 
+ * Algorithm from Uddin et al. 2017
+ * Calculates the power fade of a EV battery if you know the max resistance and current resistance
  * 
  * Algorithm: PF = (1 / (PF_factor - 1)) * (((internal_res + charge_transfer_res) / (init_charge_transfer_res + init_internal_res)) - 1);
  *
@@ -58,15 +61,17 @@ function veh_power_fade(internal_res, charge_transfer_res, init_internal_res, in
     //TODO: Needs to calc what internal and charge transfer res
 }
 
-//Algorithm from Cordoba-Arenas et al. 2015
 /**
+ * Algorithm from Cordoba-Arenas et al. 2015
+ * calculates the capacity lose (%) of capacity fade under SOC, total Ampere hours sent, and Temp conditions
  * 
  * @param {*} SOC_min = the minimum SOC 
- * @param {*} Ah = Ampere-hour throughput ie the total current to the battery over time T (do we control this? Let's say the CR [ie C] is 1C == 2A)
+ * @param {*} Ah = Ampere-hour throughput ie the total current to the battery over time T 
+ *                      (do we control this? Let's say the CR [ie C] is 1C == 2A)
  * @param {*} tempurature = tempurature of the cells in the vehicle (Unit: Kelvin)
  * @param {*} time_cd = time in charge depleting mode (Hybrid only. If full EV, set to 1)
  * @param {*} time_cs = time in charge sustain mode (Hybrid only. If full EV, set to 0)
- * @returns Q_loss-cycle
+ * @returns Q_loss-cycle, a percentage of capacity lose
  */
 function calc_cf(SOC_min, Ah, tempurature, time_cd = 1, time_cs = 0) {
     //constants
@@ -81,11 +86,34 @@ function calc_cf(SOC_min, Ah, tempurature, time_cd = 1, time_cs = 0) {
     
     var ratio = time_cd / (time_cd + time_cs);
 
-    return (a_c + B_c * (Math.pow(ratio, b_c)) + y_c * Math.pow(SOC_min - 0.25)) * Math.E((-E_a / (R * tempurature))) * Math.pow(Ah, z);
+    return (a_c + B_c * (Math.pow(ratio, b_c)) + y_c * Math.pow(SOC_min - 0.25), c_c) * Math.E((-E_a / (R * tempurature))) * Math.pow(Ah, z);
 }
 
-function calc_pf() {
+/**
+ * Algorithm from Cordoba-Arenas et al. 2015
+ * calculates the resistance growth of power fade using SOC, total Ampere hours sent, and Temp conditions
+ * 
+ * @param {*} SOC_min = the minimum SOC 
+ * @param {*} Ah = Ampere-hour throughput ie the total current to the battery over time T 
+ *                      (do we control this? Let's say the CR [ie C] is 1C == 2A)
+ * @param {*} tempurature = tempurature of the cells in the vehicle (Unit: Kelvin)
+ * @param {*} time_cd = time in charge depleting mode (Hybrid only. If full EV, set to 1)
+ * @param {*} time_cs = time in charge sustain mode (Hybrid only. If full EV, set to 0)
+ * @returns a percentage of power lose
+ */
+function calc_pf(SOC_min, Ah, tempurature, time_cd = 1, time_cs = 0) {
+    var a_r = 3.2053 * Math.pow(10, 5),
+        B_r = 1.3573 * Math.pow(10, 9),
+        y_r = 3.6342 * Math.pow(10, 3),
+        c_r = 5.45,
+        d_r = 0.9179,
+        e_r = 1.8277,
+        E_aR = 51800,   //Unit: J/mol
+        R = 8.314;       //Unit: J/(mol*K)
     
+        var ratio = time_cd / (time_cd + time_cs);
+    
+    return (a_r) + (B_r * Math.pow(SOC_min - 0.25, c_r)) + (y_r * Math.E(d_r * (5 - ratio)) + e_r * (SOC_min - 0.25) * Math.E(-E_aR / (R * tempurature)) * Ah);
 }
 
 /**
