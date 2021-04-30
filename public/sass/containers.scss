@@ -53,6 +53,10 @@ main.content {
 	-moz-transition: linear 0.2s;
 }
 
+.style-switch {
+	margin-left: 3px;
+}
+
 // Form items (in order of DOM hierarchy)
 .main-form {
 	.row {
@@ -86,6 +90,17 @@ main.content {
 	}
 }
 
+.form-input {
+	// Nothing here yet
+}
+
+.form-result {
+	background: $blue;
+	color: $body-color;
+	width: 100%;
+}
+
+// Wrapper for checkbox input elements
 .checkbox-wrapper {
 	label {
 		margin-bottom: 5px;
@@ -116,16 +131,6 @@ main.content {
 	input:checked + label:after {
 		content: "on";
 	}
-}
-
-.form-input {
-	// Nothing here yet
-}
-
-.form-result {
-	background: $blue;
-	color: $body-color;
-	width: 100%;
 }
 
 // Style for the Map input

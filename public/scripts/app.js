@@ -11,6 +11,18 @@ widget_width -= 50;
 
 let mode = 1;
 
+function switchToLight(el) {
+	$("link[href=\"sass/style-dark.css\"]").attr("href", "sass/style.css");
+	$(".style-switch .btn").removeClass("selected");
+	$(el).addClass("selected");
+}
+
+function switchToDark(el) {
+	$("link[href=\"sass/style.css\"]").attr("href", "sass/style-dark.css");
+	$(".style-switch .btn").removeClass("selected");
+	$(el).addClass("selected");
+}
+
 // Set a red border and print an error message
 function throwError(obj, message) {
 	let objId = $(obj).attr("id");
