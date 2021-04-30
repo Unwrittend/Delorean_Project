@@ -9,9 +9,9 @@
 // -- Theme
 $black:			#0a0a0a;
 $black-shadow:	rgba(0, 0, 0, 0.75);
-$blue: rgb(139, 199, 241);
+$blue:			rgb(67, 121, 179);
 $grey:			rgb(245, 245, 245);
-$green: rgb(116, 193, 125);
+$green: 		rgb(11, 132, 27);
 $orange: 		rgb(251, 196, 15);
 $orange-dark: 	rgb(164, 123, 0);
 $white:			rgb(245, 245, 245);
@@ -23,24 +23,30 @@ $h2-font-size: 				26px;
 $h4-font-size:				22px;
 
 //Body
-$body-bg: 		$white;
-$body-color: 	$black;
+$body-bg: 		$black;
+$body-color: 	$white;
 
 // Borders
 $radius-container: 10px;
 
 // Navigation
-$nav-bkg-color:						$body-bg;
+$nav-bkg-color:						rgb(35, 35, 35);
 $nav-link-color:					#217a2e;
 
 // Footer
-$footer-bkg-color:					$body-color;
-$footer-color:						$body-bg;
+$footer-bkg-color:					rgb(35, 35, 35);
+$footer-color:						$body-color;
 
 // Interactives
 // Input = the widget
 // Inter = the interactive things the user can use
 $inter-bkg-color: 		$green;
-$input-bkg-color:		rgb(220, 220, 220);
+$input-bkg-color:		rgb(35, 35, 35);
 $btn-bkg-color: 		$body-bg;
-$btn-border-color:		rgb(190, 190, 190);
+$btn-border-color:		rgb(65, 65, 65);
+
+$input-bg: rgb(25, 25, 25);
+$input-color: $white;
+$form-select-color: $white;
+$form-text-color: $white;
+$input-border-color: rgb(45, 45, 45);

@@ -44,12 +44,12 @@
 .input-text {
 	width: auto;
 	text-align: center;
-	margin-left: 27%;
-	color: $black;
+	//margin-left: 27%;
+	color: $body-color;
 }
 
 .input-text:focus {
-	color: $black;
+	color: $body-color;
 }
 
 // Labels for the sliders
@@ -113,12 +113,6 @@ input[type=number] {
 	-moz-appearance: textfield;
 }
 
-// For inputs with invalid values
-.invalid, .invalid:focus {
-	border: solid $red 3px;
-	background-color: #ffa7a7;
-}
-
 // Styling the inputs that correspond with the jQuery UI slider
 #hours-1, #hours-2 {
 	display: inline;
@@ -132,7 +126,6 @@ input[type=number] {
 }
 
 .option {
-	height: 110px;
 	width: 100%;
 	background: $btn-bkg-color;
 	border-radius: 10px;
@@ -144,6 +137,7 @@ input[type=number] {
 	-moz-transition: linear 0.2s;
 
 	img {
+		color: $black;
 		max-height: 100px;
 		width: auto;
 		min-width: 100px;
@@ -174,7 +168,7 @@ input[type=number] {
 
 // Styles for the select menu (used in the Vehicle Select menu)
 .selected {
-	background-color: $inter-bkg-color;//#4ab558;
+	background-color: $inter-bkg-color;
 	border-color: transparent;
 	filter: drop-shadow(0px 3px 3px $black-shadow);
 }
@@ -182,11 +176,11 @@ input[type=number] {
 select.form-select {
 	margin-bottom: 7px;
 	cursor: pointer;
-	color: $black;
+	color: $body-color;
 }
 
 select.form-select:focus {
-	color: $black;
+	color: $body-color;
 }
 
 .icon-info {
@@ -198,52 +192,11 @@ select.form-select:focus {
 	margin-bottom: -3px;
 }
 
-// Pill switch
-.switch-label{
-	font-size: 20px !important;
-}
-
-.switch {
-	position: relative;
-	display: inline-block;
-	width: 50px;
-	height: 23px;
-	top: 10px;
-}
-
-.switch input {
-	opacity: 0;
-	width: 0;
-	height: 0;
-}
-
-.pill {
-	position: absolute;
-	cursor: pointer;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	background-color: $input-bkg-color;
-	-webkit-transition: .4s;
-	transition: .4s;
-}
-
-.pill:before {
-	position: absolute;
-	content: "";
-	height: 23px;
-	width: 23px;
-	background-color: $green;
-	border: 1px solid $input-bkg-color;
-	-webkit-transition: .4s;
-	transition: .4s;
-}
-
-input:checked + .pill:before {
-	-webkit-transform: translateX(27px);
-	-ms-transform: translateX(27px);
-	transform: translateX(27px);
+// For inputs with invalid values
+.invalid, .invalid:focus {
+	border: solid $red 3px;
+	background-color: #ffa7a7;
+	color: $black !important;
 }
 
 /**************************** Rounded sliders ***************************/

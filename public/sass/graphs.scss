@@ -47,4 +47,17 @@
 	fill: $body-color;
 }
 
+.domain {
+	stroke: $body-color;
+}
+
+.tick {
+	line {
+		stroke: $body-color;
+	}
+	text {
+		fill: $body-color;
+	}
+}
+
 

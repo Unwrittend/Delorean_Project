@@ -66,6 +66,10 @@ $("#zip").change(function(){
 
 // When multiple choice is changed, update graphs. This function is called in app.js
 function updateGraphs(){
+
+	msoc = $("#msocText").val()/100; //is a percentage;
+	opt_in = $("#optinText").val()/100;
+
 	// Clear graphs
 	clearGraph(0);
 
@@ -85,63 +89,14 @@ function updateGraphs(){
 	indiv_profit = Math.round(calc_annual_profit(flt_tou_profit[0].revenue/veh_pop, flt_tou_profit[1].revenue/veh_pop,
 		PGE_TOU_D.winter_length, PGE_TOU_D.summer_length));
 
-	// Populate spans in HTML with the values
-	flt_roi_field.text(flt_profit.toFixed(2));
-	indiv_roi_field.text(indiv_profit.toFixed(2));
-	flt_cap_field.text((battery_capacity*veh_pop).toFixed(0))
+	// Populate spans in HTML with the values, separated with commas (e.g. 1,000,000)
+	flt_roi_field.text(flt_profit.toLocaleString());
+	indiv_roi_field.text(indiv_profit.toLocaleString());
+	flt_cap_field.text((battery_capacity*veh_pop).toLocaleString());
 
 	updatePS();
 
 }
-
-// When MSOC inputs are changed, update variable value
-$("#msocText, #msocSlider").change(function(){
-	msoc = $("#msocText").val()/100;				//is a percentage;
-	clearGraph(0);
-
-	// Only update the graphs if a car is selected.
-	if( vehicle_type !== undefined ) {
-		calc_veh_pop();
-		calc_flt_cap();
-		flt_tou_profit[0].revenue = calc_revenue_pge_tou("Winter", 15);		//index 0 is winter
-		flt_tou_profit[1].revenue = calc_revenue_pge_tou("Summer", 15);		//index 1 is summer
-		flt_profit = Math.round(calc_annual_profit(flt_tou_profit[0].revenue, flt_tou_profit[1].revenue,
-			PGE_TOU_D.winter_length, PGE_TOU_D.summer_length));
-		indiv_profit = Math.round(calc_annual_profit(flt_tou_profit[0].revenue / veh_pop, flt_tou_profit[1].revenue / veh_pop,
-			PGE_TOU_D.winter_length, PGE_TOU_D.summer_length));
-
-		flt_roi_field.text(flt_profit.toFixed(2));
-		indiv_roi_field.text(indiv_profit.toFixed(2));
-		flt_cap_field.text((battery_capacity * veh_pop).toFixed(0));
-		updatePS();
-	}
-});
-
-// When Opt-in inputs are changed, update variable value
-$("#optinText, #optinSlider").change(function(){
-	opt_in = $("#optinText").val()/100;		//is a percentage
-	clearGraph(0);
-
-	// Only update the graphs if a car is selected.
-	if( vehicle_type !== undefined ) {
-		calc_veh_pop();
-		calc_flt_cap();
-		flt_tou_profit[0].revenue = calc_revenue_pge_tou("Winter", 15);		//index 0 is winter
-		flt_tou_profit[1].revenue = calc_revenue_pge_tou("Summer", 15);		//index 1 is summer
-		flt_profit = Math.round(calc_annual_profit(flt_tou_profit[0].revenue, flt_tou_profit[1].revenue,
-			PGE_TOU_D.winter_length, PGE_TOU_D.summer_length));
-		indiv_profit = Math.round(calc_annual_profit(flt_tou_profit[0].revenue / veh_pop, flt_tou_profit[1].revenue / veh_pop,
-			PGE_TOU_D.winter_length, PGE_TOU_D.summer_length));
-		//console.log(indiv_profit);
-		//console.log(flt_profit);
-
-		flt_roi_field.text(flt_profit.toFixed(2));
-		indiv_roi_field.text(indiv_profit.toFixed(2));
-		flt_cap_field.text((battery_capacity * veh_pop).toFixed(0));
-
-		updatePS();
-	}
-});
 
 //----------------------UPDATE CALCULATIONS-----------------------
 

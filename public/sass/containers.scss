@@ -39,8 +39,7 @@ main.content {
 }
 
 .btn {
-	background: $btn-bkg-color;
-	border-radius: 0;
+	background: $input-bkg-color;
 	border-color: $btn-border-color;
 	color: $body-color;
 	-webkit-transition: linear 0.2s;
@@ -52,6 +51,10 @@ main.content {
 	filter: drop-shadow(0px 3px 3px $black-shadow);
 	-webkit-transition: linear 0.2s;
 	-moz-transition: linear 0.2s;
+}
+
+.style-switch {
+	margin-left: 3px;
 }
 
 // Form items (in order of DOM hierarchy)
@@ -81,6 +84,10 @@ main.content {
 	label {
 		font-size: $h2-font-size;
 	}
+
+	label.small-label {
+		font-size: $h6-font-size;
+	}
 }
 
 .form-input {
@@ -91,6 +98,39 @@ main.content {
 	background: $blue;
 	color: $body-color;
 	width: 100%;
+}
+
+// Wrapper for checkbox input elements
+.checkbox-wrapper {
+	label {
+		margin-bottom: 5px;
+		-webkit-transition: linear 0.2s;
+		-moz-transition: linear 0.2s;
+	}
+	label:after {
+		content: "off";
+	}
+
+	label:hover {
+		cursor: pointer;
+		filter: drop-shadow(0px 3px 3px $black-shadow);
+		-webkit-transition: linear 0.2s;
+		-moz-transition: linear 0.2s;
+	}
+
+	input {
+		display: none;
+	}
+
+	input:checked + label {
+		filter: drop-shadow(0px 3px 3px $black-shadow);
+		background-color: $green;
+		border-color: $green;
+		color: $body-bg;
+	}
+	input:checked + label:after {
+		content: "on";
+	}
 }
 
 // Style for the Map input
@@ -120,4 +160,16 @@ main.content {
 // Style for the Peak Shaving Graph shown on large displays (in the center column)
 #peak-lg {
 	width: 94%;
+}
+
+footer {
+	background-color: $footer-bkg-color;
+	color: $footer-color;
+	margin-bottom: -20px;
+	padding: 15px;
+
+	address {
+		width: 100%;
+		text-align: center;
+	}
 }
