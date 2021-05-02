@@ -9,18 +9,47 @@ widget_width = widget_width.substr(0, widget_width.length - 2);
 widget_width = parseInt(widget_width, 10);
 widget_width -= 50;
 
+// Variables for what mode we are in (individual/organizer) and whether dark mode is active (inactive by default)
 let mode = 1;
+let isDark = false;
 
 function switchToLight(el) {
 	$("link[href=\"sass/style-dark.css\"]").attr("href", "sass/style.css");
+	$("nav").removeClass("navbar-dark");
+	$("nav").addClass("navbar-light");
 	$(".style-switch .btn").removeClass("selected");
 	$(el).addClass("selected");
+	isDark = false;
+	updateBrand();
 }
 
 function switchToDark(el) {
 	$("link[href=\"sass/style.css\"]").attr("href", "sass/style-dark.css");
+	$("nav").removeClass("navbar-light");
+	$("nav").addClass("navbar-dark");
 	$(".style-switch .btn").removeClass("selected");
 	$(el).addClass("selected");
+	isDark = true;
+	updateBrand();
+}
+
+// Change navigation logo (triggers on various events)
+function updateBrand() {
+	let name = $("#navbar-brand").attr("src").substring(7);
+	if($(window).width() <= 767) {
+		name = "images/" + name.substring(0, 5) + "sm";
+	}
+	else {
+		name = "images/" + name.substring(0, 5) + "lg";
+	}
+	//-- Replace with dark logo if necessary
+	if(isDark) {
+		name += "_dark.png";
+	}
+	else {
+		name += "_light.png"
+	}
+	$("#navbar-brand").attr("src", name);
 }
 
 // Set a red border and print an error message
@@ -176,18 +205,21 @@ $("#graphType").change(function () {
 	updateFA();
 });
 
-// Update graph width when window is resized (prevents horizontal scroll)
+/***********************  Stuff to run on window resize  *******************************/
 $(window).resize(function(){
+	// Update graph width
 	widget_width = $(".form-result").css("width");
 	widget_width = widget_width.substr(0, widget_width.length - 2);
 	widget_width = parseInt(widget_width, 10);
 	widget_width -= 50;
 	clearGraph(-1);
+
 	validateAndUpdate();
 	updateFA();
+	updateBrand();
 });
 
-/*********************  Validation  *****************************/
+/********************************  Validation  ***************************************/
 function validateAndUpdate() {
 	clearError();
 
@@ -232,6 +264,14 @@ function validateAndUpdate() {
 
 /*********************  Other stuff to run on page load  *****************************/
 $(function() {
+	// Check if user has enabled dark mode on their computer, and change styles accordingly
+	if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+		switchToDark($(".style-switch .btn")[1]);
+		isDark = true;
+		updateBrand();
+	}
+
+	// Hide loading spinners and reset the car multiple choice field
 	$(".spinner-wrapper").hide();
 	$("#car-make").val("default");
 

@@ -39,11 +39,11 @@
 <body>
 <!-- Main Navigation -->
 <!--================================================================================================================-->
-<nav class="navbar navbar-expand-md navbar-light">
+<nav class="navbar navbar-expand-md navbar-light justify-content-center">
     <a class="screen-reader-only" href="#article">Skip to Content</a>
-    <a class="navbar-brand" href="/"><img class="navbar-brand-img" src="images/delorean_logo_text_transparent.png"/></a>
+    <a class="navbar-brand" href="/"><img id="navbar-brand" class="navbar-brand-img" src="images/logo_lg_light.png"/></a>
 
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <button class="navbar-toggler align-item" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
         <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -60,8 +60,6 @@
             </li>
             <li class="nav-item style-switch">
                 <button class="btn selected" onclick="switchToLight(this);"><i class="bi bi-sun"></i></button>
-            </li>
-            <li class="nav-item style-switch">
                 <button class="btn" onclick="switchToDark(this);"><i class="bi bi-moon"></i></button>
             </li>
         </ul>
