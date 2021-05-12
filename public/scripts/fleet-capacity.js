@@ -4,8 +4,17 @@
 //---------------------FILE GLOBAL VARIABLES------------------------
 
 // Variables for 3 user inputs. Names self-explanatory. MSOC is Minimum State of Charge
-var vehicle_type, msoc = .5, opt_in = .5, battery_capacity = 0, zip_code = 95050,
-	veh_pop, flt_cap, flt_profit, indiv_profit;
+var vehicle_type,
+	msoc = .5,
+	opt_in = .5,
+	battery_capacity = 0,
+	zip_code = 95050,
+	veh_pop,
+	flt_cap,
+	flt_profit,
+	indiv_profit,
+	PF = 1,					//power fade (1 == 100%)
+	CF = 1;					//capacity fade (1 == 100%) 
 
 const indiv_roi_field = $("#indiv-roi");
 const flt_roi_field = $("#flt-roi");
@@ -18,21 +27,21 @@ var flt_tou_profit =[
 
 //PGE_TOU_D holds PGE's time of use rates and their on and off peak hours
 //in military time
-	let PGE_TOU_D = {
-		winter_peak : 0.29231,
-		winter_off_peak : 0.27493,
-		winter_peak_start : 1700,
-		winter_peak_end : 2000,
-		winter_month_start: "October",
-		winter_length: 243,
+let PGE_TOU_D = {
+	winter_peak : 0.29231,
+	winter_off_peak : 0.27493,
+	winter_peak_start : 1700,
+	winter_peak_end : 2000,
+	winter_month_start: "October",
+	winter_length: 243,
 
-		summer_peak : 0.36618,
-		summer_off_peak : 0.27122,
-		summer_peak_start : 1700,
-		summer_peak_end : 2000,
-		summer_month_start: "June",
-		summer_length : 122
-	}
+	summer_peak : 0.36618,
+	summer_off_peak : 0.27122,
+	summer_peak_start : 1700,
+	summer_peak_end : 2000,
+	summer_month_start: "June",
+	summer_length : 122
+}
 
 var percent_flt_avail = [ 98.72404738009172, 98.94407289973621, 99.14171692141903, 99.2652592375488, 99.3765154139245, 99.46787692544532, 99.55432398106454, 99.61723493763674, 99.6897083596079, 99.74791209637071, 99.80963884670155, 99.8363426974442, 99.87867807057278, 99.90940822253603, 99.94046403121568, 99.9705428697462, 99.7580962700464, 99.56391605161954, 99.15323332711625, 98.85356993774036, 98.15228300160756, 97.62090005595374, 96.51781194212785, 95.65973609963912, 93.88931816365135, 92.58302025880832, 89.98170401357103, 87.76611334630029, 83.61511520846483, 80.21235778423177, 75.05866261668102, 71.54956347197474, 67.21658243999764, 64.9553998324347, 61.50921164430003, 59.42474221310362, 55.51857871566923, 53.9576764689337, 51.14950899848729, 49.78047776800775, 45.994629624695385, 44.99995559226582, 43.165590519244915, 42.59965835649925, 40.507284348642195, 40.313311366307545, 39.43824216425528, 39.40709754010763, 38.651425932340466, 38.944132110048315, 38.91349077355303, 39.26591055098155, 38.76265250355997, 39.208802204991876, 39.33823594717245, 39.932441033930374, 39.780773819568424, 40.55166247753726, 41.07369019388408, 42.06294648275962, 42.78279585172533, 44.27957333049169, 45.70532803993127, 47.39240746168406, 49.06924349944776, 51.097877606364364, 53.02313050840919, 55.006054254409186, 57.0098200302565, 59.66110977887937, 62.2160939549232, 64.4942699220497, 66.4808054970854, 68.62555102596673, 70.68488567969007, 72.5788459318075, 74.46140819885203, 76.37763152830689, 78.29802918476284, 80.12842716687534, 81.94920347327688, 83.79008168062548, 85.59676593275482, 87.27312828802265, 88.91574076541167, 90.42213991988844, 91.81464803910247, 92.94902880285628, 94.01892953676811, 94.93698542538168, 95.8113441036891, 96.45741742381854, 97.05760275209529, 97.56278513465905, 98.004523667842, 98.36247960944878]
 
@@ -94,7 +103,7 @@ function updateGraphs(){
 
 }
 
-// When MSOC inputs are changed, update variable value
+// When MSOC inputs are changed, update variable value (MSOC = min SOC)
 $("#msocText, #msocSlider").change(function(){
 	msoc = $("#msocText").val()/100;				//is a percentage;
 	clearGraph(0);
@@ -103,6 +112,8 @@ $("#msocText, #msocSlider").change(function(){
 	if( vehicle_type !== undefined ) {
 		calc_veh_pop();
 		calc_flt_cap();
+
+		//calculate fleet profits over different seasons
 		flt_tou_profit[0].revenue = calc_revenue_pge_tou("Winter", 15);		//index 0 is winter
 		flt_tou_profit[1].revenue = calc_revenue_pge_tou("Summer", 15);		//index 1 is summer
 		flt_profit = Math.round(calc_annual_profit(flt_tou_profit[0].revenue, flt_tou_profit[1].revenue,
@@ -113,6 +124,7 @@ $("#msocText, #msocSlider").change(function(){
 		flt_roi_field.text(flt_profit.toFixed(2));
 		indiv_roi_field.text(indiv_profit.toFixed(2));
 		flt_cap_field.text((battery_capacity * veh_pop).toFixed(0));
+
 		updatePS();
 	}
 });
@@ -146,20 +158,46 @@ $("#optinText, #optinSlider").change(function(){
 //----------------------UPDATE CALCULATIONS-----------------------
 
 //Determine the number of vehicles in the fleet
+//Assumes every person has 1 EV
 function calc_veh_pop() {
 	var pop = zip_code_pop_95050;//TO DO: use zip code -> populations
 	veh_pop = pop * opt_in;
+
+	//could update so that we are using average veh in household and round at the end
 }
 
 //update flt_cap
-function calc_flt_cap() {
-	flt_cap = veh_pop * (1 - msoc) * battery_capacity;
+//Assumes all vehicles in the fleet are the same
+function calc_flt_cap(years = 5) {
+	//1. Initial fleet cap before any battery degradation
+	var init_flt_cap = veh_pop * (1 - msoc) * battery_capacity * Math.min(CF, PF);
+	flt_cap[0] = veh_pop * (1 - msoc) * battery_capacity * Math.min(CF, PF);
+
+	//2. Fleet cap over x years.
+	//2a. pull charing station volts from MongoDB
+	var i,
+		volts = 120,		//charge station voltage rating		//TODO hook up to DB and data. currently defaulting to lvl 1 charger
+		amp_hours = 12,  	//charge station amp_hour rating	//TODO hook up to DB and data. currently defaulting to lvl 1 charger
+		per_veh_kWh_avail = (1 - msoc) * battery_capacity;
+	
+	for (i = 0; i < years * 365; i++){
+		//2b. Calculate CF and PF from a day's 
+
+		//calculate the max amount of retrievable energy over peak hours
+		Math.max(per_veh_kWh_avail / volts, amp_hours)
+		
+		//2c. use following function to store flt_cap of the day
+	}
+
+
 	if (!(battery_capacity >= 0))	//checks for NaN
 		flt_cap = 0;
 }
 
 
-//TO DO exclude holidays
+//TODO More the just PGE
+
+//TODO exclude holidays
 /**
  * Calculates the money saved using PGE's TOU-D plan over one day
  * @param {*} season - Either Winter or Summer
