@@ -1,0 +1,9 @@
+@charset "UTF-8";
+// Project DeLorean
+// SCSS Document
+// This Document has styles specific to display on small screens (Less than or equal to 767 pixels wide)
+@media screen and  (max-width: 767px) {
+	.form-group {
+		width: 100%;
+	}
+}

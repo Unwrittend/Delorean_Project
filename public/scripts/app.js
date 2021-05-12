@@ -2,9 +2,7 @@
 // JavaScript Document
 
 // This document contains basic functions for the website's interactive elements.
-
-// The population and MSOC inputs require constant factors so the sliders work properly
-// Sliders go from 1-100. Factors make it easier to manage the maximum and minimum values
+// For elements that change on page load, see bottom of this file
 
 let widget_width = $(".form-result").css("width");
 widget_width = widget_width.substr(0, widget_width.length - 2);
@@ -13,26 +11,27 @@ widget_width -= 50;
 
 let mode = 1;
 
+function switchToLight(el) {
+	$("link[href=\"sass/style-dark.css\"]").attr("href", "sass/style.css");
+	$(".style-switch .btn").removeClass("selected");
+	$(el).addClass("selected");
+}
+
+function switchToDark(el) {
+	$("link[href=\"sass/style.css\"]").attr("href", "sass/style-dark.css");
+	$(".style-switch .btn").removeClass("selected");
+	$(el).addClass("selected");
+}
+
 // Set a red border and print an error message
 function throwError(obj, message) {
 	let objId = $(obj).attr("id");
 	$(obj).addClass("invalid");
-
-	// Check if error message already was printed. If not, print it.
-	/*if( $("#" +objId +"Err").length == 0 ) {
-		$(obj).after("<p id=\"" + objId + "Err\">" + message + "</p>");
-	}*/
-	//$(obj).tooltip({trigger: "focus"});
-	$(obj).popover({trigger: "manual"});
-	$(obj).popover("show");
 }
 
 // Clear the error message and border
 function clearError(obj) {
-	//let objId = $(obj).attr("id");
 	$(".invalid").removeClass("invalid");
-	//$("#" +objId +"Err").remove();
-	//$(obj).popover("hide");
 }
 
 // Toggle green background for the currently selected view option (individual/organization)
@@ -74,7 +73,6 @@ function bindInputs(source, dest) {
 }
 
 /***************** Setup for the jQuery UI Slider ********************/
-
 const slider = $("#slider");
 const hours1 = $("#hours-1");
 const hours2 = $("#hours-2");
@@ -161,8 +159,7 @@ hours2.change(function(){
 	}
 });
 
-/*********************  Update Graphs  *****************************/
-
+/*********************  Graph Types/Format  *****************************/
 // Update Fleet Availability graph when the graph type is changed.
 let useFuture = false;
 $("#graphType").change(function () {
@@ -186,7 +183,7 @@ $(window).resize(function(){
 	widget_width = parseInt(widget_width, 10);
 	widget_width -= 50;
 	clearGraph(-1);
-	updatePS();
+	validateAndUpdate();
 	updateFA();
 });
 
@@ -226,15 +223,20 @@ function validateAndUpdate() {
 	// At this point, check if we can update the graphs
 	if(valid) {
 		console.log("Update!");
+		updateGraphs();
 	}
 	else {
 		console.log("Failed.");
 	}
 }
 
+/*********************  Other stuff to run on page load  *****************************/
 $(function() {
 	$(".spinner-wrapper").hide();
 	$("#car-make").val("default");
+
+	// Set the future-graph toggle to false
+	$("#graphType").prop("checked", false);
 	updateFA();
 
 	// Set default times

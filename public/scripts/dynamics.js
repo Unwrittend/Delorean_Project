@@ -1,4 +1,7 @@
+// Project DeLorean
 // JQuery Document
+
+// This document contains a single function. It runs whenever the user selects a new car make
 
 // Populate the multi-select with user-specified cars. Triggered when the dropdown for manufacturer is changed
 function populateCars() {
