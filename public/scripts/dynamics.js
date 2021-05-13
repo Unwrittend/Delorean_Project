@@ -40,7 +40,7 @@ function populateCars() {
 
 				$("#" +carId).append("<img src=\"images/vehicles/" +carId +".png\" alt=\"image\" class=\"img-thumbnail\" />");
 
-				$("#" +carId).append("<div><h4>" +mc_value + " " +carModel +"</h4><h6 property=\"" +carBattery +"\">Battery: " +carBattery +" kWh</h6></div>");
+				$("#" +carId).append("<div><h4>" +mc_value + " " +carModel +"</h4><h6 property=\"" +carBattery +"\">Battery size: " +carBattery +" kWh</h6></div>");
 			});
 
 			// Attach click event handler to the newly created elements

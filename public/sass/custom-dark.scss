@@ -8,13 +8,13 @@
 // Global Colors
 // -- Theme
 $black:			#0a0a0a;
-$black-shadow:	rgba(0, 0, 0, 0.75);
+$black-shadow:	rgba(100, 100, 100, 0.5); // Not actually black here, because of dark mode
 $blue:			rgb(67, 121, 179);
 $grey:			rgb(245, 245, 245);
 $green: 		rgb(11, 132, 27);
 $orange: 		rgb(251, 196, 15);
 $orange-dark: 	rgb(164, 123, 0);
-$white:			rgb(245, 245, 245);
+$white:			rgb(225, 225, 225);
 
 // Global Fonts
 // -- Theme
@@ -50,3 +50,7 @@ $input-color: $white;
 $form-select-color: $white;
 $form-text-color: $white;
 $input-border-color: rgb(45, 45, 45);
+
+input[type="range"].form-control, .ui-widget-content {
+	background-color: $white;
+}
