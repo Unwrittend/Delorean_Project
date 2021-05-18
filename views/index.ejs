@@ -83,20 +83,30 @@
     <div class="row main-form">
         <!-- Map Section (For now, map is from Mapbox, but it may be filled with Google Maps instead) -->
         <!--================================================================================================-->
-        <!--div class="grid-item col-lg-12">
+        div class="grid-item col-lg-12">
             <div id="map" class="form-group">
                 <label>Map</label>
                 <a href="#" class="icon-info"></a>
-                <input type="text" name="zip" id="zip" class="form-control input-text" value="95050" placeholder="Zip Code" />
+                <link href="https://api.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.css" rel="stylesheet">
                 <div id="map-container">
+                    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.min.js"></script>
+                    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.css" type="text/css">
                     <script>
-						mapboxgl.accessToken = 'pk.eyJ1IjoiYXJqdW5jaGltbmkiLCJhIjoiY2tsZTVnMGc4MWJjYTJvcXRpcGF3Ymt0MCJ9.NsWvjwV6q2X_sqWWANxOdQ';
-						var map = new mapboxgl.Map({
-							container: 'map-container', // container id
-							style: 'mapbox://styles/mapbox/streets-v11', // style URL
-							center: [-74.5, 40], // starting position [lng, lat]
-							zoom: 9, // starting zoom
-						});
+                        mapboxgl.accessToken = 'pk.eyJ1IjoiYXJqdW5jaGltbmkiLCJhIjoiY2tsZTVnMGc4MWJjYTJvcXRpcGF3Ymt0MCJ9.NsWvjwV6q2X_sqWWANxOdQ';
+                        var map = new mapboxgl.Map({
+                            container: 'map-container', // container id
+                            style: 'mapbox://styles/mapbox/streets-v11', // style URL
+                            center: [-74.5, 40], // starting position [lng, lat]
+                            zoom: 9, // starting zoom
+                        });
+                        var geocoder = new MapboxGeocoder({
+                            accessToken: mapboxgl.accessToken,
+                            marker: {
+                                color: 'green'
+                            },
+                            mapboxgl: mapboxgl,
+                        });
+                        map.addControl(geocoder);
                     </script>
                 </div>
             </div>
