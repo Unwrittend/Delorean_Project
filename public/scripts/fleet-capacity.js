@@ -89,10 +89,25 @@ function updateGraphs(){
 	indiv_profit = Math.round(calc_annual_profit(flt_tou_profit[0].revenue/veh_pop, flt_tou_profit[1].revenue/veh_pop,
 		PGE_TOU_D.winter_length, PGE_TOU_D.summer_length));
 
+	// Set the value of the HTML spans to a smaller number, expressed in larger units (e.g. Gigawatts vs Kilowatts)
+	let flt_val = battery_capacity * veh_pop;
+	let unit = "kWh";
+
+	// Once for Megawatts
+	if(flt_val >= 1000) {
+		flt_val /= 1000;
+		unit = "MWh";
+	}
+	// Again for Gigawatts
+	if(flt_val >= 1000) {
+		flt_val /= 1000;
+		unit = "GWh";
+	}
+
 	// Populate spans in HTML with the values, separated with commas (e.g. 1,000,000)
 	flt_roi_field.text(flt_profit.toLocaleString());
 	indiv_roi_field.text(indiv_profit.toLocaleString());
-	flt_cap_field.text((battery_capacity*veh_pop).toLocaleString());
+	flt_cap_field.text((flt_val).toLocaleString() + " " +unit);
 
 	updatePS();
 
