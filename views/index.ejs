@@ -10,7 +10,7 @@
     <link href="sass/jquery-ui.min.css" rel="stylesheet" type="text/css" />
 
     <!-- All Bootstrap styles and icons are embedded in these stylesheets -->
-    <link href="sass/style.css" rel="stylesheet" type="text/css" />
+    <link href="sass/style-<%= user_mode %>.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
 
     <!-- Import jQuery, PopperJS (For bootstrap effects), Bootstrap's own JS library, jQuery UI (local file -- not remote), and AJAX -->
@@ -28,6 +28,10 @@
     <script src="https://d3js.org/d3-scale.v3.min.js" defer></script>
     <script src="https://d3js.org/d3-axis.v1.min.js" defer></script>
 
+    <!-- Import js-Cookie files -->
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.mjs"></script>
+
     <!-- Our custom scripts. App = generic functionality; fleet-capacity = calculations; graphs = D3JS; dynamics = AJAX -->
     <script src="scripts/app.js" defer></script>
     <script src="scripts/fleet-capacity.js" defer></script>
@@ -39,9 +43,9 @@
 <body>
 <!-- Main Navigation -->
 <!--================================================================================================================-->
-<nav class="navbar navbar-expand-md navbar-light justify-content-center">
+<nav class="navbar navbar-expand-md navbar-<%= user_mode %> justify-content-center">
     <a class="screen-reader-only" href="#article">Skip to Content</a>
-    <a class="navbar-brand" href="/"><img id="navbar-brand" class="navbar-brand-img" src="images/logo_lg_light.png"/></a>
+    <a class="navbar-brand" href="/"><img id="navbar-brand" class="navbar-brand-img" src="images/logo_lg_<%= user_mode %>.png"/></a>
 
     <button class="navbar-toggler align-item" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
         <span class="navbar-toggler-icon"></span>
@@ -59,8 +63,13 @@
                 <a class="nav-link" href="#">About</a>
             </li>
             <li class="nav-item style-switch">
-                <button class="btn selected" onclick="switchToLight(this);"><i class="bi bi-sun"></i></button>
-                <button class="btn" onclick="switchToDark(this);"><i class="bi bi-moon"></i></button>
+                <% if(user_mode !== "dark") { %>
+                    <button class="btn selected" onclick="switchToLight(this);"><i class="bi bi-sun"></i></button>
+                    <button class="btn" onclick="switchToDark(this);"><i class="bi bi-moon"></i></button>
+                <% } else { %>
+                    <button class="btn" onclick="switchToLight(this);"><i class="bi bi-sun"></i></button>
+                    <button class="btn selected" onclick="switchToDark(this);"><i class="bi bi-moon"></i></button>
+                <% } %>
             </li>
         </ul>
     </div>
@@ -74,34 +83,18 @@
     <div class="row d-flex justify-content-center text-center">
         <section class="view-toggle">
             <h1 class="text-center">Is V2G Right For You?</h1>
-            <button id="ind-btn" class="btn" onclick="switchToIndiv()">Individual</button>
-            <button id="org-btn" class="btn selected" onclick="switchToOrg()">Organizer</button>
+            <% if(user_view === "organizer") { %>
+                <button id="ind-btn" class="btn" onclick="switchToIndiv()">Individual</button>
+                <button id="org-btn" class="btn selected" onclick="switchToOrg()">Organizer</button>
+            <% } else { %>
+                <button id="ind-btn" class="btn selected" onclick="switchToIndiv()">Individual</button>
+                <button id="org-btn" class="btn" onclick="switchToOrg()">Organizer</button>
+            <% } %>
         </section>
     </div>
     <!-- The actual form -->
     <!--=============================================================================================================-->
     <div class="row main-form">
-        <!-- Map Section (For now, map is from Mapbox, but it may be filled with Google Maps instead) -->
-        <!--================================================================================================-->
-        <!--div class="grid-item col-lg-12">
-            <div id="map" class="form-group">
-                <label>Map</label>
-                <a href="#" class="icon-info"></a>
-                <input type="text" name="zip" id="zip" class="form-control input-text" value="95050" placeholder="Zip Code" />
-                <div id="map-container">
-                    <script>
-						mapboxgl.accessToken = 'pk.eyJ1IjoiYXJqdW5jaGltbmkiLCJhIjoiY2tsZTVnMGc4MWJjYTJvcXRpcGF3Ymt0MCJ9.NsWvjwV6q2X_sqWWANxOdQ';
-						var map = new mapboxgl.Map({
-							container: 'map-container', // container id
-							style: 'mapbox://styles/mapbox/streets-v11', // style URL
-							center: [-74.5, 40], // starting position [lng, lat]
-							zoom: 9, // starting zoom
-						});
-                    </script>
-                </div>
-            </div>
-        </div-->
-
         <!-- Left Column -->
         <!--=========================================================================================================-->
         <div class="grid-item col-md-6 col-lg-4">
@@ -197,14 +190,6 @@
                     <input type="number" name="optin" id="optinText" class="form-control input-text" value="50" min="0" max="100" oninput="bindInputs($(this), $('#optinSlider'))" />
                 </div>
             </div>
-
-            <!-- Peak Shaving (Graph) NOTE: This will be displayed on sizes: LG, MD -->
-            <!--===========================================================================================-->
-            <!--div id="peak-lg" class="form-group form-result d-none d-lg-block d-xl-block">
-                <label>Peak Shaving</label>
-                <img class="img-fluid" src="http://picsum.photos/500" alt="filler" />
-            </div-->
-
         </div>
 
         <!-- Right Column (Mostly graphs &c. -->

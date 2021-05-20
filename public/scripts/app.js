@@ -9,27 +9,25 @@ widget_width = widget_width.substr(0, widget_width.length - 2);
 widget_width = parseInt(widget_width, 10);
 widget_width -= 50;
 
-// Variables for what mode we are in (individual/organizer) and whether dark mode is active (inactive by default)
-let mode = 1;
-let isDark = false;
-
 function switchToLight(el) {
-	$("link[href=\"sass/style-dark.css\"]").attr("href", "sass/style.css");
+	$("link[href=\"sass/style-dark.css\"]").attr("href", "sass/style-light.css");
 	$("nav").removeClass("navbar-dark");
 	$("nav").addClass("navbar-light");
 	$(".style-switch .btn").removeClass("selected");
 	$(el).addClass("selected");
-	isDark = false;
+
+	Cookies.set("mode", "light");
 	updateBrand();
 }
 
 function switchToDark(el) {
-	$("link[href=\"sass/style.css\"]").attr("href", "sass/style-dark.css");
+	$("link[href=\"sass/style-light.css\"]").attr("href", "sass/style-dark.css");
 	$("nav").removeClass("navbar-light");
 	$("nav").addClass("navbar-dark");
 	$(".style-switch .btn").removeClass("selected");
 	$(el).addClass("selected");
-	isDark = true;
+
+	Cookies.set("mode", "dark");
 	updateBrand();
 }
 
@@ -43,7 +41,7 @@ function updateBrand() {
 		name = "images/" + name.substring(0, 5) + "lg";
 	}
 	//-- Replace with dark logo if necessary
-	if(isDark) {
+	if(Cookies.get("mode") === "dark") {
 		name += "_dark.png";
 	}
 	else {
@@ -54,12 +52,11 @@ function updateBrand() {
 
 // Set a red border and print an error message
 function throwError(obj, message) {
-	let objId = $(obj).attr("id");
 	$(obj).addClass("invalid");
 }
 
 // Clear the error message and border
-function clearError(obj) {
+function clearError() {
 	$(".invalid").removeClass("invalid");
 }
 
@@ -83,7 +80,7 @@ function switchToIndiv() {
 	$("#flt-roi").addClass("d-none");
 	$("#indiv-roi").removeClass("d-none");
 	$("#kwh-panel").addClass("d-none");
-	mode = 0;
+	Cookies.set("view", "individual");
 }
 
 function switchToOrg() {
@@ -92,7 +89,7 @@ function switchToOrg() {
 	$("#flt-roi").removeClass("d-none");
 	$("#indiv-roi").addClass("d-none");
 	$("#kwh-panel").removeClass("d-none");
-	mode = 1;
+	Cookies.set("view", "organizer");
 }
 
 /*****************  Bind sliders and text fields  ********************/
@@ -240,7 +237,7 @@ function validateAndUpdate() {
 	}
 
 	// If in organizer view:
-	if(mode === 1) {
+	if(Cookies.get("view") === "organizer") {
 		let optin = $("#optinText");
 
 		// If opt-in text box is out of range
@@ -250,25 +247,33 @@ function validateAndUpdate() {
 		}
 	}
 	// If in individual view:
-	else if(mode === 0) {}
+	else if(Cookies.get("view") === "individual") {}
 
 	// At this point, check if we can update the graphs
 	if(valid) {
-		console.log("Update!");
+		//console.log("Update!"); Dev Only
 		updateGraphs();
 	}
 	else {
-		console.log("Failed.");
+		//console.log("Failed."); Dev Only
 	}
 }
 
 /*********************  Other stuff to run on page load  *****************************/
 $(function() {
-	// Check if user has enabled dark mode on their computer, and change styles accordingly
-	if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
-		switchToDark($(".style-switch .btn")[1]);
-		isDark = true;
-		updateBrand();
+	// Initialize cookie if empty
+	if( !(Cookies.get("mode")) )
+		Cookies.set("mode", "", { expires: 7 });
+
+	if(Cookies.get("view") === "individual")
+		switchToIndiv();
+
+	// If the browser cookie only has path, set values to default. If it has values, then update the browser JSON obj
+	if(Cookies.get("mode") === "") {
+		// Check if user has enabled dark mode on their computer, and change styles accordingly
+		if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+			switchToDark($(".style-switch .btn")[1]); // Automatically updates the cookie
+		}
 	}
 
 	// Hide loading spinners and reset the car multiple choice field
