@@ -53,6 +53,10 @@ main.content {
 	-moz-transition: linear 0.2s;
 }
 
+.btn-action:active {
+	background-color: $green;
+}
+
 .style-switch {
 	margin-left: 3px;
 }
@@ -87,6 +91,11 @@ main.content {
 
 	label.small-label {
 		font-size: $h6-font-size;
+	}
+
+	.btn-action {
+		margin-bottom: 10px;
+		margin-left: 5px;
 	}
 }
 

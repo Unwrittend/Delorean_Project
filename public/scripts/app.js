@@ -70,10 +70,13 @@ $(".view-toggle button").click(function (){
 function toggleMCSelected() {
 	$(".option").removeClass("selected");
 	$(this).addClass("selected");
+
+	Cookies.set("make", $("#car-make").val());
+	Cookies.set("model", $(this).attr("id"));
 	validateAndUpdate();
 }
 
-// Next 2 functions are for the mode toggle
+// Next 2 functions are for the view toggle
 function switchToIndiv() {
 	$("#optin-panel").addClass("d-none");
 	$("#hours-panel").removeClass("d-none");
@@ -90,6 +93,19 @@ function switchToOrg() {
 	$("#indiv-roi").addClass("d-none");
 	$("#kwh-panel").removeClass("d-none");
 	Cookies.set("view", "organizer");
+}
+
+// Find the selected car (using cookies) and show it in the multiple-choice
+function findCar() {
+	let make = Cookies.get("make");
+	let sel_make = $("#car-make");
+	if(make !== sel_make.val()){
+		sel_make.val(make);
+		populateCars(function() {
+			$(".option").removeClass("selected");
+			$("#" +Cookies.get("model")).addClass("selected");
+		});
+	}
 }
 
 /*****************  Bind sliders and text fields  ********************/
