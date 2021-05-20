@@ -19,13 +19,17 @@ function updatePS() {
 
 	// To set upper bound of y-axis, snap to powers of ten
 	const rangeMax = d3.max(flt_tou_profit, d => d.revenue);
-	let yMax = Math.log10(rangeMax);
-	yMax = Math.floor(yMax);
-	yMax = Math.pow(10, yMax);
+	let yMax = 1;
+	if(rangeMax > 0) {
+		yMax = Math.log10(rangeMax);
+		yMax = Math.floor(yMax);
+		yMax = Math.pow(10, yMax);
 
-	// Multiply by numbers 1-9 to improve readability
-	let bits = Math.ceil(rangeMax/yMax);
-	yMax *= bits;
+		// Split powers of ten into quarters, to improve readability
+		yMax *= 2.5;
+		while(rangeMax / yMax > 1)
+			yMax *= 2;
+	}
 
 	// Set scales
 	xScale.domain(flt_tou_profit.map((d) => d.season)); // Unique token used to separate data
@@ -50,7 +54,7 @@ function updatePS() {
 	// Y-axis
 	chart
 		.append("g")
-		.call(d3.axisLeft(yScale).tickSizeOuter(0))
+		.call(d3.axisLeft(yScale).tickSize(-CHART_WIDTH).tickSizeOuter(0))
 		.attr("color", "#000")
 		.attr("transform", `translate(${MARGIN.left}, 10)`);
 
@@ -124,7 +128,7 @@ function updateFA() {
 		// X-axis
 		chart_FA
 			.append("g")
-			.call( d3.axisBottom(xScale_Labels) ) //.ticks(10, "s").tickSizeOuter(0)
+			.call( d3.axisBottom(xScale_Labels).tickSize(-CHART_HEIGHT_FA).tickSizeOuter(0) ) //.ticks(10, "s").tickSizeOuter(0)
 			.attr("transform", `translate(${MARGIN_FA.left}, ${CHART_HEIGHT_FA + 10})`)
 			.attr("color", "#000");
 
@@ -137,7 +141,7 @@ function updateFA() {
 		// Y-axis
 		chart_FA
 			.append("g")
-			.call(d3.axisLeft(yScale_FA))
+			.call(d3.axisLeft(yScale_FA).tickSize(-CHART_WIDTH_FA))
 			.attr("color", "#000")
 			.attr("transform", `translate(${MARGIN_FA.left}, 10)`);
 
