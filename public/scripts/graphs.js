@@ -17,10 +17,21 @@ function updatePS() {
 		.attr("width", CHART_WIDTH + MARGIN.right + MARGIN.left)
 		.attr("height", CHART_HEIGHT + MARGIN.top + MARGIN.bottom);
 
-	xScale.domain(flt_tou_profit.map((d) => d.season)); // Unique token used to separate data (here, either ID or region can be used)
-	yScale.domain([0, (d3.max(flt_tou_profit, d => d.revenue) + (d3.max(flt_tou_profit, d => d.revenue) / 10)) ]); //  + (d3.max(flt_tou_profit, d => d.revenue) / 10)
+	// To set upper bound of y-axis, snap to powers of ten
+	const rangeMax = d3.max(flt_tou_profit, d => d.revenue);
+	let yMax = Math.log10(rangeMax);
+	yMax = Math.floor(yMax);
+	yMax = Math.pow(10, yMax);
 
-	d3.select("#svg-ps g").remove();
+	// Multiply by numbers 1-9 to improve readability
+	let bits = Math.ceil(rangeMax/yMax);
+	yMax *= bits;
+
+	// Set scales
+	xScale.domain(flt_tou_profit.map((d) => d.season)); // Unique token used to separate data
+	yScale.domain([0, yMax]);
+
+	d3.select("#svg-ps g").remove(); // Remove old graph
 	const chart = chartContainer.append("g"); // Group in SVG for the many bars
 
 	// X-axis
