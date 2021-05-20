@@ -191,7 +191,6 @@ let useFuture = false;
 $("#graphType").change(function () {
 	// If we do not want to show the future graph:
 	if (useFuture) {
-		clearGraph(1);
 		useFuture = false;
 	}
 	// If we do want to overlay the future graph:
@@ -209,9 +208,10 @@ $(window).resize(function(){
 	widget_width = widget_width.substr(0, widget_width.length - 2);
 	widget_width = parseInt(widget_width, 10);
 	widget_width -= 50;
-	clearGraph(-1);
 
-	validateAndUpdate();
+	//validateAndUpdate();
+	if($("#car-list .selected").length)
+		updatePS();
 	updateFA();
 	updateBrand();
 });

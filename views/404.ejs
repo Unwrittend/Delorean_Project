@@ -10,7 +10,7 @@
     <link href="sass/jquery-ui.min.css" rel="stylesheet" type="text/css" />
 
     <!-- All Bootstrap styles are embedded in this stylesheet -->
-    <link href="sass/style.css" rel="stylesheet" type="text/css" />
+    <link href="sass/style-<%= user_mode %>.css" rel="stylesheet" type="text/css" />
 
     <!-- Import jQuery, PopperJS (For bootstrap effects), Bootstrap's own JS library, and jQuery UI (local file -- not remote) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -40,7 +40,7 @@
 <!--================================================================================================================-->
 <nav class="navbar navbar-expand-md navbar-light">
     <a class="screen-reader-only" href="#article">Skip to Content</a>
-    <a class="navbar-brand" href="/"><img class="navbar-brand-img" src="images/delorean_logo_text_transparent.png"/></a>
+    <a class="navbar-brand" href="/"><img class="navbar-brand-img" src="images/logo_lg_<%= user_mode %>.png"/></a>
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
         <span class="navbar-toggler-icon"></span>
