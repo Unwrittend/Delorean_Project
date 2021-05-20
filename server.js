@@ -3,11 +3,16 @@
 // Dependencies
 const express = require("express");
 const mongoose = require("mongoose");
+const cookieParser = require("cookie-parser");
 
 // Create instance of Express
 const app = express();
 const ejs = require("ejs");
 app.set("view engine", "ejs");
+
+// Use cookie Parser, set variables for determining style and view preferences
+app.use(cookieParser());
+let user_mode, user_view;
 
 // Connect to DeLorean Database
 mongoose.connect("mongodb+srv://[username]:[password]@cluster0.joafk.mongodb.net/delorean?retryWrites=true&w=majority");
@@ -42,6 +47,17 @@ app.use(express.static(__dirname + "/public/"));
 // Load index.ejs
 app.get("/", (req, res) => {
 
+	// Read cookie to find out user's dark/light mode preference. Default is light
+	user_mode = req.cookies.mode;
+	if(!(user_mode))
+		user_mode = "light";
+
+	// Read cookie to find user's view preference (organizer/individual). Default is organizer
+	if(!(req.cookies.view))
+		res.cookie("view", "organizer");
+	user_view = req.cookies.view;
+
+	// Send JSON object with list of vehicle makes
 	Vehicles.find({}, {}, {
 		sort: {make: 1}
 	}, function(err, cars) {
@@ -60,6 +76,8 @@ app.get("/", (req, res) => {
 
 		// Render the homepage
 		res.render("index", {
+			user_mode: user_mode,
+			user_view: user_view,
 			makeList: makeList,
 			carsList: cars
 		});
@@ -88,7 +106,14 @@ app.get("/getCarById", (req, res) => {
 
 // In case request cannot be processed, show the 404 page
 app.use(function(req, res){
-	res.render("404");
+	// Read cookie to find out user's dark/light mode preference. Default is light
+	user_mode = req.cookies.mode;
+	if(!(user_mode))
+		user_mode = "light";
+
+	res.render("404", {
+		user_mode: user_mode
+	});
 });
 
 
