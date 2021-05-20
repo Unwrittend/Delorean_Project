@@ -99,11 +99,15 @@ function switchToOrg() {
 function findCar() {
 	let make = Cookies.get("make");
 	let sel_make = $("#car-make");
-	if(make !== sel_make.val()){
+
+	// Do not make an AJAX call if the user has not selected a car, or if they have not navigated away
+	// from the currently selected one.
+	if(make && make !== sel_make.val()){
 		sel_make.val(make);
 		populateCars(function() {
 			$(".option").removeClass("selected");
 			$("#" +Cookies.get("model")).addClass("selected");
+			validateAndUpdate();
 		});
 	}
 }

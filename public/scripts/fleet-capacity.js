@@ -98,6 +98,10 @@ function updateGraphs(){
 	if(flt_val >= 1000) {
 		flt_val /= 1000;
 		unit = "GWh";
+
+		// Easter Egg -- if fleet capacity is approximately 1.21 GWh, replace unit with "Jigawatt-hours"
+		if(flt_val >= 1.21 && flt_val < 1.22)
+			unit = "Jigawatt-hours";
 	}
 
 	// Populate spans in HTML with the values, separated with commas (e.g. 1,000,000)

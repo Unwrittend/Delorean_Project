@@ -4,6 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" initial-scale="1" />
 
+    <!-- For favicon -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://www.deloreanenergy.us/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="https://www.deloreanenergy.us/apple-touch-icon-152x152.png" />
+    <link rel="icon" type="image/png" href="https://www.deloreanenergy.us/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="https://www.deloreanenergy.us/favicon-16x16.png" sizes="16x16" />
+    <meta name="application-name" content="DeLorean Energy"/>
+    <meta name="msapplication-TileColor" content="#FFFFFF" />
+    <meta name="msapplication-TileImage" content="https://www.deloreanenergy.us/mstile-144x144.png" />
+
     <!-- Link to remote font -->
     <link rel="stylesheet" href="https://use.typekit.net/ahh6uys.css">
 
@@ -38,7 +47,7 @@
     <script src="scripts/graphs.js" defer></script>
     <script src="scripts/dynamics.js" defer></script>
 
-    <title>Project DeLorean</title>
+    <title>DeLorean Energy</title>
 </head>
 <body>
 <!-- Main Navigation -->
@@ -83,12 +92,12 @@
     <div class="row d-flex justify-content-center text-center">
         <section class="view-toggle">
             <h1 class="text-center">Is V2G Right For You?</h1>
-            <% if(user_view === "organizer") { %>
-                <button id="ind-btn" class="btn" onclick="switchToIndiv()">Individual</button>
-                <button id="org-btn" class="btn selected" onclick="switchToOrg()">Organizer</button>
-            <% } else { %>
+            <% if(user_view === "individual") { %>
                 <button id="ind-btn" class="btn selected" onclick="switchToIndiv()">Individual</button>
                 <button id="org-btn" class="btn" onclick="switchToOrg()">Organizer</button>
+            <% } else { %>
+                <button id="ind-btn" class="btn" onclick="switchToIndiv()">Individual</button>
+                <button id="org-btn" class="btn selected" onclick="switchToOrg()">Organizer</button>
             <% } %>
         </section>
     </div>

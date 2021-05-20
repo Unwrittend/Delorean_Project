@@ -11046,7 +11046,7 @@ select.form-select:focus {
 }
 
 .tick line {
-  stroke: #e1e1e1;
+  stroke: #aaa;
 }
 .tick text {
   fill: #e1e1e1;
