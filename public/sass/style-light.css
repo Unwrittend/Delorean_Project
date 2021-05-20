@@ -10674,6 +10674,10 @@ main.content {
   -moz-transition: linear 0.2s;
 }
 
+.btn-action:active {
+  background-color: #74c17d;
+}
+
 .style-switch {
   margin-left: 3px;
 }
@@ -10703,6 +10707,10 @@ main.content {
 }
 .form-group label.small-label {
   font-size: 1rem;
+}
+.form-group .btn-action {
+  margin-bottom: 10px;
+  margin-left: 5px;
 }
 
 .form-result {

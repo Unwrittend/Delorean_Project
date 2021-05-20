@@ -4,7 +4,7 @@
 // This document contains a single function. It runs whenever the user selects a new car make
 
 // Populate the multi-select with user-specified cars. Triggered when the dropdown for manufacturer is changed
-function populateCars() {
+function populateCars(callback) {
 
 	// Empty the container before populating it
 	$("#car-list").empty();
@@ -47,6 +47,8 @@ function populateCars() {
 			$(document).on("click", ".option", toggleMCSelected);
 
 			$("#car-spinner").hide(100);
+
+			typeof callback === "function" && callback();
 		},
 
 		// Provide a descriptive error message
