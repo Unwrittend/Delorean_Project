@@ -58,8 +58,7 @@ $("#zip").change(function(){
 	
 	flt_roi_field.text(flt_profit);
 	indiv_roi_field.text(indiv_profit);
-	flt_cap_field.text((battery_capacity*veh_pop).toFixed(0))
-	clearGraph(0);
+	flt_cap_field.text((battery_capacity*veh_pop).toFixed(0));
 	updatePS();
 	updateFA();
 });
@@ -69,9 +68,6 @@ function updateGraphs(){
 
 	msoc = $("#msocText").val()/100; //is a percentage;
 	opt_in = $("#optinText").val()/100;
-
-	// Clear graphs
-	clearGraph(0);
 
 	// Get id of selected vehicle
 	vehicle_type = $("#car-list .selected").attr("id");

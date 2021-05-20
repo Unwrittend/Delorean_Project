@@ -1,19 +1,5 @@
 // D3JS Document
 
-// Clear graph based on id. If -1, clear all.
-function clearGraph(id) {
-	if(id === 0) {
-		$("#svg-ps").empty();
-	}
-	else if(id === 1) {
-		$("#svg-fa").empty();
-	}
-	else if(id === -1) {
-		$("#svg-ps").empty();
-		$("#svg-fa").empty();
-	}
-}
-
 /** *************************************************************************** **/
 /**                               Peak Shaving                                  **/
 /** *************************************************************************** **/
@@ -34,6 +20,7 @@ function updatePS() {
 	xScale.domain(flt_tou_profit.map((d) => d.season)); // Unique token used to separate data (here, either ID or region can be used)
 	yScale.domain([0, (d3.max(flt_tou_profit, d => d.revenue) + (d3.max(flt_tou_profit, d => d.revenue) / 10)) ]); //  + (d3.max(flt_tou_profit, d => d.revenue) / 10)
 
+	d3.select("#svg-ps g").remove();
 	const chart = chartContainer.append("g"); // Group in SVG for the many bars
 
 	// X-axis
@@ -120,6 +107,7 @@ function updateFA() {
 		xScale_Labels.domain([0, 24]);
 		yScale_FA.domain([0, 100]) // Determines max height of the graph (we add 3 so there's some padding above the tallest bar)
 
+		d3.select("#svg-fa g").remove();
 		const chart_FA = chartContainer_FA.append("g"); // Group in SVG for the many bars
 
 		// X-axis
