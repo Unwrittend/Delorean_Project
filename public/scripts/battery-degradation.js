@@ -46,17 +46,18 @@ function calc_cf_with_current_cap(cell_cap, max_rated_cell_cap, CF_factor = .8) 
 
 /**
  * Algorithm from Cordoba-Arenas et al. 2015
+ * Cycle aging algorithm
  * calculates the capacity lose (%) of capacity fade under SOC, total Ampere hours sent, and Temp conditions
  * 
  * @param {*} SOC_min = the minimum SOC 
- * @param {*} Ah = Ampere-hour throughput ie the total current to the battery over time T 
+ * @param {*} Ah = Ampere-hour throughput ie the total current to the battery over an hour 
  *                      (do we control this? Let's say the CR [ie C] is 1C == 2A)
  * @param {*} tempurature = tempurature of the cells in the vehicle (Unit: Kelvin)
  * @param {*} time_cd = time in charge depleting mode (Hybrid only. If full EV, set to 1)
  * @param {*} time_cs = time in charge sustain mode (Hybrid only. If full EV, set to 0)
  * @returns Q_loss-cycle, a percentage of capacity lose
  */
- function calc_cf_with_SOC_and_temp(SOC_min, Ah, tempurature, time_cd = 1, time_cs = 0) {
+ function calc_cf_cycle_aging_with_SOC_and_temp(SOC_min, Ah, tempurature, time_cd = 1, time_cs = 0) {
     //constants
     var a_c = 137,
         B_c = 420,
@@ -70,7 +71,24 @@ function calc_cf_with_current_cap(cell_cap, max_rated_cell_cap, CF_factor = .8) 
     var ratio = time_cd / (time_cd + time_cs);
 
     return (a_c + B_c * (Math.pow(ratio, b_c)) + y_c * Math.pow(SOC_min - 0.25), c_c) * Math.E((-E_a / (R * tempurature))) * Math.pow(Ah, z);
-}
+ }
+
+ /**
+  * Algorithm from Wang et al. 2014
+  * Calender aging algorithm
+  * calculates the capacity lose (%) of capacity fade over a period of days
+  * 
+  * @param {*} cell_temp - tempurature of the EV's battery cells
+  * @param {*} days - calendar time (unit: days)
+  * @returns - capacity fade over a period of days
+  */
+function calc_cf_calendar_aging(cell_temp, days) {
+    var A = 14786,
+        Ea = 24500,
+        R = 8.314;
+
+    return (A * Math.exp(-Ea / (R * cell_temp)) * Math.sqrt(days));
+ }
 
 /**
  * Algorithm from Uddin et al. 2017
@@ -93,17 +111,18 @@ function calc_pf_with_current_res(internal_res, charge_transfer_res, init_intern
 //note when being used give it a CR (current rate) * Time
 /**
  * Algorithm from Cordoba-Arenas et al. 2015
+ * Cycle aging algorithm
  * calculates the resistance growth of power fade using SOC, total Ampere hours sent, and Temp conditions
  * 
  * @param {*} SOC_min = the minimum SOC 
- * @param {*} Ah = Ampere-hour throughput ie the total current to the battery over time T 
+ * @param {*} Ah = Ampere-hour throughput ie the total current to the battery over over an hour
  *                      (do we control this? Let's say the CR [ie C] is 1C == 2A)
  * @param {*} tempurature = tempurature of the cells in the vehicle (Unit: Kelvin)
  * @param {*} time_cd = time in charge depleting mode (Hybrid only. If full EV, set to 1)
  * @param {*} time_cs = time in charge sustain mode (Hybrid only. If full EV, set to 0)
  * @returns a percentage of power lose
  */
- function calc_pf_with_SOC_and_temp(SOC_min, Ah, tempurature, time_cd = 1, time_cs = 0) {
+ function calc_pf_cycle_aging_with_SOC_and_temp(SOC_min, Ah, tempurature, time_cd = 1, time_cs = 0) {
     var a_r = 3.2053 * Math.pow(10, 5),
         B_r = 1.3573 * Math.pow(10, 9),
         y_r = 3.6342 * Math.pow(10, 3),

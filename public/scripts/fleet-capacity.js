@@ -10,7 +10,7 @@ var vehicle_type,
 	battery_capacity = 0,
 	zip_code = 95050,
 	veh_pop,
-	flt_cap,
+	flt_cap = [],
 	flt_profit,
 	indiv_profit,
 	PF = 1,					//power fade (1 == 100%)
@@ -109,6 +109,7 @@ function updateGraphs(){
 
 //----------------------UPDATE CALCULATIONS-----------------------
 
+
 //Determine the number of vehicles in the fleet
 //Assumes every person has 1 EV
 function calc_veh_pop() {
@@ -118,8 +119,21 @@ function calc_veh_pop() {
 	//could update so that we are using average veh in household and round at the end
 }
 
+/*
+function calc_flt_cap(years = 5) {
+	//1. Initial fleet cap before any battery degradation
+	var init_flt_cap = veh_pop * (1 - msoc) * battery_capacity * Math.min(CF, PF);
+	flt_cap = veh_pop * (1 - msoc) * battery_capacity * Math.min(CF, PF);
+}
+*/
+
 //update flt_cap
 //Assumes all vehicles in the fleet are the same
+/**
+ * Calculates the fleets capacity every day
+ * @param {*} years 
+ * @return - A fleet with an overall decaying battery in an array
+ */
 function calc_flt_cap(years = 5) {
 	//1. Initial fleet cap before any battery degradation
 	var init_flt_cap = veh_pop * (1 - msoc) * battery_capacity * Math.min(CF, PF);
@@ -130,26 +144,48 @@ function calc_flt_cap(years = 5) {
 	var i,
 		volts = 120,		//charge station voltage rating		//TODO hook up to DB and data. currently defaulting to lvl 1 charger
 		amp_hours = 12,  	//charge station amp_hour rating	//TODO hook up to DB and data. currently defaulting to lvl 1 charger
-		per_veh_kWh_avail = (1 - msoc) * battery_capacity;
+		per_veh_kWh_avail = (1 - msoc) * battery_capacity,
+		temp = 295;			//arbitary hardcoded number			//TODO use map data from Arjun
 	
-	for (i = 0; i < years * 365; i++){
+	
+	
+	//perhaps make this a smaller interval?
+	for (i = 1; i < years * 365; i++){
 		//2b. Calculate CF and PF from a day's charging
 
 		//calculate the max amount of retrievable energy over peak hours
-		Math.max(per_veh_kWh_avail / volts, amp_hours)
+		var veh_amp_hour = per_veh_kWh_avail * 1000 / volts;	//converts vehicle battery to an ampere-hour value using station voltage
+		var max_amps = Math.min(veh_amp_hour, amp_hours);	//whichever is worse is the bottleneck
 		
 		//2c. use following function to store flt_cap of the day
+		
+		//update CF and PF
+		CF = 1 - calc_cf_calendar_aging(temp, i);
+		//PF -= calc_pf_with_SOC_and_temp(msoc, max_amps, temp);		//TODO find calendar aging power fade algorithm
+
+		//note: PF is not currently changing so PF >= CF
+		//flt_cap[i] = veh_pop * (1 - msoc) * battery_capacity * Math.min(CF, PF);
+		flt_cap.push(veh_pop * (1 - msoc) * battery_capacity * Math.min(CF, PF));
+
 	}
+	
 
 
 	if (!(battery_capacity >= 0))	//checks for NaN
 		flt_cap = 0;
+	
+	
+	console.log(flt_cap);
+	return flt_cap;
 }
+
 
 
 //TODO More the just PGE
 
 //TODO exclude holidays
+
+//TODO flt_cap is now an array
 /**
  * Calculates the money saved using PGE's TOU-D plan over one day
  * @param {*} season - Either Winter or Summer

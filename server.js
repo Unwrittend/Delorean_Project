@@ -10,7 +10,7 @@ const ejs = require("ejs");
 app.set("view engine", "ejs");
 
 // Connect to DeLorean Database
-mongoose.connect("mongodb+srv://[username]:[password]@cluster0.joafk.mongodb.net/delorean?retryWrites=true&w=majority");
+mongoose.connect("mongodb+srv://chris:XyMmhyAD9efV1q2F@cluster0.joafk.mongodb.net/delorean?retryWrites=true&w=majority");
 
 // Schema for the Vehicles collection within DeLorean database
 let vehiclesSchema = mongoose.Schema,
