@@ -4,7 +4,7 @@
 // This document contains a single function. It runs whenever the user selects a new car make
 
 // Populate the multi-select with user-specified cars. Triggered when the dropdown for manufacturer is changed
-function populateCars() {
+function populateCars(callback) {
 
 	// Empty the container before populating it
 	$("#car-list").empty();
@@ -40,13 +40,15 @@ function populateCars() {
 
 				$("#" +carId).append("<img src=\"images/vehicles/" +carId +".png\" alt=\"image\" class=\"img-thumbnail\" />");
 
-				$("#" +carId).append("<div><h4>" +mc_value + " " +carModel +"</h4><h6 property=\"" +carBattery +"\">Battery: " +carBattery +" kWh</h6></div>");
+				$("#" +carId).append("<div><h4>" +mc_value + " " +carModel +"</h4><h6 property=\"" +carBattery +"\">Battery size: " +carBattery +" kWh</h6></div>");
 			});
 
 			// Attach click event handler to the newly created elements
 			$(document).on("click", ".option", toggleMCSelected);
 
 			$("#car-spinner").hide(100);
+
+			typeof callback === "function" && callback();
 		},
 
 		// Provide a descriptive error message

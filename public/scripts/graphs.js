@@ -1,19 +1,5 @@
 // D3JS Document
 
-// Clear graph based on id. If -1, clear all.
-function clearGraph(id) {
-	if(id === 0) {
-		$("#svg-ps").empty();
-	}
-	else if(id === 1) {
-		$("#svg-fa").empty();
-	}
-	else if(id === -1) {
-		$("#svg-ps").empty();
-		$("#svg-fa").empty();
-	}
-}
-
 /** *************************************************************************** **/
 /**                               Peak Shaving                                  **/
 /** *************************************************************************** **/
@@ -31,9 +17,25 @@ function updatePS() {
 		.attr("width", CHART_WIDTH + MARGIN.right + MARGIN.left)
 		.attr("height", CHART_HEIGHT + MARGIN.top + MARGIN.bottom);
 
-	xScale.domain(flt_tou_profit.map((d) => d.season)); // Unique token used to separate data (here, either ID or region can be used)
-	yScale.domain([0, (d3.max(flt_tou_profit, d => d.revenue) + (d3.max(flt_tou_profit, d => d.revenue) / 10)) ]); //  + (d3.max(flt_tou_profit, d => d.revenue) / 10)
+	// To set upper bound of y-axis, snap to powers of ten
+	const rangeMax = d3.max(flt_tou_profit, d => d.revenue);
+	let yMax = 1;
+	if(rangeMax > 0) {
+		yMax = Math.log10(rangeMax);
+		yMax = Math.floor(yMax);
+		yMax = Math.pow(10, yMax);
 
+		// Split powers of ten into quarters, to improve readability
+		yMax *= 2.5;
+		while(rangeMax / yMax > 1)
+			yMax *= 2;
+	}
+
+	// Set scales
+	xScale.domain(flt_tou_profit.map((d) => d.season)); // Unique token used to separate data
+	yScale.domain([0, yMax]);
+
+	d3.select("#svg-ps g").remove(); // Remove old graph
 	const chart = chartContainer.append("g"); // Group in SVG for the many bars
 
 	// X-axis
@@ -52,7 +54,7 @@ function updatePS() {
 	// Y-axis
 	chart
 		.append("g")
-		.call(d3.axisLeft(yScale).tickSizeOuter(0))
+		.call(d3.axisLeft(yScale).tickSize(-CHART_WIDTH).tickSizeOuter(0))
 		.attr("color", "#000")
 		.attr("transform", `translate(${MARGIN.left}, 10)`);
 
@@ -120,12 +122,13 @@ function updateFA() {
 		xScale_Labels.domain([0, 24]);
 		yScale_FA.domain([0, 100]) // Determines max height of the graph (we add 3 so there's some padding above the tallest bar)
 
+		d3.select("#svg-fa g").remove();
 		const chart_FA = chartContainer_FA.append("g"); // Group in SVG for the many bars
 
 		// X-axis
 		chart_FA
 			.append("g")
-			.call( d3.axisBottom(xScale_Labels) ) //.ticks(10, "s").tickSizeOuter(0)
+			.call( d3.axisBottom(xScale_Labels).tickSize(-CHART_HEIGHT_FA).tickSizeOuter(0) ) //.ticks(10, "s").tickSizeOuter(0)
 			.attr("transform", `translate(${MARGIN_FA.left}, ${CHART_HEIGHT_FA + 10})`)
 			.attr("color", "#000");
 
@@ -138,7 +141,7 @@ function updateFA() {
 		// Y-axis
 		chart_FA
 			.append("g")
-			.call(d3.axisLeft(yScale_FA))
+			.call(d3.axisLeft(yScale_FA).tickSize(-CHART_WIDTH_FA))
 			.attr("color", "#000")
 			.attr("transform", `translate(${MARGIN_FA.left}, 10)`);
 

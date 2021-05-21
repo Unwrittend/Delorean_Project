@@ -9,28 +9,54 @@ widget_width = widget_width.substr(0, widget_width.length - 2);
 widget_width = parseInt(widget_width, 10);
 widget_width -= 50;
 
-let mode = 1;
-
 function switchToLight(el) {
-	$("link[href=\"sass/style-dark.css\"]").attr("href", "sass/style.css");
+	$("link[href=\"sass/style-dark.css\"]").attr("href", "sass/style-light.css");
+	$("nav").removeClass("navbar-dark");
+	$("nav").addClass("navbar-light");
 	$(".style-switch .btn").removeClass("selected");
 	$(el).addClass("selected");
+
+	Cookies.set("mode", "light");
+	updateBrand();
 }
 
 function switchToDark(el) {
-	$("link[href=\"sass/style.css\"]").attr("href", "sass/style-dark.css");
+	$("link[href=\"sass/style-light.css\"]").attr("href", "sass/style-dark.css");
+	$("nav").removeClass("navbar-light");
+	$("nav").addClass("navbar-dark");
 	$(".style-switch .btn").removeClass("selected");
 	$(el).addClass("selected");
+
+	Cookies.set("mode", "dark");
+	updateBrand();
+}
+
+// Change navigation logo (triggers on various events)
+function updateBrand() {
+	let name = $("#navbar-brand").attr("src").substring(7);
+	if($(window).width() <= 767) {
+		name = "images/" + name.substring(0, 5) + "sm";
+	}
+	else {
+		name = "images/" + name.substring(0, 5) + "lg";
+	}
+	//-- Replace with dark logo if necessary
+	if(Cookies.get("mode") === "dark") {
+		name += "_dark.png";
+	}
+	else {
+		name += "_light.png"
+	}
+	$("#navbar-brand").attr("src", name);
 }
 
 // Set a red border and print an error message
 function throwError(obj, message) {
-	let objId = $(obj).attr("id");
 	$(obj).addClass("invalid");
 }
 
 // Clear the error message and border
-function clearError(obj) {
+function clearError() {
 	$(".invalid").removeClass("invalid");
 }
 
@@ -44,17 +70,20 @@ $(".view-toggle button").click(function (){
 function toggleMCSelected() {
 	$(".option").removeClass("selected");
 	$(this).addClass("selected");
+
+	Cookies.set("make", $("#car-make").val());
+	Cookies.set("model", $(this).attr("id"));
 	validateAndUpdate();
 }
 
-// Next 2 functions are for the mode toggle
+// Next 2 functions are for the view toggle
 function switchToIndiv() {
 	$("#optin-panel").addClass("d-none");
 	$("#hours-panel").removeClass("d-none");
 	$("#flt-roi").addClass("d-none");
 	$("#indiv-roi").removeClass("d-none");
 	$("#kwh-panel").addClass("d-none");
-	mode = 0;
+	Cookies.set("view", "individual");
 }
 
 function switchToOrg() {
@@ -63,7 +92,24 @@ function switchToOrg() {
 	$("#flt-roi").removeClass("d-none");
 	$("#indiv-roi").addClass("d-none");
 	$("#kwh-panel").removeClass("d-none");
-	mode = 1;
+	Cookies.set("view", "organizer");
+}
+
+// Find the selected car (using cookies) and show it in the multiple-choice
+function findCar() {
+	let make = Cookies.get("make");
+	let sel_make = $("#car-make");
+
+	// Do not make an AJAX call if the user has not selected a car, or if they have not navigated away
+	// from the currently selected one.
+	if(make && make !== sel_make.val()){
+		sel_make.val(make);
+		populateCars(function() {
+			$(".option").removeClass("selected");
+			$("#" +Cookies.get("model")).addClass("selected");
+			validateAndUpdate();
+		});
+	}
 }
 
 /*****************  Bind sliders and text fields  ********************/
@@ -165,7 +211,6 @@ let useFuture = false;
 $("#graphType").change(function () {
 	// If we do not want to show the future graph:
 	if (useFuture) {
-		clearGraph(1);
 		useFuture = false;
 	}
 	// If we do want to overlay the future graph:
@@ -176,18 +221,22 @@ $("#graphType").change(function () {
 	updateFA();
 });
 
-// Update graph width when window is resized (prevents horizontal scroll)
+/***********************  Stuff to run on window resize  *******************************/
 $(window).resize(function(){
+	// Update graph width
 	widget_width = $(".form-result").css("width");
 	widget_width = widget_width.substr(0, widget_width.length - 2);
 	widget_width = parseInt(widget_width, 10);
 	widget_width -= 50;
-	clearGraph(-1);
-	validateAndUpdate();
+
+	//validateAndUpdate();
+	if($("#car-list .selected").length)
+		updatePS();
 	updateFA();
+	updateBrand();
 });
 
-/*********************  Validation  *****************************/
+/********************************  Validation  ***************************************/
 function validateAndUpdate() {
 	clearError();
 
@@ -208,7 +257,7 @@ function validateAndUpdate() {
 	}
 
 	// If in organizer view:
-	if(mode === 1) {
+	if(Cookies.get("view") === "organizer") {
 		let optin = $("#optinText");
 
 		// If opt-in text box is out of range
@@ -218,20 +267,36 @@ function validateAndUpdate() {
 		}
 	}
 	// If in individual view:
-	else if(mode === 0) {}
+	else if(Cookies.get("view") === "individual") {}
 
 	// At this point, check if we can update the graphs
 	if(valid) {
-		console.log("Update!");
+		//console.log("Update!"); Dev Only
 		updateGraphs();
 	}
 	else {
-		console.log("Failed.");
+		//console.log("Failed."); Dev Only
 	}
 }
 
 /*********************  Other stuff to run on page load  *****************************/
 $(function() {
+	// Initialize cookie if empty
+	if( !(Cookies.get("mode")) )
+		Cookies.set("mode", "", { expires: 7 });
+
+	if(Cookies.get("view") === "individual")
+		switchToIndiv();
+
+	// If the browser cookie only has path, set values to default. If it has values, then update the browser JSON obj
+	if(Cookies.get("mode") === "") {
+		// Check if user has enabled dark mode on their computer, and change styles accordingly
+		if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+			switchToDark($(".style-switch .btn")[1]); // Automatically updates the cookie
+		}
+	}
+
+	// Hide loading spinners and reset the car multiple choice field
 	$(".spinner-wrapper").hide();
 	$("#car-make").val("default");
 
