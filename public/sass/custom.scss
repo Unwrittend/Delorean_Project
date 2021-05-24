@@ -9,9 +9,9 @@
 // -- Theme
 $black:			#0a0a0a;
 $black-shadow:	rgba(0, 0, 0, 0.75);
-$blue: rgb(139, 199, 241);
-$grey:			rgb(245, 245, 245);
-$green: rgb(116, 193, 125);
+$blue: 			rgb(139, 199, 241);
+$grey:			rgb(220, 220, 220);
+$green: 		rgb(116, 193, 125);
 $orange: 		rgb(251, 196, 15);
 $orange-dark: 	rgb(164, 123, 0);
 $white:			rgb(245, 245, 245);
@@ -30,8 +30,16 @@ $body-color: 	$black;
 $radius-container: 10px;
 
 // Navigation
+$brand-img-height:					55px;
 $nav-bkg-color:						$body-bg;
-$nav-link-color:					#217a2e;
+$nav-link-color:					$body-color;
+$nav-link-bkg-color:				$grey;
+$nav-link-hover:					#ccc;
+
+$icon-height:						25px;
+$bar-bg:							#444;
+$bar-height:						4px;
+$bar-width:							40px;
 
 // Footer
 $footer-bkg-color:					$body-color;

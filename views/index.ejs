@@ -45,19 +45,22 @@
     <script src="scripts/app.js" defer></script>
     <script src="scripts/fleet-capacity.js" defer></script>
     <script src="scripts/graphs.js" defer></script>
-    <script src="scripts/dynamics.js" defer></script>
+    <script src="scripts/project.js" defer></script>
 
     <title>DeLorean Energy</title>
 </head>
 <body>
 <!-- Main Navigation -->
 <!--================================================================================================================-->
-<nav class="navbar navbar-expand-md navbar-<%= user_mode %> justify-content-center">
+<nav class="navbar navbar-expand-md navbar-<%= user_mode %>">
     <a class="screen-reader-only" href="#article">Skip to Content</a>
-    <a class="navbar-brand" href="/"><img id="navbar-brand" class="navbar-brand-img" src="images/logo_lg_<%= user_mode %>.png"/></a>
+    <a class="navbar-brand" href="/"><img id="navbar-brand" class="navbar-brand-img" src="images/logo_lg_<%= user_mode %>.png" alt="DeLorean Energy"/></a>
 
     <button class="navbar-toggler align-item" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-        <span class="navbar-toggler-icon"></span>
+        <span class="screen-reader-only">Toggle navigation</span>
+        <span id="b1" class="bar"></span>
+        <span id="b2" class="bar"></span>
+        <span id="b3" class="bar"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="collapsibleNavbar">
@@ -66,21 +69,21 @@
                 <a class="nav-link" href="/">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Project</a>
+                <a class="nav-link selected-nav" href="#">Project</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">About</a>
             </li>
-            <li class="nav-item style-switch">
-                <% if(user_mode !== "dark") { %>
-                    <button class="btn selected" onclick="switchToLight(this);"><i class="bi bi-sun"></i></button>
-                    <button class="btn" onclick="switchToDark(this);"><i class="bi bi-moon"></i></button>
-                <% } else { %>
-                    <button class="btn" onclick="switchToLight(this);"><i class="bi bi-sun"></i></button>
-                    <button class="btn selected" onclick="switchToDark(this);"><i class="bi bi-moon"></i></button>
-                <% } %>
-            </li>
         </ul>
+        <div class="style-switch">
+            <% if(user_mode !== "dark") { %>
+                <button class="btn selected" onclick="switchToLight(this);"><i class="bi bi-sun"></i></button>
+                <button class="btn" onclick="switchToDark(this);"><i class="bi bi-moon"></i></button>
+            <% } else { %>
+                <button class="btn" onclick="switchToLight(this);"><i class="bi bi-sun"></i></button>
+                <button class="btn selected" onclick="switchToDark(this);"><i class="bi bi-moon"></i></button>
+            <% } %>
+        </div>
     </div>
 </nav>
 <!-- Content (sr-only link jumps here) -->

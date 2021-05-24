@@ -10,7 +10,7 @@
 $black:			#0a0a0a;
 $black-shadow:	rgba(100, 100, 100, 0.5); // Not actually black here, because of dark mode
 $blue:			rgb(67, 121, 179);
-$grey:			rgb(245, 245, 245);
+$grey: 			rgb(35, 35, 35);
 $green: 		rgb(11, 132, 27);
 $orange: 		rgb(251, 196, 15);
 $orange-dark: 	rgb(164, 123, 0);
@@ -30,8 +30,16 @@ $body-color: 	$white;
 $radius-container: 10px;
 
 // Navigation
+$brand-img-height:					55px;
 $nav-bkg-color:						rgb(35, 35, 35);
-$nav-link-color:					#217a2e;
+$nav-link-color:					$body-color;
+$nav-link-bkg-color:				$grey;
+$nav-link-hover: 					rgb(51, 51, 51);
+
+$icon-height:						25px;
+$bar-bg:							#aaa;
+$bar-height:						4px;
+$bar-width:							40px;
 
 // Footer
 $footer-bkg-color:					rgb(35, 35, 35);
