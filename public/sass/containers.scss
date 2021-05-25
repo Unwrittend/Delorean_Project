@@ -6,6 +6,7 @@
 // Navigation container
 nav.navbar {
 	background-color: $nav-bkg-color;
+	border-bottom: $nav-border;
 	border-bottom-left-radius: $radius-container;
 	border-bottom-right-radius: $radius-container;
 	filter: drop-shadow(0px 0px 5px $black-shadow);
