@@ -70,7 +70,7 @@ function calc_cf_with_current_cap(cell_cap, max_rated_cell_cap, CF_factor = .8) 
     
     var ratio = time_cd / (time_cd + time_cs);
 
-    return (a_c + B_c * (Math.pow(ratio, b_c)) + y_c * Math.pow(SOC_min - 0.25), c_c) * Math.E((-E_a / (R * tempurature))) * Math.pow(Ah, z);
+    return (a_c + B_c * (Math.pow(ratio, b_c)) + y_c * Math.pow((SOC_min - 0.25), c_c) * Math.exp((-E_a / (R * tempurature))) * Math.pow(Ah, z));
  }
 
  /**
@@ -87,7 +87,7 @@ function calc_cf_calendar_aging(cell_temp, days) {
         Ea = 24500,
         R = 8.314;
 
-    return (A * Math.exp(-Ea / (R * cell_temp)) * Math.sqrt(days));
+    return A * Math.exp(-Ea / (R * cell_temp)) * Math.sqrt(days);
  }
 
 /**
