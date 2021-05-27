@@ -3,6 +3,81 @@
 // SCSS Document
 // This Document has styles specific to display on small screens (Less than or equal to 767 pixels wide)
 @media screen and  (max-width: 767px) {
+	nav.navbar {
+		.navbar-toggler{
+			width: $bar-width;
+			height: $icon-height;
+			position: relative;
+			display: block;
+			border: none;
+
+			.bar {
+				display: block;
+				background: $bar-bg;
+				width: $bar-width;
+				height: $bar-height;
+				position: absolute;
+				left: 0;
+				border-radius: $bar-height / 2;
+				transition: 0.5s;
+				-webkit-transition: 0.5s;
+				-moz-transition: 0.5s;
+			}
+
+			#b1 {
+				top: 0;
+			}
+
+			#b2 {
+				top: 50%;
+			}
+
+			#b3 {
+				top: 100%;
+			}
+
+			// Style when the button is clicked
+			#b1.anim {
+					transform: rotate(-45deg) translate(-10px, 9px);
+					transition-duration:0.5s;
+			}
+			#b2.anim {
+					opacity: 0;
+					transition-duration:0.5s;
+			}
+			#b3.anim {
+					transform: rotate(45deg) translate(-8px, -8px);
+					transition-duration:0.5s;
+			}
+		}
+
+		.navbar-toggler:focus {
+			box-shadow: none;
+			border: none;
+			background-color: transparent;
+		}
+
+		.navbar-collapse {
+			height: auto;
+
+			ul.navbar-nav {
+				.nav-item {
+					border-right: none;
+					border-bottom: solid $btn-border-color 1px;
+				}
+
+				.nav-link {
+					background-color: $body-bg;
+				}
+			}
+		}
+	}
+
+	.style-switch {
+		margin-left: 10px;
+		margin-bottom: 20px;
+	}
+
 	.form-group {
 		width: 100%;
 	}

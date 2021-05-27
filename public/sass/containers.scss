@@ -3,27 +3,68 @@
 // SCSS Document
 // This document contains all styles for the containers (divs, navs, mains, etc.)
 
+// Navigation container
 nav.navbar {
 	background-color: $nav-bkg-color;
+	border-bottom: $nav-border;
 	border-bottom-left-radius: $radius-container;
 	border-bottom-right-radius: $radius-container;
 	filter: drop-shadow(0px 0px 5px $black-shadow);
-	padding-left: 10px;
-	padding-right: 10px;
+	padding: 0 10px;
 
-	ul.navbar-nav {
-		margin-left: auto;
+	// The part of the navigation that collapses on mobile
+	.navbar-collapse {
+		height: $brand-img-height + 10;
 
-		.nav-link {
-			color: $nav-link-color;
+		// The actual navigation menu
+		ul.navbar-nav {
+			height: 100%;
+
+			// Wrapper for the clickable links
+			.nav-item {
+				height: 100%;
+				line-height: 3rem;
+				border-right: solid $btn-border-color 1px;
+			}
+
+			.nav-item:last-child {
+				border-right: none;
+			}
+
+			// The clickable links
+			.nav-link {
+				background-color: $nav-link-bkg-color;
+				color: $nav-link-color;
+				height: 100%;
+				padding: 8px 15px;
+			}
+
+			.nav-link:hover {
+				background-color: $nav-link-hover;
+			}
+
+			// Styling for the tab if we are on that page
+			.selected-nav {
+				background-color: $green;
+			}
+
+			.selected-nav:hover {
+				background-color: $green;
+			}
 		}
 	}
 }
 
 .navbar-brand-img {
-	height: 55px;
+	height: $brand-img-height;
 	width: auto;
 	margin-left: 10px;
+}
+
+// Switches for Light mode and Dark mode
+.style-switch {
+	margin-left: auto;
+	margin-top: 5px;
 }
 
 main.content {
@@ -55,10 +96,6 @@ main.content {
 
 .btn-action:active {
 	background-color: $green;
-}
-
-.style-switch {
-	margin-left: 3px;
 }
 
 // Form items (in order of DOM hierarchy)

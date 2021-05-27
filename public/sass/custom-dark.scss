@@ -10,11 +10,12 @@
 $black:			#0a0a0a;
 $black-shadow:	rgba(100, 100, 100, 0.5); // Not actually black here, because of dark mode
 $blue:			rgb(67, 121, 179);
-$grey:			rgb(245, 245, 245);
+$grey: 			rgb(70, 70, 70);
 $green: 		rgb(11, 132, 27);
 $orange: 		rgb(251, 196, 15);
 $orange-dark: 	rgb(164, 123, 0);
-$white:			rgb(225, 225, 225);
+$white:			rgb(200, 200, 200);
+$light-grey: 	rgb(90, 90, 90);
 
 // Global Fonts
 // -- Theme
@@ -30,8 +31,17 @@ $body-color: 	$white;
 $radius-container: 10px;
 
 // Navigation
+$brand-img-height:					55px;
 $nav-bkg-color:						rgb(35, 35, 35);
-$nav-link-color:					#217a2e;
+$nav-link-color:					$body-color;
+$nav-link-bkg-color:				$grey;
+$nav-link-hover: 					rgb(51, 51, 51);
+$nav-border:						solid 1px;
+
+$icon-height:						25px;
+$bar-bg:							#aaa;
+$bar-height:						4px;
+$bar-width:							40px;
 
 // Footer
 $footer-bkg-color:					rgb(35, 35, 35);
@@ -45,11 +55,12 @@ $input-bkg-color:		rgb(35, 35, 35);
 $btn-bkg-color: 		$body-bg;
 $btn-border-color:		rgb(65, 65, 65);
 
-$input-bg: rgb(25, 25, 25);
-$input-color: $white;
-$form-select-color: $white;
-$form-text-color: $white;
-$input-border-color: rgb(45, 45, 45);
+$input-bg: 					rgb(25, 25, 25);
+$input-color: 				$body-bg;
+$form-select-color: 		$body-bg;
+$form-select-border-color: 	$light-grey;
+$form-text-color: 			$body-bg;
+$input-border-color: 		$light-grey;
 
 input[type="range"].form-control, .ui-widget-content {
 	background-color: $white;
