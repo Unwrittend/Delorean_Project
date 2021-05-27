@@ -151,8 +151,9 @@ function calc_flt_cap(years = 5) {
  */
 function calc_flt_cap(years = 5) {
 	//1. Initial fleet cap before any battery degradation
-	var init_flt_cap = veh_pop * (1 - msoc) * battery_capacity * Math.min(CF, PF);
-	flt_cap[0] = veh_pop * (1 - msoc) * battery_capacity * Math.min(CF, PF);
+	var batt_degrad = Math.min(CF, PF) / 100;
+	var init_flt_cap = veh_pop * (1 - msoc) * battery_capacity * batt_degrad;
+	flt_cap[0] = veh_pop * (1 - msoc) * battery_capacity * batt_degrad;
 
 	//2. Fleet cap over x years.
 	//2a. pull charing station volts from MongoDB
@@ -165,6 +166,7 @@ function calc_flt_cap(years = 5) {
 	
 	
 	//perhaps make this a smaller interval?
+	//previously working at a daily level
 	for (i = 1; i < years * 365; i++){
 		//2b. Calculate CF and PF from a day's charging
 

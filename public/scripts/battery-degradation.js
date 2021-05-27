@@ -45,6 +45,7 @@ function calc_cf_with_current_cap(cell_cap, max_rated_cell_cap, CF_factor = .8) 
 }
 
 /**
+ * @jordan use this
  * Algorithm from Cordoba-Arenas et al. 2015
  * Cycle aging algorithm
  * calculates the capacity lose (%) of capacity fade under SOC, total Ampere hours sent, and Temp conditions
@@ -70,7 +71,7 @@ function calc_cf_with_current_cap(cell_cap, max_rated_cell_cap, CF_factor = .8) 
     
     var ratio = time_cd / (time_cd + time_cs);
 
-    return (a_c + B_c * (Math.pow(ratio, b_c)) + y_c * Math.pow((SOC_min - 0.25), c_c) * Math.exp((-E_a / (R * tempurature))) * Math.pow(Ah, z));
+    return (a_c + (B_c * Math.pow(ratio, b_c)) + (y_c * Math.pow((SOC_min - 0.25), c_c))) * Math.exp((-E_a / (R * tempurature))) * Math.pow(Ah, z);
  }
 
  /**
@@ -110,6 +111,7 @@ function calc_pf_with_current_res(internal_res, charge_transfer_res, init_intern
 
 //note when being used give it a CR (current rate) * Time
 /**
+ * @jordan use this
  * Algorithm from Cordoba-Arenas et al. 2015
  * Cycle aging algorithm
  * calculates the resistance growth of power fade using SOC, total Ampere hours sent, and Temp conditions
@@ -134,7 +136,7 @@ function calc_pf_with_current_res(internal_res, charge_transfer_res, init_intern
     
         var ratio = time_cd / (time_cd + time_cs);
     
-    return (a_r) + (B_r * Math.pow(SOC_min - 0.25, c_r)) + (y_r * Math.E(d_r * (5 - ratio)) + e_r * (SOC_min - 0.25) * Math.E(-E_aR / (R * tempurature)) * Ah);
+    return (a_r) + (B_r * Math.pow(SOC_min - 0.25, c_r)) + (y_r * Math.exp(d_r * (5 - ratio)) + e_r * (SOC_min - 0.25) * Math.exp(-E_aR / (R * tempurature)) * Ah);
 }
 
 
