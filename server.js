@@ -52,6 +52,21 @@ app.get("/", (req, res) => {
 	if(!(user_mode))
 		user_mode = "light";
 
+	// Render the homepage
+	res.render("index", {
+		user_mode: user_mode,
+	});
+});
+
+
+// Load project.ejs
+app.get("/project", (req, res) => {
+
+	// Read cookie to find out user's dark/light mode preference. Default is light
+	user_mode = req.cookies.mode;
+	if(!(user_mode))
+		user_mode = "light";
+
 	// Read cookie to find user's view preference (organizer/individual). Default is organizer
 	if(!(req.cookies.view))
 		res.cookie("view", "organizer");
@@ -74,8 +89,8 @@ app.get("/", (req, res) => {
 			i++;
 		});
 
-		// Render the homepage
-		res.render("index", {
+		// Render the project page
+		res.render("project", {
 			user_mode: user_mode,
 			user_view: user_view,
 			makeList: makeList,

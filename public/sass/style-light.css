@@ -11068,6 +11068,67 @@ select.form-select:focus {
   fill: #0a0a0a;
 }
 
+nav.header-expanded {
+  background-color: rgba(245, 245, 245, 0.6);
+}
+nav.header-expanded img {
+  height: 70px;
+}
+nav.header-expanded #collapsibleNavbar, nav.header-expanded #collapsibleNavbar > * {
+  display: none !important;
+}
+
+#landing {
+  padding: 0;
+  margin-right: 0;
+  margin-left: -17px;
+}
+
+#titleVideo {
+  object-fit: cover;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+}
+
+.title {
+  position: absolute;
+  left: 30px;
+  top: 38%;
+  max-width: 40rem;
+  padding: 16px;
+  background: transparent;
+}
+
+.header-btn {
+  background-color: #74c17d;
+  margin-right: 10px;
+}
+
+.banner {
+  max-width: 58rem;
+  line-height: 4rem;
+  margin-top: 50px;
+}
+
+.description-grid {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+.description-grid .grid-item {
+  margin-left: 7%;
+}
+.description-grid .grid-item .form-group h4, .description-grid .grid-item .form-group .h4 {
+  text-align: center;
+}
+.description-grid .grid-item .form-group p {
+  margin-top: 35px;
+  margin-bottom: 35px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
 @media screen and (max-width: 767px) {
   nav.navbar .navbar-toggler {
     width: 40px;

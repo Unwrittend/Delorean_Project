@@ -41,20 +41,18 @@
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.mjs"></script>
 
-    <!-- Our custom scripts. App = generic functionality; fleet-capacity = calculations; graphs = D3JS; dynamics = AJAX -->
+    <!-- Our custom scripts. App = generic functionality -->
     <script src="scripts/app.js" defer></script>
-    <script src="scripts/fleet-capacity.js" defer></script>
-    <script src="scripts/graphs.js" defer></script>
-    <script src="scripts/project.js" defer></script>
+    <script src="scripts/home.js" defer></script>
 
-    <title>DeLorean Energy</title>
+    <title>Vehicle-to-Grid Feasibility | Electric Car Profitability - DeLorean Energy</title>
 </head>
 <body>
 <!-- Main Navigation -->
 <!--================================================================================================================-->
-<nav class="navbar navbar-expand-md navbar-<%= user_mode %>">
+<nav class="navbar fixed-top navbar-expand-md navbar-<%= user_mode %> justify-content-center header-expanded">
     <a class="screen-reader-only" href="#article">Skip to Content</a>
-    <a class="navbar-brand" href="/"><img id="navbar-brand" class="navbar-brand-img" src="images/logo_lg_<%= user_mode %>.png" alt="DeLorean Energy"/></a>
+    <a class="navbar-brand align-items-center" href="/"><img id="navbar-brand" class="navbar-brand-img" src="images/logo_lg_<%= user_mode %>.png" alt="DeLorean Energy"/></a>
 
     <button class="navbar-toggler align-item" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
         <span class="screen-reader-only">Toggle navigation</span>
@@ -63,13 +61,13 @@
         <span id="b3" class="bar"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <div id="collapsibleNavbar" class="collapse navbar-collapse">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="/">Home</a>
+                <a class="nav-link selected-nav" href="#">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link selected-nav" href="#">Project</a>
+                <a class="nav-link" href="/project">Project</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">About</a>
@@ -88,184 +86,51 @@
 </nav>
 <!-- Content (sr-only link jumps here) -->
 <!--=================================================================================================================-->
-<main id="article" class="container-fluid content">
+<main id="landing" class="container-fluid content">
 
-    <!-- Buttons to decide whether client wants Individual or Organizer View -->
-    <!--==================================================================================================-->
-    <div class="row d-flex justify-content-center text-center">
-        <section class="view-toggle">
-            <h1 class="text-center">Is V2G Right For You?</h1>
-            <% if(user_view === "individual") { %>
-                <button id="ind-btn" class="btn selected" onclick="switchToIndiv()">Individual</button>
-                <button id="org-btn" class="btn" onclick="switchToOrg()">Organizer</button>
-            <% } else { %>
-                <button id="ind-btn" class="btn" onclick="switchToIndiv()">Individual</button>
-                <button id="org-btn" class="btn selected" onclick="switchToOrg()">Organizer</button>
-            <% } %>
-        </section>
+    <video autoplay muted loop id="titleVideo">
+        <source src="images/title-1080.mp4" type="video/mp4">
+    </video>
+    <div class="title">
+        <h1>Vehicle-to-Grid Feasibility Studies For a Greener Tomorrow</h1>
+        <a class="btn header-btn" href="#">Learn More</a><a class="btn header-btn" href="/project">Use the Calculator</a>
     </div>
-    <!-- The actual form -->
-    <!--=============================================================================================================-->
-    <div class="row main-form">
-        <!-- Left Column -->
-        <!--=========================================================================================================-->
-        <div class="grid-item col-md-6 col-lg-4">
-            <div id="mc" class="form-group">
-                <!-- NodeJS populates all the options -->
-                <label for="car-make">Vehicle Make/Model</label>
 
-                <!-- info icon and loading spinner -->
-                <a href="#" class="icon-info"></a>
-                <button id="vehicle-find-btn" class="btn btn-action" onclick="findCar()"><i class="bi bi-arrow-counterclockwise"></i></button>
-                <span id="car-spinner" class="spinner-wrapper"><div class="spinner"></div><em>Loading</em></span>
+    <div class="row d-flex justify-content-center text-center">
+        <h1 class="banner">DeLorean Energy allows you to find out if Vehicle-to-Grid is profitable for your community</h1>
+    </div>
 
-                <select id="car-make" class="form-select" name="car-make" oninput="populateCars()">
-                    <option value="default" selected disabled hidden>--Select Make--</option>
-                    <% makeList.forEach(make => { %>
-                    <option value="<%= make %>"><%= make %></option>
-                    <% }); %>
-                </select>
-
-                <!-- JQuery populates all the choices -->
-                <div id="car-list" class="multi-choice">
-                    <!-- Boilerplate option>
-                    <div id="[car id]" class="option">
-                        <img src="images/[car id].png" alt="image" class="img-thumbnail" />
-                        <div>
-                            <h4>[car make] [car model]</h4>
-                            <h6>Lorem</h6>
-                        </div>
-                    </div>
-                    -->
-                </div>
-            </div>
-        </div>
-
-        <!-- Center Column  -->
-        <!--=========================================================================================================-->
-        <div class="grid-item col-md-6 col-lg-4">
-
-            <!-- Map (Range, 1000-X) -->
-            <!--=========================================================================================-->
-            <!-- The ID is there because the range of the slider will be generated dynamically -->
+    <div class="row description-grid">
+        <div class="grid-item col-sm-11 col-md-5 col-lg-3">
             <div class="form-group">
-                <label>Map</label>
-                <a href="#" class="icon-info"></a>
-                <input type="text" name="zip" id="zip" class="form-control input-text" value="95050" placeholder="Zip Code" />
-                <div id="map-container">
-                    <script>
-						mapboxgl.accessToken = 'pk.eyJ1IjoiYXJqdW5jaGltbmkiLCJhIjoiY2tsZTVnMGc4MWJjYTJvcXRpcGF3Ymt0MCJ9.NsWvjwV6q2X_sqWWANxOdQ';
-						var map = new mapboxgl.Map({
-							container: 'map-container', // container id
-							style: 'mapbox://styles/mapbox/streets-v11', // style URL
-							center: [-74.5, 40], // starting position [lng, lat]
-							zoom: 9, // starting zoom
-						});
-                    </script>
+                <h4>What is Vehicle-to-Grid?</h4>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vitae erat dapibus, iaculis neque vitae, accumsan est. Nunc ut nisl eget lacus dictum laoreet sit amet vel velit.</p>
+                <div class="d-flex justify-content-center">
+                    <a class="btn header-btn">Learn More</a>
                 </div>
             </div>
+        </div>
 
-            <!-- Minimum State of Charge (Range, 0-100) -->
-            <!--==========================================================================================-->
+        <div class="grid-item col-sm-11 col-md-5 col-lg-3">
             <div class="form-group">
-                <label for="msocSlider">Minimum State of Charge</label>
-                <input type="range" name="msoc" id="msocSlider" class="form-control slider" min="0" max="100" oninput="bindInputs($(this), $('#msocText'))" />
-                <span class="align-left">0&#37;</span><span class="align-right">100&#37;</span>
-                <br><br>
+                <h4>What is the Calculator's Purpose?</h4>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vitae erat dapibus, iaculis neque vitae, accumsan est. Nunc ut nisl eget lacus dictum laoreet sit amet vel velit.</p>
                 <div class="d-flex justify-content-center">
-                    <input type="number" name="msoc" id="msocText" class="form-control input-text" value="50" min="0" max="100" oninput="bindInputs($(this), $('#msocSlider'))" />
-                </div>
-            </div>
-
-            <!-- Hours Charging (Range, 0-24) (only show in individual view) -->
-            <!--===========================================================================================-->
-            <div id="hours-panel" class="form-group d-none">
-                <label for="slider">Hours Charging</label>
-                <a href="#" class="icon-info"></a>
-                <div id="hours-group">
-                    <input id="hours-1" class="form-control input-text" type="time" /> -
-                    <input id="hours-2" class="form-control input-text" type="time" />
-                    <div class="hours-wrapper">
-                        <div id="slider"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Opt-in Percentage (Range, 0-100) (only show in organization view) -->
-            <!--==========================================================================================-->
-            <div id="optin-panel" class="form-group">
-                <label for="optinSlider">Opt-In Percentage</label>
-                <input type="range" name="optin" id="optinSlider" class="form-control slider" min="0" max="100" oninput="bindInputs($(this), $('#optinText'))" />
-                <span class="align-left">0&#37;</span><span class="align-right">100&#37;</span>
-                <br><br>
-                <div class="d-flex justify-content-center">
-                    <input type="number" name="optin" id="optinText" class="form-control input-text" value="50" min="0" max="100" oninput="bindInputs($(this), $('#optinSlider'))" />
+                    <a class="btn header-btn">User Guide</a>
+                    <a class="btn header-btn" href="/project">Use the Calculator</a>
                 </div>
             </div>
         </div>
 
-        <!-- Right Column (Mostly graphs &c. -->
-        <!--=========================================================================================================-->
-        <div class="grid-item col-md-8 offset-md-2 col-lg-4 offset-lg-0">
-
-            <!-- Return on Investment (Text, USD) -->
-            <!--============================================================================================-->
-            <div class="form-group form-result">
-                <label>ROI</label>
-                <h3 class="text-center">$<span id="indiv-roi" class="d-none"></span><span id="flt-roi"></span></h3>
-            </div>
-
-            <!-- Stored energy (kWh) -->
-            <!--=============================================================================================-->
-            <div class="form-group form-result" id="kwh-panel">
-                <label>Max Energy Stored in Fleet</label>
-                <h3 id="fleet-capacity" class="text-center">kWh</h3>
-            </div>
-
-            <!-- Peak Shaving (Graph) -->
-            <!--=============================================================================================-->
-            <div class="form-group form-result">
-                <label>Money Saved per Month</label>
-                <span id="graph-spinner" class="spinner-wrapper"><div class="spinner"></div><em>Loading</em></span>
-                <div id="app-ps" class="app">
-                    <div id="chart-ps" class="chart">
-                        <svg id="svg-ps"></svg>
-                    </div>
+        <div class="grid-item col-sm-11 col-md-5 col-lg-3">
+            <div class="form-group">
+                <h4>How do you calculate profitability?</h4>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vitae erat dapibus, iaculis neque vitae, accumsan est. Nunc ut nisl eget lacus dictum laoreet sit amet vel velit.</p>
+                <div class="d-flex justify-content-center">
+                    <a class="btn header-btn">Our Methods</a>
                 </div>
             </div>
-
-            <!-- Battery Degradation (Graph) -->
-            <!--============================================================================================-->
-            <div class="form-group form-result">
-                <label>Fleet Availability / Time</label>
-                <a href="#" class="icon-info"></a>
-                <br>
-                <div class="checkbox-wrapper">
-                    <input type="checkbox" id="graphType" class="form-check-label" checked="" />
-                    <label class="btn small-label" for="graphType">Future Graph: </label>
-                </div>
-                <div id="app-fa" class="app">
-                    <div id="chart-fa" class="chart">
-                        <svg id="svg-fa"></svg>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Cars Required (Graph) -->
-            <!--===========================================================================================-->
-            <!--div class="form-group form-result">
-                <label>Cars Required</label>
-                <img class="img-fluid" src="http://picsum.photos/500" alt="filler" />
-            </div-->
-
-            <!-- Peak Shaving (Graph) NOTE: This will be displayed on sizes: SM, XS -->
-            <!--div class="form-group form-result d-block d-lg-none d-xl-none">
-                <label>Peak Shaving</label>
-                <img class="img-fluid" src="http://picsum.photos/500" alt="filler" />
-            </div-->
-
         </div>
-
     </div>
 
 </main>
