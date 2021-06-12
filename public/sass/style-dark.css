@@ -11078,6 +11078,7 @@ select.form-select:focus {
 
 nav.header-expanded {
   background-color: rgba(10, 10, 10, 0.6);
+  filter: none;
 }
 nav.header-expanded img {
   height: 70px;
@@ -11103,10 +11104,13 @@ nav.header-expanded #collapsibleNavbar, nav.header-expanded #collapsibleNavbar >
 .title {
   position: absolute;
   left: 30px;
-  top: 38%;
+  top: 72%;
   max-width: 40rem;
   padding: 16px;
-  background: transparent;
+  border-radius: 10px;
+}
+.title h1, .title .h1 {
+  filter: drop-shadow(0px 0px 7px #0a0a0a);
 }
 
 .header-btn {

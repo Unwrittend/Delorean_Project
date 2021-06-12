@@ -58,6 +58,31 @@ app.get("/", (req, res) => {
 	});
 });
 
+app.get("/about", (req, res) => {
+
+	// Read cookie to find out user's dark/light mode preference. Default is light
+	user_mode = req.cookies.mode;
+	if(!(user_mode))
+		user_mode = "light";
+
+	// Render the homepage
+	res.render("about", {
+		user_mode: user_mode,
+	});
+});
+
+app.get("/user-guide", (req, res) => {
+
+	// Read cookie to find out user's dark/light mode preference. Default is light
+	user_mode = req.cookies.mode;
+	if(!(user_mode))
+		user_mode = "light";
+
+	// Render the homepage
+	res.render("user-guide", {
+		user_mode: user_mode,
+	});
+});
 
 // Load project.ejs
 app.get("/project", (req, res) => {
