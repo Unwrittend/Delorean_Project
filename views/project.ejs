@@ -95,7 +95,7 @@
     <!--==================================================================================================-->
     <div class="row d-flex justify-content-center text-center">
         <section class="view-toggle">
-            <h1 class="text-center">Is V2G Right For You?</h1>
+            <h1 class="text-center">Is Vehicle-to-Grid (V2G) Right For You?</h1>
             <% if(user_view === "individual") { %>
                 <button id="ind-btn" class="btn selected" onclick="switchToIndiv()">Individual</button>
                 <button id="org-btn" class="btn" onclick="switchToOrg()">Organizer</button>
@@ -116,7 +116,7 @@
                 <label for="car-make">Vehicle Make/Model</label>
 
                 <!-- info icon and loading spinner -->
-                <a href="#" class="icon-info"></a>
+                <a href="/user-guide" class="icon-info"></a>
                 <button id="vehicle-find-btn" class="btn btn-action" onclick="findCar()"><i class="bi bi-arrow-counterclockwise"></i></button>
                 <span id="car-spinner" class="spinner-wrapper"><div class="spinner"></div><em>Loading</em></span>
 
@@ -151,7 +151,7 @@
             <!-- The ID is there because the range of the slider will be generated dynamically -->
             <div class="form-group">
                 <label>Map</label>
-                <a href="#" class="icon-info"></a>
+                <a href="/user-guide" class="icon-info"></a>
 <!--                <input type="text" name="zip" id="zip" class="form-control input-text" value="95050" placeholder="Zip Code" />-->
                 <div id="map-container">
                     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.min.js"></script>
@@ -189,10 +189,10 @@
             </div>
 
             <!-- Hours Charging (Range, 0-24) (only show in individual view) -->
-            <!--===========================================================================================-->
+            <!--===========================================================================================
             <div id="hours-panel" class="form-group d-none">
                 <label for="slider">Hours Charging</label>
-                <a href="#" class="icon-info"></a>
+                <a href="/user-guide" class="icon-info"></a>
                 <div id="hours-group">
                     <input id="hours-1" class="form-control input-text" type="time" /> -
                     <input id="hours-2" class="form-control input-text" type="time" />
@@ -200,7 +200,7 @@
                         <div id="slider"></div>
                     </div>
                 </div>
-            </div>
+            </div-->
 
             <!-- Opt-in Percentage (Range, 0-100) (only show in organization view) -->
             <!--==========================================================================================-->
@@ -249,7 +249,7 @@
             <!--============================================================================================-->
             <div class="form-group form-result">
                 <label>Fleet Availability / Time</label>
-                <a href="#" class="icon-info"></a>
+                <a href="/user-guide" class="icon-info"></a>
                 <br>
                 <div class="checkbox-wrapper">
                     <input type="checkbox" id="graphType" class="form-check-label" checked="" />

@@ -85,23 +85,91 @@
 </nav>
 <!-- Content (sr-only link jumps here) -->
 <!--=================================================================================================================-->
-<main id="about" class="container-fluid content">
+<main id="user-guide" class="container-fluid content">
 
     <div class="row">
-        <div class="col-md-6 offset-md-3">
+        <div class="col-md-8 offset-md-2">
             <h1>User Guide</h1>
 
             <ul class="nav nav-pills nav-fill">
-                <li class="nav-item"><a class="nav-link" href="#">Vehicle</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Map</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">MSOC</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Opt-In</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">ROI</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Max Energy</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Money Saved</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Fleet Availability</a></li>
+                <li class="nav-item"><a class="nav-link" href="#vehicle">Vehicle</a></li>
+                <li class="nav-item"><a class="nav-link" href="#map">Map</a></li>
+                <li class="nav-item"><a class="nav-link" href="#msoc">MSOC</a></li>
+                <li class="nav-item"><a class="nav-link" href="#opt-in">Opt-In</a></li>
+                <li class="nav-item"><a class="nav-link" href="#roi">ROI</a></li>
+                <li class="nav-item"><a class="nav-link" href="#max-en">Max Energy</a></li>
+                <li class="nav-item"><a class="nav-link" href="#money">Money Saved</a></li>
+                <li class="nav-item"><a class="nav-link" href="#flt-av">Fleet Availability</a></li>
             </ul>
+            <hr>
+            <div id="vehicle" class="ref-cards">
+                <h3>Vehicle Make/Model</h3>
+                <article>
+                    <ol>
+                        <li>Select a manufacturer from the dropdown menu</li>
+                        <li>Please wait a moment for the list to load</li>
+                        <li>Select a car from the list</li>
+                    </ol>
+                    If an error occurs, please reload the page or click the car again.
+                    <br>If you navigate away and want to go back to the car you previously selected, click the <i class="bi bi-arrow-counterclockwise"></i> icon.
+                    <br><em>This field is required</em>
+                </article>
+            </div>
+            <div id="map" class="ref-cards">
+                <h3>Map</h3>
+                <article>
+                    In the map section, please input your US ZIP Code in the text field. The map is there so you can ensure we selected the correct place.
+                    <br><em>This field is required.</em>
+                </article>
 
+            </div>
+            <div id="msoc" class="ref-cards">
+                <h3>Minimum State of Charge</h3>
+                <article>
+                    Please input a number between 1 and 100. You may use either the slider or the text field. Please note that the slider may not work on all platforms.
+                    <br>Minimum State of Charge is the amount of charge each person, on average, wants to keep in their car at all times.
+                    <br><em>This field is required.</em>
+                </article>
+            </div>
+            <div id="opt-in" class="ref-cards">
+                <h3>Opt-in Percentage</h3>
+                <article>
+                    Please input a number between 1 and 100. You may use either the slider or the text field. Please note that the slider may not work on all platforms.
+                    <br>Opt-in percentage is the proportion of people living in the selected ZIP code who join a V2G program there.
+                    <br><em>This field is required.</em>
+                </article>
+            </div>
+            <div id="roi" class="ref-cards">
+                <h3>ROI</h3>
+                <article>
+                    In <strong>Organizer</strong> view, this number is the ROI for a whole V2G system within a ZIP code.
+                    <br></br>In <strong>Individual</strong> view, this number is the expected bonus for one person who joins a V2G program in their community.
+                    <br><em>This is a calculated value.</em>
+                </article>
+            </div>
+            <div id="max-en" class="ref-cards">
+                <h3>Max Energy</h3>
+                <article>
+                    This number is the maximum cumulative amount of energy stored in every person's car within the selected ZIP code.
+                    <br><em>This calculated value is only shown in Organizer view.</em>
+                </article>
+            </div>
+            <div id="money" class="ref-cards">
+                <h3>Money Saved Per Month</h3>
+                <article>
+                    This graph shows how much money a community can expect to save each season while using V2G.
+                    <br><em>This graph is influenced by your input.</em>
+                </article>
+            </div>
+            <div id="flt-av" class="ref-cards">
+                <h3>Fleet Availability/Time</h3>
+                <article>
+                    In <strong>Present</strong> view, this graph shows what percentage of a V2G fleet would be available (on average) during every hour of the day.
+                    In <strong>Future</strong> view, this graph shows the same availability as it is predicted to be years in the future.
+                    <br>
+                    <br><em>This graph is</em> not <em>influenced by your input.</em>
+                </article>
+            </div>
         </div>
     </div>
 

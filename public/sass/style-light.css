@@ -10682,6 +10682,18 @@ main.content {
   padding-right: 20px;
 }
 
+#user-guide {
+  padding-bottom: 40px;
+}
+
+.ref-cards {
+  padding-top: 2rem;
+}
+.ref-cards article {
+  margin-left: 2rem;
+  line-height: 1.7rem;
+}
+
 .view-toggle {
   padding: 15px 0 20px 5px;
   color: #0a0a0a;

@@ -73,6 +73,20 @@ main.content {
 	padding-right: 20px;
 }
 
+// Style used on User Guide Page
+#user-guide {
+	padding-bottom: 40px;
+}
+
+.ref-cards {
+	padding-top: 2rem;
+
+	article {
+		margin-left: 2rem;
+		line-height: 1.7rem;
+	}
+}
+
 // Section for Individual/Organizer View buttons
 .view-toggle {
 	padding: 15px 0 20px 5px;
