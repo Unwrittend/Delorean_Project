@@ -11076,6 +11076,10 @@ select.form-select:focus {
   fill: #c8c8c8;
 }
 
+nav.navbar {
+  border: none;
+}
+
 nav.header-expanded {
   background-color: rgba(10, 10, 10, 0.6);
   filter: none;
@@ -11090,15 +11094,12 @@ nav.header-expanded #collapsibleNavbar, nav.header-expanded #collapsibleNavbar >
 #landing {
   padding: 0;
   margin-right: 0;
-  margin-left: -17px;
 }
 
 #titleVideo {
   object-fit: cover;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
-  top: 0;
-  left: 0;
 }
 
 .title {
@@ -11107,12 +11108,9 @@ nav.header-expanded #collapsibleNavbar, nav.header-expanded #collapsibleNavbar >
   top: 72%;
   max-width: 40rem;
   padding: 16px;
+  background: rgba(10, 10, 10, 0.4);
   border-radius: 10px;
 }
-.title h1, .title .h1 {
-  filter: drop-shadow(0px 0px 7px #0a0a0a);
-}
-
 .header-btn {
   background-color: #0b841b;
   margin-right: 10px;
@@ -11127,9 +11125,10 @@ nav.header-expanded #collapsibleNavbar, nav.header-expanded #collapsibleNavbar >
 .description-grid {
   margin-top: 50px;
   margin-bottom: 50px;
+  --bs-gutter-x: 0;
 }
 .description-grid .grid-item {
-  margin-left: 7%;
+  padding: 3.5%;
 }
 .description-grid .grid-item .form-group h4, .description-grid .grid-item .form-group .h4 {
   text-align: center;
@@ -11201,6 +11200,11 @@ nav.header-expanded #collapsibleNavbar, nav.header-expanded #collapsibleNavbar >
   .style-switch {
     margin-left: 10px;
     margin-bottom: 20px;
+  }
+
+  .title {
+    left: 1%;
+    max-width: 23rem;
   }
 
   .form-group {
