@@ -65,7 +65,7 @@ app.get("/about", (req, res) => {
 	if(!(user_mode))
 		user_mode = "light";
 
-	// Render the homepage
+	// Render the page
 	res.render("about", {
 		user_mode: user_mode,
 	});
@@ -78,8 +78,21 @@ app.get("/user-guide", (req, res) => {
 	if(!(user_mode))
 		user_mode = "light";
 
-	// Render the homepage
+	// Render the page
 	res.render("user-guide", {
+		user_mode: user_mode,
+	});
+});
+
+app.get("/what-is-v2g", (req, res) => {
+
+	// Read cookie to find out user's dark/light mode preference. Default is light
+	user_mode = req.cookies.mode;
+	if(!(user_mode))
+		user_mode = "light";
+
+	// Render the page
+	res.render("what-is-v2g", {
 		user_mode: user_mode,
 	});
 });

@@ -76,19 +76,42 @@ main.content {
 // Styles used on the About Page
 #about {
 
+	.profile-pics {
+		margin-bottom: 20px;
+
+		div {
+			margin-top: 20px;
+
+			h6:first-of-type {
+				margin-top: 4px;
+				margin-bottom: 2px;
+			}
+
+			.profile {
+				border-radius: 50%;
+				display: inline;
+			}
+		}
+	}
 }
 
 // Style used on User Guide Page
 #user-guide {
 	padding-bottom: 40px;
-}
 
-.ref-cards {
-	padding-top: 2rem;
+	.ref-cards {
+		padding-top: 2rem;
+		padding-bottom: 2rem;
+		border-top: solid 1px $grey;
 
-	article {
-		margin-left: 2rem;
-		line-height: 1.7rem;
+		article {
+			margin-left: 2rem;
+			line-height: 1.7rem;
+		}
+	}
+
+	.ref-cards:first-of-type {
+		border-top: none;
 	}
 }
 

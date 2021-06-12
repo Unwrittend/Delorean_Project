@@ -10682,6 +10682,21 @@ main.content {
   padding-right: 20px;
 }
 
+#about .profile-pics {
+  margin-bottom: 20px;
+}
+#about .profile-pics div {
+  margin-top: 20px;
+}
+#about .profile-pics div h6:first-of-type, #about .profile-pics div .h6:first-of-type {
+  margin-top: 4px;
+  margin-bottom: 2px;
+}
+#about .profile-pics div .profile {
+  border-radius: 50%;
+  display: inline;
+}
+
 #user-guide {
   padding-bottom: 40px;
 }
