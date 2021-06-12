@@ -36,10 +36,9 @@ $(function() {
 	if( $(window).width() <= 767 ){
 		isSmall = true;
 		$("nav.navbar").removeClass("justify-content-center header-expanded");
-		updateBrand();
 	}
 	else {
 		isSmall = false;
 		changeHeader();
 	}
-})
+});

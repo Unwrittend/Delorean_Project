@@ -10693,13 +10693,17 @@ main.content {
 #user-guide {
   padding-bottom: 40px;
 }
-
-.ref-cards {
+#user-guide .ref-cards {
   padding-top: 2rem;
+  padding-bottom: 2rem;
+  border-top: solid 1px #464646;
 }
-.ref-cards article {
+#user-guide .ref-cards article {
   margin-left: 2rem;
   line-height: 1.7rem;
+}
+#user-guide .ref-cards:first-of-type {
+  border-top: none;
 }
 
 .view-toggle {
@@ -11217,6 +11221,10 @@ nav.header-expanded #collapsibleNavbar, nav.header-expanded #collapsibleNavbar >
   .title {
     left: 1%;
     max-width: 23rem;
+  }
+
+  #landing .banner {
+    line-height: 2rem;
   }
 
   .form-group {
