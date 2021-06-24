@@ -10704,6 +10704,11 @@ main.content {
   border-radius: 50%;
   display: inline;
 }
+#about #email-form input, #about #email-form textarea {
+  width: 100%;
+  text-align: left;
+  margin-bottom: 1.5rem;
+}
 
 #user-guide {
   padding-bottom: 40px;

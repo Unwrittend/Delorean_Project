@@ -93,6 +93,14 @@ main.content {
 			}
 		}
 	}
+
+	#email-form {
+		input, textarea {
+			width: 100%;
+			text-align: left;
+			margin-bottom: 1.5rem;
+		}
+	}
 }
 
 // Style used on User Guide Page

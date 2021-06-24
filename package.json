@@ -9,6 +9,7 @@
     "express": "^4.17.1",
     "js-cookie": "^2.2.1",
     "mongoose": "^5.12.2",
+    "nodemailer": "^6.6.2",
     "npm": "^7.16.0"
   },
   "devDependencies": {

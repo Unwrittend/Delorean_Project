@@ -50,7 +50,7 @@
 <!-- Main Navigation -->
 <!--================================================================================================================-->
 <nav class="navbar navbar-expand-md navbar-<%= user_mode %>">
-    <a class="screen-reader-only" href="#article">Skip to Content</a>
+    <a class="screen-reader-only" href="#about">Skip to Content</a>
     <a class="navbar-brand" href="/"><img id="navbar-brand" class="navbar-brand-img" src="images/logo_lg_<%= user_mode %>.png" alt="DeLorean Energy"/></a>
 
     <button class="navbar-toggler align-item" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -117,9 +117,28 @@
                     <h6 class="figure-caption text-center">Faculty Advisor</h6>
                 </div>
             </div>
-            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis lacinia ultricies ligula eget porta. Duis laoreet gravida eros non condimentum. Quisque pharetra blandit elit ac aliquam. Donec ullamcorper ex convallis, euismod augue sit amet, consectetur tortor. Phasellus nec elit laoreet, dapibus tortor at, iaculis velit. Vestibulum interdum ipsum id blandit aliquet. Fusce lacinia a neque varius imperdiet. Mauris eget suscipit elit. Integer lectus tellus, pharetra et consequat eget, facilisis in elit. Integer quam odio, eleifend ut egestas at, imperdiet ac odio. Nunc molestie et neque et semper. Mauris vulputate mi ac consectetur lobortis. Cras finibus enim neque, ut interdum nulla porttitor eu.
-<br>
-                Quisque ornare magna id lorem imperdiet, et varius enim luctus. Ut ac justo in mi sollicitudin mollis. Nullam et purus vitae dui rutrum auctor. Curabitur venenatis massa ante, rhoncus consectetur sapien sagittis at. Sed quis libero gravida, fermentum massa non, efficitur lacus. Donec id dolor sed neque tristique aliquet. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla tincidunt luctus est, et fermentum libero egestas quis. Aliquam luctus sagittis mauris, sit amet feugiat dolor laoreet at. Suspendisse ullamcorper consectetur turpis, nec aliquam nisl condimentum condimentum. Duis eu elit sed ante posuere tempor. Etiam ut volutpat tortor, id fermentum diam. Suspendisse volutpat ligula magna, vel convallis orci ultrices in. Sed non nibh ut odio cursus aliquet. Etiam nec finibus augue. </p>
+            <p>
+                We are DeLorean Energy.
+                We are a group of students (and our spectacular faculty advisor) who are conducting research in sustainable energy.
+                For any queries, please e-mail us using this form.
+            </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 offset-md-4">
+            <div class="form-group">
+                <h3>Contact Us</h3>
+                <span id="mail-spinner" class="spinner-wrapper"><div class="spinner"></div><em>Loading</em></span>
+                <br>
+                <form id="email-form">
+                    <input type="text" id="name" class="form-control input-text" placeholder="Name">
+                    <input type="email" id="email" class="form-control input-text" placeholder="E-mail">
+                    <input type="text" id="subject" class="form-control input-text" placeholder="Subject">
+                    <textarea id="body" class="form-control input-text" placeholder="Body"></textarea>
+                    <button type="submit" class="btn">Send E-mail</button>
+                </form>
+            </div>
         </div>
     </div>
 

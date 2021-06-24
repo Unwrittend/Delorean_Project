@@ -4,6 +4,10 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
+const nodemailer = require("nodemailer");
+
+// Port number
+const port = 3000;
 
 // Create instance of Express
 const app = express();
@@ -157,6 +161,33 @@ app.get("/getCarById", (req, res) => {
 	});
 });
 
+let transporter = nodemailer.createTransport({
+	host: "HOST",
+	port: PORT,
+	secure: BOOL,
+	auth: {
+		user: "EMAIL",
+		pass: "PASSWORD"
+	}
+});
+
+app.get("/sendmail", (req, res) => {
+	let mailOptions = {
+		from: req.query.email,
+		to: "EMAIL",
+		subject: req.query.subject,
+		text: req.query.body
+	};
+	let info = transporter.sendMail(mailOptions, function(err, data){
+		if(err) {
+			res.send("failed");
+		}
+		else {
+			res.send(data.response);
+		}
+	});
+});
+
 // In case request cannot be processed, show the 404 page
 app.use(function(req, res){
 	// Read cookie to find out user's dark/light mode preference. Default is light
@@ -169,20 +200,4 @@ app.use(function(req, res){
 	});
 });
 
-
-app.listen(4000, function() {
-	console.log("Server is running");
-});
-
-//------------------------------------------  CPanel Server Code
-/**
-var http = require('http');
-var server = http.createServer(function(req, res) {
-	res.writeHead(200, {'Content-Type': 'text/plain'});
-	var message = 'It works!\n',
-		version = 'NodeJS ' + process.versions.node + '\n',
-		response = [message, version].join('\n');
-	res.end(response);
-});
-server.listen(4000);
-*/
+app.listen(port, () => console.log(`Example app listening on port ${port}!`));
