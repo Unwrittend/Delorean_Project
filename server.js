@@ -178,6 +178,7 @@ app.get("/sendmail", (req, res) => {
 		subject: req.query.subject,
 		text: req.query.body
 	};
+
 	let info = transporter.sendMail(mailOptions, function(err, data){
 		if(err) {
 			res.send("failed");

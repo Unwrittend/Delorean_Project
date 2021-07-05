@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width" initial-scale="1" />
 
     <!-- For favicon -->
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://www.deloreanenergy.us/apple-touch-icon-144x144.png" />
-    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="https://www.deloreanenergy.us/apple-touch-icon-152x152.png" />
-    <link rel="icon" type="image/png" href="https://www.deloreanenergy.us/favicon-32x32.png" sizes="32x32" />
-    <link rel="icon" type="image/png" href="https://www.deloreanenergy.us/favicon-16x16.png" sizes="16x16" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/icons/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="/images/icons/apple-touch-icon-152x152.png" />
+    <link rel="icon" type="image/png" href="/images/icons/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/images/icons/favicon-16x16.png" sizes="16x16" />
     <meta name="application-name" content="DeLorean Energy"/>
     <meta name="msapplication-TileColor" content="#FFFFFF" />
-    <meta name="msapplication-TileImage" content="https://www.deloreanenergy.us/mstile-144x144.png" />
+    <meta name="msapplication-TileImage" content="/images/icons/mstile-144x144.png" />
 
     <!-- Link to remote font -->
     <link rel="stylesheet" href="https://use.typekit.net/ahh6uys.css">
@@ -41,8 +41,13 @@
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.mjs"></script>
 
+    <!-- ReCaptcha Stuff -->
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+
+
     <!-- Our custom scripts. App = generic functionality -->
     <script src="scripts/app.js" defer></script>
+    <script src="scripts/about.js" defer></script>
 
     <title>About Us - DeLorean Energy</title>
 </head>
@@ -136,7 +141,12 @@
                     <input type="email" id="email" class="form-control input-text" placeholder="E-mail">
                     <input type="text" id="subject" class="form-control input-text" placeholder="Subject">
                     <textarea id="body" class="form-control input-text" placeholder="Body"></textarea>
-                    <button type="submit" class="btn">Send E-mail</button>
+                    <button type="submit" class="btn g-recaptcha"
+                            data-sitekey="6Leb3XgbAAAAAA2hlm6qpV2dbGXZS_wh3BZ62OOY"
+                            data-callback="onSubmit"
+                            data-action="submit" >
+                        Send E-mail
+                    </button>
                 </form>
             </div>
         </div>
