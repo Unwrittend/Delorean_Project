@@ -1,10 +1,13 @@
 // NodeJS Document
 
 // Dependencies
+require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 const nodemailer = require("nodemailer");
+const fetch = require("node-fetch");
+const bodyParser = require("body-parser");
 
 // Port number
 const port = 3000;
@@ -13,6 +16,16 @@ const port = 3000;
 const app = express();
 const ejs = require("ejs");
 app.set("view engine", "ejs");
+
+// For Body Parser
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
+
+// E-mail info
+const emailHost = "HOST_NAME";
+const emailAddress = "EMAIL";
+const emailPort = "PORT";
+const emailPass = "PASSWORD";
 
 // Use cookie Parser, set variables for determining style and view preferences
 app.use(cookieParser());
@@ -162,31 +175,61 @@ app.get("/getCarById", (req, res) => {
 });
 
 let transporter = nodemailer.createTransport({
-	host: "HOST",
-	port: PORT,
-	secure: BOOL,
+	host: emailHost,
+	port: emailPort,
+	secure: true,
 	auth: {
-		user: "EMAIL",
-		pass: "PASSWORD"
+		user: emailAddress,
+		pass: emailPass
 	}
 });
 
 app.get("/sendmail", (req, res) => {
-	let mailOptions = {
-		from: req.query.email,
-		to: "EMAIL",
-		subject: req.query.subject,
-		text: req.query.body
-	};
 
-	let info = transporter.sendMail(mailOptions, function(err, data){
-		if(err) {
-			res.send("failed");
-		}
-		else {
-			res.send(data.response);
-		}
-	});
+	// Make verification URL
+	const secret_key = process.env.SECRET_KEY;
+	const token = req.query.captcha;
+	const url = `https://www.google.com/recaptcha/api/siteverify?secret=${secret_key}&response=${token}`;
+
+	// Error if no captcha token was passed
+	if(!token){
+		res.send({msg: "captcha token is undefined"});
+	}
+
+	// Make request to verification URL
+	fetch(url)
+		.then(response => response.json())
+		.then(obj => {
+			//console.log(obj);
+			// We got a response. Now check if user is a robot or not
+			// If user is a human
+			if(obj.success) {
+				// Setup the e-mail
+				let mailOptions = {
+					from: req.query.email,
+					to: emailAddress,
+					subject: req.query.subject,
+					text: req.query.body
+				};
+
+				// Send the e-mail
+				let info = transporter.sendMail(mailOptions, function(err, data){
+					if(err) {
+						res.send({status: "failed", msg: "Couldn't send e-mail, sorry :("});
+					}
+					else {
+						//console.log(data.response);
+						res.send({status: "success", msg: "E-mail has been sent"});
+					}
+				});
+			}
+
+			// If user is a robot
+			else {
+				res.send({status: "failed", msg: "Captcha test failed, sorry :("});
+			}
+
+	}).catch(err => res.json({err}));
 });
 
 // In case request cannot be processed, show the 404 page
@@ -201,4 +244,4 @@ app.use(function(req, res){
 	});
 });
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+app.listen(port, () => console.log(`App listening on port ${port}!`));
