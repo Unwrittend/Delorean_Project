@@ -189,11 +189,15 @@ app.get("/sendmail", (req, res) => {
 	// Make verification URL
 	const secret_key = process.env.SECRET_KEY;
 	const token = req.query.captcha;
-	const url = `https://www.google.com/recaptcha/api/siteverify?secret=${secret_key}&response=${token}`;
+	const url = `https://www.google.com/recaptcha/api/siteverify?secret=${secret_key}&response=${token}&remoteip=${req.connection.remoteAddress}`;
 
 	// Error if no captcha token was passed
-	if(!token){
-		res.send({msg: "captcha token is undefined"});
+	if(
+		token === undefined ||
+		token === "" ||
+		token === null
+	){
+		res.send({status: "failed", msg: "Captcha token is undefined"});
 	}
 
 	// Make request to verification URL
@@ -219,17 +223,17 @@ app.get("/sendmail", (req, res) => {
 					}
 					else {
 						//console.log(data.response);
-						res.send({status: "success", msg: "E-mail has been sent"});
+						res.send({status: "success", msg: "E-mail has been sent!"});
 					}
 				});
 			}
 
 			// If user is a robot
 			else {
-				res.send({status: "failed", msg: "Captcha test failed, sorry :("});
+				res.send({status: "failed", msg: "Captcha failed :( <br>Perhaps try reloading the page?"});
 			}
 
-	}).catch(err => res.json({err}));
+	}).catch((err) => res.send({err}));
 });
 
 // In case request cannot be processed, show the 404 page
