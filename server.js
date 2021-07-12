@@ -209,11 +209,13 @@ app.get("/sendmail", (req, res) => {
 			// If user is a human
 			if(obj.success) {
 				// Setup the e-mail
+				let emailBody = `Name: ${req.query.name}\nSubject: ${req.query.subject}\nE-mail: ${req.query.email}\n\n${req.query.body}\n\nSent from the contact form on deloreanenergy.us`;
+
 				let mailOptions = {
 					from: req.query.email,
 					to: emailAddress,
 					subject: req.query.subject,
-					text: req.query.body
+					text: emailBody
 				};
 
 				// Send the e-mail
