@@ -10781,6 +10781,10 @@ main.content {
   margin-left: 5px;
 }
 
+.form-group > label {
+  margin-bottom: 10px;
+}
+
 .form-result {
   background: #4379b3;
   color: #c8c8c8;
@@ -10829,10 +10833,6 @@ main.content {
 
 .mapboxgl-ctrl-attrib-inner {
   display: none !important;
-}
-
-#mc {
-  min-height: 500px;
 }
 
 #peak-lg {
@@ -10954,7 +10954,29 @@ input[type=number] {
 #hours-1, #hours-2 {
   display: inline;
   margin-left: 0px;
-  margin-top: 20px;
+  margin-top: 10px;
+}
+
+.car-select {
+  width: 100%;
+  background: #0a0a0a;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  padding: 5px;
+  display: flex;
+}
+.car-select div.car-labels-L {
+  flex: 1;
+}
+.car-select div.car-labels-L h5, .car-select div.car-labels-L .h5 {
+  margin-bottom: 50px;
+}
+.car-select div.car-labels-L .btn-danger {
+  bottom: 30px;
+}
+.car-select div.car-sliders .slider {
+  margin-bottom: 10px;
+  background-color: #c8c8c8;
 }
 
 .option {
@@ -10978,11 +11000,11 @@ input[type=number] {
   border-color: #c8c8c8;
   text-align: left;
 }
-.option div {
+.option div.car-labels {
   flex: 1;
   text-align: right;
 }
-.option div h4, .option div .h4 {
+.option div.car-labels h4, .option div.car-labels .h4 {
   margin-top: 10px;
 }
 

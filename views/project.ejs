@@ -46,7 +46,7 @@
     <script src="scripts/fleet-capacity.js" defer></script>
     <script src="scripts/graphs.js" defer></script>
     <script src="scripts/project.js" defer></script>
-    <script src="scripts/battery-degradation.js" defer></script>
+<!--    <script src="scripts/battery-degradation.js" defer></script>-->
 
     <title>Calculator Project - DeLorean Energy</title>
 </head>
@@ -111,13 +111,31 @@
         <!-- Left Column -->
         <!--=========================================================================================================-->
         <div class="grid-item col-md-6 col-lg-4">
+            <div class="form-group">
+                <label>Vehicles in Fleet</label>
+                <div id="cars-selected">
+<!--                    <div id="car-sel-i" class="car-select">-->
+<!--                        <div class="car-labels-L">-->
+<!--                            <h5>[Car Make] [Car Model]</h5>-->
+<!--                            <button class="btn btn-danger">Remove</button>-->
+<!--                        </div>-->
+<!--                        <div class="car-sliders">-->
+<!--                            <div class="d-flex justify-content-center">-->
+<!--                                <input type="number" id="car-sel-txt-i" class="form-control input-text" value="100" min="0" max="100" oninput="bindInputs($(this), $('#car-sel-rng-i'))" />-->
+<!--                            </div>-->
+<!--                            <input type="range" id="car-sel-rng-i" class="form-control slider" value="100" min="0" max="100" oninput="bindInputs($(this), $('#car-sel-txt-i'))" />-->
+<!--                        </div>-->
+<!--                    </div>-->
+                </div>
+            </div>
+
             <div id="mc" class="form-group">
                 <!-- NodeJS populates all the options -->
-                <label for="car-make">Vehicle Make/Model</label>
+                <label for="car-make">Add Vehicle</label>
 
                 <!-- info icon and loading spinner -->
                 <a href="/user-guide" class="icon-info"></a>
-                <button id="vehicle-find-btn" class="btn btn-action" onclick="findCar()"><i class="bi bi-arrow-counterclockwise"></i></button>
+<!--                <button id="vehicle-find-btn" class="btn btn-action" onclick="findCar()"><i class="bi bi-arrow-counterclockwise"></i></button>-->
                 <span id="car-spinner" class="spinner-wrapper"><div class="spinner"></div><em>Loading</em></span>
 
                 <select id="car-make" class="form-select" name="car-make" oninput="populateCars()">
@@ -152,31 +170,10 @@
             <div class="form-group">
                 <label>ZIP Code</label>
                 <a href="/user-guide" class="icon-info"></a>
-                <br><br>
+                <br>
                 <div class="d-flex justify-content-center">
                     <input type="text" name="zip" id="zip" class="form-control input-text" value="95050" placeholder="Zip Code" />
                 </div>
-                <!--div id="map-container">
-                    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.min.js"></script>
-                    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.css" type="text/css">
-                    <script>
-						mapboxgl.accessToken = 'pk.eyJ1IjoiYXJqdW5jaGltbmkiLCJhIjoiY2tsZTVnMGc4MWJjYTJvcXRpcGF3Ymt0MCJ9.NsWvjwV6q2X_sqWWANxOdQ';
-						var map = new mapboxgl.Map({
-							container: 'map-container', // container id
-							style: 'mapbox://styles/mapbox/streets-v11', // style URL
-							center: [-74.5, 40], // starting position [lng, lat]
-							zoom: 9, // starting zoom
-						});
-						var geocoder = new MapboxGeocoder({
-							accessToken: mapboxgl.accessToken,
-							marker: {
-								color: 'green'
-							},
-							mapboxgl: mapboxgl,
-						});
-						map.addControl(geocoder);
-                    </script>
-                </div-->
             </div>
 
             <!-- Minimum State of Charge (Range, 0-100) -->
@@ -250,7 +247,7 @@
 
             <!-- Battery Degradation (Graph) -->
             <!--============================================================================================-->
-            <div class="form-group form-result">
+            <div class="form-group form-result d-none">
                 <label>Fleet Availability / Time</label>
                 <a href="/user-guide" class="icon-info"></a>
                 <br>

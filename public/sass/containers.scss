@@ -186,6 +186,10 @@ main.content {
 	}
 }
 
+.form-group > label {
+	margin-bottom: 10px;
+}
+
 .form-input {
 	// Nothing here yet
 }
@@ -250,7 +254,7 @@ main.content {
 
 // Style for the Multiple Choice Input
 #mc {
-	min-height: 500px;
+	//min-height: 500px;
 }
 
 // Style for the Peak Shaving Graph shown on large displays (in the center column)
