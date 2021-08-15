@@ -53,7 +53,11 @@ function toggleMCSelected() {
 
 		// Add the new car to the cookie
 		let cars = JSON.parse(Cookies.get("cars"));
-		cars.push({name: carName, id: $(this).attr("id")});
+		cars.push({
+			name: carName,				// Model and make of the car
+			id: $(this).attr("id"),		// alphanumeric string in mongodb
+			cap: $(this).children(".car-labels").children("h6").attr("property") // Car's battery capacity
+		});
 		Cookies.set("cars", JSON.stringify(cars));
 
 		//validateAndUpdate();
@@ -367,13 +371,64 @@ function validateAndUpdate() {
 
 	// At this point, check if we can update the graphs
 	if(valid) {
-		//console.log("Update!"); Dev Only
-		updateGraphs();
+		runCalculations();
+		updatePS();
 	}
 	else {
 		//console.log("Failed."); Dev Only
 	}
 }
+
+/********************************  Set variable values and update graphs  ***************************************/
+function runCalculations() {
+
+	let total_fleet = 0;
+	let total_indiv = 0;
+	let total_energy = 0;
+	let results;
+
+	let cars = JSON.parse(Cookies.get("cars")); // Array of all the cars
+
+	// Update variables in fleet-capcity.js (line 50)
+	msoc = $("#msocText").val() / 100;
+
+	for(let i=0; i<cars.length; i++) {
+		battery_capacity = cars[i].cap;
+		diversity_constant = $("car-sel-txt-" +i) / 100;
+
+		results = updateGraphs();
+		total_fleet += results.fleet;
+		total_indiv += results.indiv;
+		total_energy += results.cap;
+	}
+
+	// Set the value of the HTML spans to a smaller number, expressed in larger units (e.g. Gigawatts vs Kilowatts)
+	let unit = "kWh";
+
+	// Once for Megawatts
+	if(total_energy >= 1000) {
+		total_energy /= 1000;
+		unit = "MWh";
+	}
+	// Again for Gigawatts
+	if(total_energy >= 1000) {
+		total_energy /= 1000;
+		unit = "GWh";
+
+		// Easter Egg -- if fleet capacity is approximately 1.21 GWh, replace unit with "Jigawatt-hours"
+		if(total_energy >= 1.21 && total_energy < 1.22)
+			unit = "Jigawatt-hours";
+	}
+
+	// Populate spans in HTML with the values, separated with commas (e.g. 1,000,000)
+	flt_roi_field.text(total_fleet.toLocaleString());
+	indiv_roi_field.text(total_indiv.toLocaleString());
+	flt_cap_field.text((total_energy).toLocaleString() + " " +unit);
+
+	flt_tou_profit = total_fleet
+
+}
+
 
 /********************************  On Page load  ***************************************/
 $(function() {

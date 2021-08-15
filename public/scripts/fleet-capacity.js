@@ -5,14 +5,14 @@
  *****************************************************************************/
 
 // Variables for 3 user inputs. Names self-explanatory. MSOC is Minimum State of Charge
-var vehicle_type, /*msoc = .5,*/ opt_in = .5, /*battery_capacity = 0,*/ zip_code = 95050,
+let vehicle_type, /*msoc = .5,*/ opt_in = .5, /*battery_capacity = 0,*/ zip_code = 95050,
 	veh_pop, flt_cap, flt_profit, indiv_profit;
 
 const indiv_roi_field = $("#indiv-roi");
 const flt_roi_field = $("#flt-roi");
 const flt_cap_field = $("#fleet-capacity");
 
-var flt_tou_profit =[
+let flt_tou_profit =[
 	{season: "Winter", revenue: 0, id: 1},
 	{season: "Summer", revenue: 0, id: 2}
 ]
@@ -44,12 +44,14 @@ const zip_code_pop_95050 = 38699;
 const percent_flt_avail = [ 98.72404738009172, 98.94407289973621, 99.14171692141903, 99.2652592375488, 99.3765154139245, 99.46787692544532, 99.55432398106454, 99.61723493763674, 99.6897083596079, 99.74791209637071, 99.80963884670155, 99.8363426974442, 99.87867807057278, 99.90940822253603, 99.94046403121568, 99.9705428697462, 99.7580962700464, 99.56391605161954, 99.15323332711625, 98.85356993774036, 98.15228300160756, 97.62090005595374, 96.51781194212785, 95.65973609963912, 93.88931816365135, 92.58302025880832, 89.98170401357103, 87.76611334630029, 83.61511520846483, 80.21235778423177, 75.05866261668102, 71.54956347197474, 67.21658243999764, 64.9553998324347, 61.50921164430003, 59.42474221310362, 55.51857871566923, 53.9576764689337, 51.14950899848729, 49.78047776800775, 45.994629624695385, 44.99995559226582, 43.165590519244915, 42.59965835649925, 40.507284348642195, 40.313311366307545, 39.43824216425528, 39.40709754010763, 38.651425932340466, 38.944132110048315, 38.91349077355303, 39.26591055098155, 38.76265250355997, 39.208802204991876, 39.33823594717245, 39.932441033930374, 39.780773819568424, 40.55166247753726, 41.07369019388408, 42.06294648275962, 42.78279585172533, 44.27957333049169, 45.70532803993127, 47.39240746168406, 49.06924349944776, 51.097877606364364, 53.02313050840919, 55.006054254409186, 57.0098200302565, 59.66110977887937, 62.2160939549232, 64.4942699220497, 66.4808054970854, 68.62555102596673, 70.68488567969007, 72.5788459318075, 74.46140819885203, 76.37763152830689, 78.29802918476284, 80.12842716687534, 81.94920347327688, 83.79008168062548, 85.59676593275482, 87.27312828802265, 88.91574076541167, 90.42213991988844, 91.81464803910247, 92.94902880285628, 94.01892953676811, 94.93698542538168, 95.8113441036891, 96.45741742381854, 97.05760275209529, 97.56278513465905, 98.004523667842, 98.36247960944878]
 
 /*****************************************************************************
- * BATTERY INVARIANTS
+ * BATTERY INVARIANTS -- values set in project.js
  *****************************************************************************/
 
-let msoc = 0.2; //min state of charge
+let msoc;// = 0.2; //min state of charge
 
-let battery_capacity = 82; // in kWh, Tesla Model 3
+let battery_capacity;// = 82; // in kWh, Tesla Model 3
+
+let diversity_constant; // = 1.0; // what percentage of the fleet is this car. E.g. With two cars, could be 0.7 and 0.3
 
 const battery_cost_per_kwH = 143;
 
@@ -65,7 +67,7 @@ const winterKelvinTemperatures = [{"index":0,"temp":305.01666666666665},{"index"
 
 /*
  * ==============================================================================
- * @PRANAV => UPDATE THIS VALUE (CURRENTLY IDENTICAL TO THE WINTER TEMPERATURES)
+ * @PRANAV => UPDATE THIS VALUE (CURRENTLY IDENTICAL TO THE WINTER TEMPERATURES) [Pranav] Not anymore.
  * ==============================================================================
  */
 
@@ -184,7 +186,7 @@ const CF_per_winter = get_CF_for_season(winterKelvinTemperatures);
 function get_veh_pop() {
 	const average_veh_per_household = 1.6;
 	const zip_code_pop_95050 = 38699 * average_veh_per_household;
-	return zip_code_pop_95050 * opt_in;
+	return zip_code_pop_95050 * opt_in * diversity_constant;
 }
 
 /*****************************************************************************
@@ -484,18 +486,20 @@ $("#zip").change(function(){
 // When multiple choice is changed, update graphs. This function is called in app.js
 function updateGraphs(){
 
-	msoc = $("#msocText").val()/100; //is a percentage;
+	//msoc = $("#msocText").val()/100; //is a percentage;
 	opt_in = $("#optinText").val()/100;
 
 	// Get id of selected vehicle
-	vehicle_type = $("#car-list .selected").attr("id");
+	//vehicle_type = $("#car-list .selected").attr("id");
 	//console.log(vehicle_type);
 
 	//console.log(data.batteryKWhCapacity);
-	battery_capacity = $("#car-list .selected div h6").attr("property");
+	//battery_capacity = $("#car-list .selected div h6").attr("property");
 
 	calc_veh_pop();
 	calc_flt_cap();
+	console.log(flt_tou_profit);
+
 	flt_tou_profit[0].revenue = get_winter_revenue_pge_tou();
 	flt_tou_profit[1].revenue = get_summer_revenue_pge_tou();
 	flt_profit = Math.round(calc_annual_profit(flt_tou_profit[0].revenue, flt_tou_profit[1].revenue,
@@ -505,27 +509,9 @@ function updateGraphs(){
 
 	// Set the value of the HTML spans to a smaller number, expressed in larger units (e.g. Gigawatts vs Kilowatts)
 	let flt_val = battery_capacity * veh_pop;
-	let unit = "kWh";
 
-	// Once for Megawatts
-	if(flt_val >= 1000) {
-		flt_val /= 1000;
-		unit = "MWh";
-	}
-	// Again for Gigawatts
-	if(flt_val >= 1000) {
-		flt_val /= 1000;
-		unit = "GWh";
 
-		// Easter Egg -- if fleet capacity is approximately 1.21 GWh, replace unit with "Jigawatt-hours"
-		if(flt_val >= 1.21 && flt_val < 1.22)
-			unit = "Jigawatt-hours";
-	}
 
-	// Populate spans in HTML with the values, separated with commas (e.g. 1,000,000)
-	flt_roi_field.text(flt_profit.toLocaleString());
-	indiv_roi_field.text(indiv_profit.toLocaleString());
-	flt_cap_field.text((flt_val).toLocaleString() + " " +unit);
-
-	updatePS();
+	return {"fleet": flt_profit, "indiv": indiv_profit, "cap": flt_val};
+	//updatePS();
 }
