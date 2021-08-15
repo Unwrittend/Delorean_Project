@@ -55,6 +55,11 @@ function clearError() {
 	$(".invalid").removeClass("invalid");
 }
 
+/*******************  Update the navigation brand on page resize  **********************/
+$(window).resize(function() {
+	updateBrand();
+});
+
 /*********************  Other stuff to run on page load  *****************************/
 $(function() {
 	// Initialize cookie if empty

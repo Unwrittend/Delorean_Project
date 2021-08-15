@@ -8,20 +8,74 @@ widget_width = widget_width.substr(0, widget_width.length - 2);
 widget_width = parseInt(widget_width, 10);
 widget_width -= 50;
 
+let sel_i=0;
+
 // Toggle green background for the currently selected view option (individual/organization)
 $(".view-toggle button").click(function (){
 	$(".view-toggle button").removeClass("selected");
 	$(this).addClass("selected");
 });
 
-// Toggle green background for the currently selected MC option, and then update the graphs
+// Multiple choice select -- also add to the "cart" of cars
 function toggleMCSelected() {
-	$(".option").removeClass("selected");
-	$(this).addClass("selected");
+	// Name of the car the user just selected
+	let carName = $(this).children("div").children("h4").html();
 
-	Cookies.set("make", $("#car-make").val());
-	Cookies.set("model", $(this).attr("id"));
-	validateAndUpdate();
+	// If the car is not already selected, execute this code
+	if( JSON.parse(Cookies.get("cars")).filter(e => e.name === carName).length === 0 ) {
+
+		// Make the multiple choice option green
+		$(this).addClass("selected");
+
+		// Add the markup to show this in the cart
+		$("#cars-selected").append(
+			"<div id=\"car-sel-" +sel_i +"\" class=\"car-select\">\n" +
+			"    <div class=\"car-labels-L\">\n" +
+			"        <div>"+
+			"            <h5>" +carName +"</h5>\n" +
+			"            <button id=\"rm-" +sel_i +"\" class=\"btn btn-danger remove-car\" onClick='removeCar($(\"#rm-" +sel_i +"\"))'>Remove</button>\n" +
+			"        </div>"+
+			"    </div>\n" +
+			"    <div class=\"car-sliders\">\n" +
+			"        <div class=\"d-flex justify-content-center\">\n" +
+			"            <input type=\"number\" id=\"car-sel-txt-" +sel_i +"\" class=\"form-control input-text\" value=\"100\" min=\"0\" max=\"100\" oninput=\"bindInputs($(this), $('#car-sel-rng-" +sel_i +"'))\" />\n" +
+			"        </div>\n" +
+			"        <input type=\"range\" id=\"car-sel-rng-" +sel_i +"\" class=\"form-control slider\" value=\"100\" min=\"0\" max=\"100\" oninput=\"bindInputs($(this), $('#car-sel-txt-" +sel_i +"'))\" />\n" +
+			"    </div>\n" +
+			"</div>"
+		);
+
+		// Increment the iterator (TODO: is this necessary?)
+		sel_i++;
+
+		// Attach click event handler to the newly created elements
+		$(document).on("click", ".remove-car", removeCar);
+
+		// Add the new car to the cookie
+		let cars = JSON.parse(Cookies.get("cars"));
+		cars.push({
+			name: carName,				// Model and make of the car
+			id: $(this).attr("id"),		// alphanumeric string in mongodb
+			cap: $(this).children(".car-labels").children("h6").attr("property") // Car's battery capacity
+		});
+		Cookies.set("cars", JSON.stringify(cars));
+
+		//validateAndUpdate();
+	}
+
+}
+
+// Remove a car from the list
+function removeCar(el) {
+	let rm_i = el.attr("id").substr(3);
+	let cars = JSON.parse(Cookies.get("cars"));
+	let rm_id = cars[rm_i].id;
+
+	cars.splice(rm_i, 1);
+	Cookies.set("cars", JSON.stringify(cars));
+
+	$("#car-sel-" +rm_i).remove();
+	$("#" +rm_id).removeClass("selected");
 }
 
 // Next 2 functions are for the view toggle
@@ -43,7 +97,8 @@ function switchToOrg() {
 	Cookies.set("view", "organizer");
 }
 
-// Populate the multi-select with user-specified cars. Triggered when the dropdown for manufacturer is changed
+/***************** Populate the multi-select with user-specified cars.
+ * Triggered when the dropdown for manufacturer is changed  ********************/
 function populateCars(callback) {
 
 	// Empty the container before populating it
@@ -75,12 +130,23 @@ function populateCars(callback) {
 				let carId = car._id;
 				let carModel = car.model;
 				let carBattery = car.batteryKWhCapacity;
-				// For boilerplate div, see index.ejs
-				$("#car-list").append("<div id=\"" +carId +"\" class=\"option\"></div>");
 
-				$("#" +carId).append("<img src=\"images/vehicles/" +carId +".png\" alt=\"image\" class=\"img-thumbnail\" />");
+				// For boilerplate selection, see index.ejs
 
-				$("#" +carId).append("<div><h4>" +mc_value + " " +carModel +"</h4><h6 property=\"" +carBattery +"\">Battery size: " +carBattery +" kWh</h6></div>");
+				// If the car is not selected, render it normally
+				if( JSON.parse(Cookies.get("cars")).filter(e => e.name === `${mc_value} ${carModel}`).length === 0 )
+					$("#car-list").append("<div id=\"" +carId +"\" class=\"option\"></div>");
+
+				// If the car is already selected, add the "selected" class
+				else
+					$("#car-list").append("<div id=\"" +carId +"\" class=\"option selected\"></div>");
+
+				// The div's contents are common code
+				$("#" +carId).append(
+					"<img src=\"images/vehicles/" +carId +".png\" alt=\"image\" class=\"img-thumbnail\" />" +
+					"<div class=\"car-labels\"><h4>" +mc_value + " " +carModel +"</h4><h6 property=\"" +carBattery +"\">Battery size: " +carBattery +" kWh</h6></div>"
+				);
+
 			});
 
 			// Attach click event handler to the newly created elements
@@ -103,6 +169,30 @@ function populateCars(callback) {
 	});
 }
 
+/***************** Populate the cart with the selected cars  ********************/
+function populateSelectedCars() {
+	JSON.parse(Cookies.get("cars")).forEach( function(item){
+		$("#cars-selected").append(
+			"<div id=\"car-sel-" +sel_i +"\" class=\"car-select\">\n" +
+			"    <div class=\"car-labels-L\">\n" +
+			"        <div>"+
+			"            <h5>" +item.name +"</h5>\n" +
+			"            <button id=\"rm-" +sel_i +"\" class=\"btn btn-danger remove-car\" onClick='removeCar($(\"#rm-" +sel_i +"\"))'>Remove</button>\n" +
+			"        </div>"+
+			"    </div>\n" +
+			"    <div class=\"car-sliders\">\n" +
+			"        <div class=\"d-flex justify-content-center\">\n" +
+			"            <input type=\"number\" id=\"car-sel-txt-" +sel_i +"\" class=\"form-control input-text\" value=\"100\" min=\"0\" max=\"100\" oninput=\"bindInputs($(this), $('#car-sel-rng-" +sel_i +"'))\" />\n" +
+			"        </div>\n" +
+			"        <input type=\"range\" id=\"car-sel-rng-" +sel_i +"\" class=\"form-control slider\" value=\"100\" min=\"0\" max=\"100\" oninput=\"bindInputs($(this), $('#car-sel-txt-" +sel_i +"'))\" />\n" +
+			"    </div>\n" +
+			"</div>"
+		);
+		sel_i++;
+	} );
+}
+
+/*
 // Find the selected car (using cookies) and show it in the multiple-choice
 function findCar() {
 	let make = Cookies.get("make");
@@ -119,6 +209,7 @@ function findCar() {
 		});
 	}
 }
+*/
 
 /*****************  Bind sliders and text fields  ********************/
 function bindInputs(source, dest) {
@@ -126,7 +217,7 @@ function bindInputs(source, dest) {
 	validateAndUpdate();
 }
 
-/***************** Setup for the jQuery UI Slider ********************/
+/***************** Setup for the jQuery UI Slider ********************
 const slider = $("#slider");
 const hours1 = $("#hours-1");
 const hours2 = $("#hours-2");
@@ -141,7 +232,7 @@ slider.slider({
 	range: true,
 	values: [ 9, 17 ],
 
-	/* Set the time field input when the sliders change */
+	// Set the time field input when the sliders change
 	slide: function(event, ui) {
 		hrs1 = ui.values[0];
 		hrs2 = ui.values[1];
@@ -212,10 +303,11 @@ hours2.change(function(){
 		}
 	}
 });
-
+*/
 /*********************  Graph Types/Format  *****************************/
 // Update Fleet Availability graph when the graph type is changed.
 let useFuture = false;
+/*
 $("#graphType").change(function () {
 	// If we do not want to show the future graph:
 	if (useFuture) {
@@ -228,7 +320,7 @@ $("#graphType").change(function () {
 
 	updateFA();
 });
-
+*/
 /***********************  Stuff to run on window resize  *******************************/
 $(window).resize(function(){
 	// Update graph width
@@ -253,7 +345,7 @@ function validateAndUpdate() {
 
 	/**  Common Stuff  **/
 	// If no car is selected
-	if(! $("#car-list .selected").length) {
+	if( JSON.parse(Cookies.get("cars")).length === 0 ) {
 		valid = false;
 		throwError($("#car-make"), "Please select a car");
 	}
@@ -279,17 +371,72 @@ function validateAndUpdate() {
 
 	// At this point, check if we can update the graphs
 	if(valid) {
-		//console.log("Update!"); Dev Only
-		updateGraphs();
+		runCalculations();
+		updatePS();
 	}
 	else {
 		//console.log("Failed."); Dev Only
 	}
 }
 
+/********************************  Set variable values and update graphs  ***************************************/
+function runCalculations() {
+
+	let total_fleet = 0;
+	let total_indiv = 0;
+	let total_energy = 0;
+	let results;
+
+	let cars = JSON.parse(Cookies.get("cars")); // Array of all the cars
+
+	// Update variables in fleet-capcity.js (line 50)
+	msoc = $("#msocText").val() / 100;
+
+	for(let i=0; i<cars.length; i++) {
+		battery_capacity = cars[i].cap;
+		diversity_constant = $("car-sel-txt-" +i) / 100;
+
+		results = updateGraphs();
+		total_fleet += results.fleet;
+		total_indiv += results.indiv;
+		total_energy += results.cap;
+	}
+
+	// Set the value of the HTML spans to a smaller number, expressed in larger units (e.g. Gigawatts vs Kilowatts)
+	let unit = "kWh";
+
+	// Once for Megawatts
+	if(total_energy >= 1000) {
+		total_energy /= 1000;
+		unit = "MWh";
+	}
+	// Again for Gigawatts
+	if(total_energy >= 1000) {
+		total_energy /= 1000;
+		unit = "GWh";
+
+		// Easter Egg -- if fleet capacity is approximately 1.21 GWh, replace unit with "Jigawatt-hours"
+		if(total_energy >= 1.21 && total_energy < 1.22)
+			unit = "Jigawatt-hours";
+	}
+
+	// Populate spans in HTML with the values, separated with commas (e.g. 1,000,000)
+	flt_roi_field.text(total_fleet.toLocaleString());
+	indiv_roi_field.text(total_indiv.toLocaleString());
+	flt_cap_field.text((total_energy).toLocaleString() + " " +unit);
+
+	flt_tou_profit = total_fleet
+
+}
+
+
+/********************************  On Page load  ***************************************/
 $(function() {
 	if(Cookies.get("view") === "individual")
 		switchToIndiv();
+
+	if(!Cookies.get("cars"))
+		Cookies.set("cars", "[]");
 
 	// Hide loading spinners and reset the car multiple choice field
 	$(".spinner-wrapper").hide();
@@ -299,7 +446,9 @@ $(function() {
 	$("#graphType").prop("checked", false);
 	updateFA();
 
+	populateSelectedCars();
+
 	// Set default times
-	hours1.val( "0" + slider.slider( "values", 0 ) + ":00" );
-	hours2.val( slider.slider( "values", 1 ) + ":00" );
+	//hours1.val( "0" + slider.slider( "values", 0 ) + ":00" );
+	//hours2.val( slider.slider( "values", 1 ) + ":00" );
 })

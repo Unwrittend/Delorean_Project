@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" initial-scale="1" />
+
+    <!-- For favicon -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/icons/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="/images/icons/apple-touch-icon-152x152.png" />
+    <link rel="icon" type="image/png" href="/images/icons/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/images/icons/favicon-16x16.png" sizes="16x16" />
+    <meta name="application-name" content="DeLorean Energy"/>
+    <meta name="msapplication-TileColor" content="#FFFFFF" />
+    <meta name="msapplication-TileImage" content="/images/icons/mstile-144x144.png" />
+
+    <!-- Link to remote font -->
+    <link rel="stylesheet" href="https://use.typekit.net/ahh6uys.css">
+
+    <link href="sass/jquery-ui.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- All Bootstrap styles and icons are embedded in these stylesheets -->
+    <link href="sass/style-<%= user_mode %>.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
+
+    <!-- Import jQuery, PopperJS (For bootstrap effects), Bootstrap's own JS library, jQuery UI (local file -- not remote), and AJAX -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="scripts/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+
+    <!-- Import js-Cookie files -->
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.mjs"></script>
+
+    <!-- ReCaptcha Script -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+    <!-- Our custom scripts. App = generic functionality -->
+    <script src="scripts/app.js" defer></script>
+    <script src="scripts/about.js" defer></script>
+
+    <title>About Us - DeLorean Energy</title>
+</head>
+<body>
+<!-- Main Navigation -->
+<!--================================================================================================================-->
+<nav class="navbar navbar-expand-md navbar-<%= user_mode %>">
+    <a class="screen-reader-only" href="#about">Skip to Content</a>
+    <a class="navbar-brand" href="/"><img id="navbar-brand" class="navbar-brand-img" src="images/logo_lg_<%= user_mode %>.png" alt="DeLorean Energy"/></a>
+
+    <button class="navbar-toggler align-item" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="screen-reader-only">Toggle navigation</span>
+        <span id="b1" class="bar"></span>
+        <span id="b2" class="bar"></span>
+        <span id="b3" class="bar"></span>
+    </button>
+
+    <div id="collapsibleNavbar" class="collapse navbar-collapse">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/project">Project</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link selected-nav" href="#">About</a>
+            </li>
+        </ul>
+        <div class="style-switch">
+            <% if(user_mode !== "dark") { %>
+                <button class="btn selected" onclick="switchToLight(this);"><i class="bi bi-sun"></i></button>
+                <button class="btn" onclick="switchToDark(this);"><i class="bi bi-moon"></i></button>
+            <% } else { %>
+                <button class="btn" onclick="switchToLight(this);"><i class="bi bi-sun"></i></button>
+                <button class="btn selected" onclick="switchToDark(this);"><i class="bi bi-moon"></i></button>
+            <% } %>
+        </div>
+    </div>
+</nav>
+<!-- Content (sr-only link jumps here) -->
+<!--=================================================================================================================-->
+<main id="about" class="container-fluid content">
+
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h1>About Us</h1>
+            <div class="profile-pics row d-flex justify-content-evenly">
+                <div class="col-lg-2 col-md-3 col-sm-2 col-4">
+                    <img class="img-fluid profile" src="/images/profiles/Chris-Pitterle.jpg" alt="Chris Pitterle">
+                    <h6 class="text-center">Chris Pitterle</h6>
+                    <h6 class="figure-caption text-center">Project Lead</h6>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-2 col-4">
+                    <img class="img-fluid profile" src="/images/profiles/Pranav-Rao.jpg" alt="Pranav Rao">
+                    <h6 class="text-center">Pranav Rao</h6>
+                    <h6 class="figure-caption text-center">Partner</h6>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-2 col-4">
+                    <img class="img-fluid profile" src="/images/profiles/Jordan-Randleman.jpg" alt="Jordan Randleman">
+                    <h6 class="text-center">Jordan Randleman</h6>
+                    <h6 class="figure-caption text-center">Partner</h6>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-2 col-4">
+                    <img class="img-fluid profile" src="/images/profiles/Arjun-Chimni.jpg" alt="Arjun Chimni">
+                    <h6 class="text-center">Arjun Chimni</h6>
+                    <h6 class="figure-caption text-center">Partner</h6>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-2 col-4">
+                    <img class="img-fluid profile" src="/images/profiles/Navid-Shaghaghi.jpg" alt="Navid Shaghaghi">
+                    <h6 class="text-center">Dr. Navid Shaghaghi</h6>
+                    <h6 class="figure-caption text-center">Faculty Advisor</h6>
+                </div>
+            </div>
+            <p>
+                We are DeLorean Energy.
+                We are a group of students (and our spectacular faculty advisor) who are conducting research in sustainable energy.
+                For any queries, please e-mail us using this form.
+            </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 offset-md-4">
+            <div class="form-group">
+                <h3>Contact Us</h3>
+                <br>
+                <form id="email-form">
+                    <input type="text" id="name" class="form-control input-text" placeholder="Name" required>
+                    <input type="email" id="email" class="form-control input-text" placeholder="E-mail" required>
+                    <input type="text" id="subject" class="form-control input-text" placeholder="Subject" required>
+                    <textarea id="body" class="form-control input-text" placeholder="Body" required></textarea>
+                    <div id="captcha_element" class="g-recaptcha" data-sitekey="SITEKEY"></div><br>
+                    <button type="submit" class="btn">Send E-mail</button><br>
+                    <span id="mail-spinner" class="spinner-wrapper"><div class="spinner"></div><em>Loading</em></span>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</main>
+<!-- Footer -->
+<!--=================================================================================================================-->
+<footer>
+    <% const year = new Date().getFullYear(); %>
+    <address>Copyright &#169; <%= year %> Project DeLorean.</address>
+    <address>EPIC Labs</address>
+    <address>Santa Clara University</address>
+</footer>
+
+</body>
+</html>

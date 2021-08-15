@@ -10682,6 +10682,42 @@ main.content {
   padding-right: 20px;
 }
 
+#about .profile-pics {
+  margin-bottom: 20px;
+}
+#about .profile-pics div {
+  margin-top: 20px;
+}
+#about .profile-pics div h6:first-of-type, #about .profile-pics div .h6:first-of-type {
+  margin-top: 4px;
+  margin-bottom: 2px;
+}
+#about .profile-pics div .profile {
+  border-radius: 50%;
+  display: inline;
+}
+#about #email-form input, #about #email-form textarea {
+  width: 100%;
+  text-align: left;
+  margin-bottom: 1.5rem;
+}
+
+#user-guide {
+  padding-bottom: 40px;
+}
+#user-guide .ref-cards {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  border-top: solid 1px gainsboro;
+}
+#user-guide .ref-cards article {
+  margin-left: 2rem;
+  line-height: 1.7rem;
+}
+#user-guide .ref-cards:first-of-type {
+  border-top: none;
+}
+
 .view-toggle {
   padding: 15px 0 20px 5px;
   color: #0a0a0a;
@@ -10737,6 +10773,10 @@ main.content {
   margin-left: 5px;
 }
 
+.form-group > label {
+  margin-bottom: 10px;
+}
+
 .form-result {
   background: #8bc7f1;
   color: #0a0a0a;
@@ -10785,10 +10825,6 @@ main.content {
 
 .mapboxgl-ctrl-attrib-inner {
   display: none !important;
-}
-
-#mc {
-  min-height: 500px;
 }
 
 #peak-lg {
@@ -10910,7 +10946,29 @@ input[type=number] {
 #hours-1, #hours-2 {
   display: inline;
   margin-left: 0px;
-  margin-top: 20px;
+  margin-top: 10px;
+}
+
+.car-select {
+  width: 100%;
+  background: whitesmoke;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  padding: 5px;
+  display: flex;
+}
+.car-select div.car-labels-L {
+  flex: 1;
+}
+.car-select div.car-labels-L h5, .car-select div.car-labels-L .h5 {
+  margin-bottom: 50px;
+}
+.car-select div.car-labels-L .btn-danger {
+  bottom: 30px;
+}
+.car-select div.car-sliders .slider {
+  margin-bottom: 10px;
+  background-color: #0a0a0a;
 }
 
 .option {
@@ -10934,11 +10992,11 @@ input[type=number] {
   border-color: whitesmoke;
   text-align: left;
 }
-.option div {
+.option div.car-labels {
   flex: 1;
   text-align: right;
 }
-.option div h4, .option div .h4 {
+.option div.car-labels h4, .option div.car-labels .h4 {
   margin-top: 10px;
 }
 
@@ -11068,6 +11126,70 @@ select.form-select:focus {
   fill: #0a0a0a;
 }
 
+nav.navbar {
+  border: none;
+}
+
+nav.header-expanded {
+  background-color: rgba(245, 245, 245, 0.6);
+  filter: none;
+}
+nav.header-expanded img {
+  height: 70px;
+}
+nav.header-expanded #collapsibleNavbar, nav.header-expanded #collapsibleNavbar > * {
+  display: none !important;
+}
+
+#landing {
+  padding: 0;
+  margin-right: 0;
+}
+
+#titleVideo {
+  object-fit: cover;
+  width: 100%;
+  height: 100vh;
+}
+
+.title {
+  position: absolute;
+  left: 30px;
+  top: 72%;
+  max-width: 40rem;
+  padding: 16px;
+  background: rgba(245, 245, 245, 0.4);
+  border-radius: 10px;
+}
+.header-btn {
+  background-color: #74c17d;
+  margin-right: 10px;
+}
+
+.banner {
+  max-width: 58rem;
+  line-height: 4rem;
+  margin-top: 50px;
+}
+
+.description-grid {
+  margin-top: 50px;
+  margin-bottom: 50px;
+  --bs-gutter-x: 0;
+}
+.description-grid .grid-item {
+  padding: 3.5%;
+}
+.description-grid .grid-item .form-group h4, .description-grid .grid-item .form-group .h4 {
+  text-align: center;
+}
+.description-grid .grid-item .form-group p {
+  margin-top: 35px;
+  margin-bottom: 35px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
 @media screen and (max-width: 767px) {
   nav.navbar .navbar-toggler {
     width: 40px;
@@ -11128,6 +11250,15 @@ select.form-select:focus {
   .style-switch {
     margin-left: 10px;
     margin-bottom: 20px;
+  }
+
+  .title {
+    left: 1%;
+    max-width: 23rem;
+  }
+
+  #landing .banner {
+    line-height: 2rem;
   }
 
   .form-group {
