@@ -22,17 +22,17 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 // E-mail info
-const emailHost = "HOST_NAME";
-const emailAddress = "EMAIL";
-const emailPort = "PORT";
-const emailPass = "PASSWORD";
+const emailHost = process.env.EMAIL_HOST;
+const emailAddress = process.env.EMAIL_USR;
+const emailPort = process.env.EMAIL_PORT;
+const emailPass = process.env.EMAIL_PASS;
 
 // Use cookie Parser, set variables for determining style and view preferences
 app.use(cookieParser());
 let user_mode, user_view;
 
 // Connect to DeLorean Database
-mongoose.connect("mongodb+srv://[username]:[password]@cluster0.joafk.mongodb.net/delorean?retryWrites=true&w=majority");
+mongoose.connect(process.env.MONGO_URI);
 
 // Schema for the Vehicles collection within DeLorean database
 let vehiclesSchema = mongoose.Schema,
@@ -85,6 +85,7 @@ app.get("/about", (req, res) => {
 	// Render the page
 	res.render("about", {
 		user_mode: user_mode,
+		captcha_token: process.env.CAPTCHA_SITEKEY,
 	});
 });
 

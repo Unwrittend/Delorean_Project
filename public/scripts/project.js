@@ -67,7 +67,7 @@ function toggleMCSelected() {
 
 // Remove a car from the list
 function removeCar(el) {
-	let rm_i = el.attr("id").substr(3);
+	let rm_i = el[0].id.substring(3);
 	let cars = JSON.parse(Cookies.get("cars"));
 	let rm_id = cars[rm_i].id;
 
@@ -76,6 +76,7 @@ function removeCar(el) {
 
 	$("#car-sel-" +rm_i).remove();
 	$("#" +rm_id).removeClass("selected");
+	sel_i--;
 }
 
 // Next 2 functions are for the view toggle
@@ -106,7 +107,7 @@ function populateCars(callback) {
 
 	let mc_value = $("#car-make").val() + "";
 
-	if(mc_value == "default") {
+	if(mc_value === "default") {
 		return;
 	}
 
@@ -217,93 +218,6 @@ function bindInputs(source, dest) {
 	validateAndUpdate();
 }
 
-/***************** Setup for the jQuery UI Slider ********************
-const slider = $("#slider");
-const hours1 = $("#hours-1");
-const hours2 = $("#hours-2");
-let hrs1, hrs2;
-let h_inp1, h_inp2;
-let mins1, mins2;
-let msg;
-
-slider.slider({
-	min: 0,
-	max: 24,
-	range: true,
-	values: [ 9, 17 ],
-
-	// Set the time field input when the sliders change
-	slide: function(event, ui) {
-		hrs1 = ui.values[0];
-		hrs2 = ui.values[1];
-
-		if (hrs1 === 24) {
-			hours1.val( "23:59" );
-		} else if (hrs1 >= 10) {
-			hours1.val( hrs1 + ":00" );
-		} else {
-			hours1.val( "0" + hrs1 + ":00" );
-		}
-
-		if (hrs2 === 24) {
-			hours2.val( "23:59" );
-		} else if (hrs2 >= 10) {
-			hours2.val( hrs2 + ":00" );
-		} else {
-			hours2.val( "0" + hrs2 + ":00" );
-		}
-	}
-});
-
-// Change the slider values when the time fields are changed
-hours1.change(function(){
-	h_inp1 = hours1.val(); // String in 24-hr time format
-	h_inp2 = hours2.val(); // String in 24-hr time format
-	hrs1 = parseInt(h_inp1.substring(0, 2));	// Number containing hour
-	mins1 = parseInt(h_inp1.substring(3, 5));	// Number containing minutes
-
-	// Form validation. If invalid input is given, run the error handler
-	if(hrs1 >= parseInt(h_inp2.substring(0, 2)) ) {
-		msg = "Please select a valid time";
-		throwError(this, msg);
-	}
-	else {
-		// If input is valid, remove any error styles if they were displayed
-		clearError(this);
-
-		if (mins1 > 30) {
-			slider.slider("values", 0, (hrs1 + 1).toString());
-		} else {
-			slider.slider("values", 0, (hrs1).toString());
-		}
-	}
-
-});
-
-hours2.change(function(){
-	h_inp1 = hours1.val(); // String in 24-hr time format
-	h_inp2 = hours2.val(); // String in 24-hr time format
-	hrs2 = parseInt(h_inp2.substring(0, 2)); 	// Number containing hour
-	mins2 = parseInt(h_inp2.substring(3, 5)); 	// Number containing minutes
-
-	// Form validation. If invalid input is given, run the error handler
-	if(hrs2 <= parseInt(h_inp1.substring(0, 2)) ) {
-		msg = "Please select a valid time";
-		throwError(this, msg);
-	}
-	else{
-		// If input is valid, remove the error styles if they were displayed
-		clearError(this);
-
-		if(mins2 > 30) {
-			slider.slider( "values", 1, (hrs2+1).toString() );
-		}
-		else {
-			slider.slider("values", 1, (hrs2).toString());
-		}
-	}
-});
-*/
 /*********************  Graph Types/Format  *****************************/
 // Update Fleet Availability graph when the graph type is changed.
 let useFuture = false;
@@ -339,7 +253,7 @@ $(window).resize(function(){
 /********************************  Validation  ***************************************/
 function validateAndUpdate() {
 	clearError();
-
+// TODO: validate number of years
 	let valid = true;
 	let msoc = $("#msocText");
 
@@ -371,8 +285,8 @@ function validateAndUpdate() {
 
 	// At this point, check if we can update the graphs
 	if(valid) {
-		runCalculations();
-		updatePS();
+		let results = runCalculations();
+		updatePS(results.data);
 	}
 	else {
 		//console.log("Failed."); Dev Only
@@ -389,16 +303,18 @@ function runCalculations() {
 
 	let cars = JSON.parse(Cookies.get("cars")); // Array of all the cars
 
-	// Update variables in fleet-capcity.js (line 50)
-	msoc = $("#msocText").val() / 100;
+	const optIn = $("#optinText").val() / 100;
+	const years = parseFloat( $("#years-inp").val() );
 
 	for(let i=0; i<cars.length; i++) {
-		battery_capacity = cars[i].cap;
-		diversity_constant = $("car-sel-txt-" +i) / 100;
+		let battery_capacity = parseFloat(cars[i].cap);
+		let diversity_constant = $("#car-sel-txt-" +i).val() / 100;
 
-		results = updateGraphs();
+		// Update variables in fleet-capcity.js (line 50)
+		results = roi($("#msocText").val() / 100, optIn, years, battery_capacity, diversity_constant );
+
 		total_fleet += results.fleet;
-		total_indiv += results.indiv;
+		//total_indiv += results.indiv;
 		total_energy += results.cap;
 	}
 
@@ -421,12 +337,12 @@ function runCalculations() {
 	}
 
 	// Populate spans in HTML with the values, separated with commas (e.g. 1,000,000)
-	flt_roi_field.text(total_fleet.toLocaleString());
-	indiv_roi_field.text(total_indiv.toLocaleString());
-	flt_cap_field.text((total_energy).toLocaleString() + " " +unit);
+	$("#flt-roi").text(total_fleet.toLocaleString());
+	//indiv_roi_field.text(total_indiv.toLocaleString());
+	$("#fleet-capacity").text((total_energy).toLocaleString() + " " +unit);
 
-	flt_tou_profit = total_fleet
-
+	// For updateGraphs()
+	return results;
 }
 
 

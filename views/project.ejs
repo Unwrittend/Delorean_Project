@@ -43,10 +43,9 @@
 
     <!-- Our custom scripts. App = generic functionality; fleet-capacity = calculations; graphs = D3JS; dynamics = AJAX -->
     <script src="scripts/app.js" defer></script>
-    <script src="scripts/fleet-capacity.js" defer></script>
+    <script src="scripts/roi.js" defer></script>
     <script src="scripts/graphs.js" defer></script>
     <script src="scripts/project.js" defer></script>
-<!--    <script src="scripts/battery-degradation.js" defer></script>-->
 
     <title>Calculator Project - DeLorean Energy</title>
 </head>
@@ -97,10 +96,10 @@
         <section class="view-toggle">
             <h1 class="text-center">Is Vehicle-to-Grid (V2G) Right For You?</h1>
             <% if(user_view === "individual") { %>
-                <button id="ind-btn" class="btn selected" onclick="switchToIndiv()">Individual</button>
+<!--                <button id="ind-btn" class="btn selected" onclick="switchToIndiv()">Individual</button>-->
                 <button id="org-btn" class="btn" onclick="switchToOrg()">Organizer</button>
             <% } else { %>
-                <button id="ind-btn" class="btn" onclick="switchToIndiv()">Individual</button>
+<!--                <button id="ind-btn" class="btn" onclick="switchToIndiv()">Individual</button>-->
                 <button id="org-btn" class="btn selected" onclick="switchToOrg()">Organizer</button>
             <% } %>
         </section>
@@ -168,11 +167,11 @@
             <!--=========================================================================================-->
             <!-- The ID is there because the range of the slider will be generated dynamically -->
             <div class="form-group">
-                <label>ZIP Code</label>
+                <label>Years</label>
                 <a href="/user-guide" class="icon-info"></a>
                 <br>
                 <div class="d-flex justify-content-center">
-                    <input type="text" name="zip" id="zip" class="form-control input-text" value="95050" placeholder="Zip Code" />
+                    <input type="number" name="years-inp" id="years-inp" class="form-control input-text" value="0" placeholder="0" />
                 </div>
             </div>
 
@@ -221,6 +220,7 @@
 
             <!-- Return on Investment (Text, USD) -->
             <!--============================================================================================-->
+<!--            Correct number for ROI: 19933574.031174384 -->
             <div class="form-group form-result">
                 <label>ROI</label>
                 <h3 class="text-center">$<span id="indiv-roi" class="d-none"></span><span id="flt-roi"></span></h3>
@@ -236,7 +236,7 @@
             <!-- Peak Shaving (Graph) -->
             <!--=============================================================================================-->
             <div class="form-group form-result">
-                <label>Money Saved per Month</label>
+                <label>Money Saved per Season</label>
                 <span id="graph-spinner" class="spinner-wrapper"><div class="spinner"></div><em>Loading</em></span>
                 <div id="app-ps" class="app">
                     <div id="chart-ps" class="chart">
