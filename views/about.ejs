@@ -109,7 +109,7 @@
                 </div>
                 <div class="col-lg-2 col-md-3 col-sm-2 col-4">
                     <img class="img-fluid profile" src="/images/profiles/Navid-Shaghaghi.jpg" alt="Navid Shaghaghi">
-                    <h6 class="text-center">Dr. Navid Shaghaghi</h6>
+                    <h6 class="text-center">Navid Shaghaghi</h6>
                     <h6 class="figure-caption text-center">Faculty Advisor</h6>
                 </div>
             </div>
@@ -131,7 +131,7 @@
                     <input type="email" id="email" class="form-control input-text" placeholder="E-mail" required>
                     <input type="text" id="subject" class="form-control input-text" placeholder="Subject" required>
                     <textarea id="body" class="form-control input-text" placeholder="Body" required></textarea>
-                    <div id="captcha_element" class="g-recaptcha" data-sitekey="SITEKEY"></div><br>
+                    <div id="captcha_element" class="g-recaptcha" data-sitekey="<%= captcha_token %>"></div><br>
                     <button type="submit" class="btn">Send E-mail</button><br>
                     <span id="mail-spinner" class="spinner-wrapper"><div class="spinner"></div><em>Loading</em></span>
                 </form>

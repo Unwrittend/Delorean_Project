@@ -3,7 +3,7 @@
 /** *************************************************************************** **/
 /**                               Peak Shaving                                  **/
 /** *************************************************************************** **/
-function updatePS() {
+function updatePS(flt_tou_profit) {
 
 	const MARGIN = {top: 20, right: 5, bottom: 40, left: 70};
 	const CHART_WIDTH = widget_width - MARGIN.right - MARGIN.left;
@@ -77,6 +77,7 @@ function updatePS() {
 		.attr("height", data => CHART_HEIGHT - yScale(data.revenue))
 		.attr("x", (data => xScale(data.season) + MARGIN.left))
 		.attr("y", data => yScale(data.revenue) + 10);
+
 }
 
 /** *************************************************************************** **/

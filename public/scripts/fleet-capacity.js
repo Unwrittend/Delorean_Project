@@ -8,9 +8,9 @@
 let vehicle_type, /*msoc = .5,*/ opt_in = .5, /*battery_capacity = 0,*/ zip_code = 95050,
 	veh_pop, flt_cap, flt_profit, indiv_profit;
 
-const indiv_roi_field = $("#indiv-roi");
-const flt_roi_field = $("#flt-roi");
-const flt_cap_field = $("#fleet-capacity");
+// const indiv_roi_field = $("#indiv-roi");
+// const flt_roi_field = $("#flt-roi");
+// const flt_cap_field = $("#fleet-capacity");
 
 let flt_tou_profit =[
 	{season: "Winter", revenue: 0, id: 1},
@@ -38,8 +38,8 @@ const PGE_TOU_D = {
 const PF_per_summer = 100; //power fade percentage. Assumed 100% for now.
 const PF_per_winter = 100; //power fade percentage. Assumed 100% for now.
 
-const average_veh_per_home = 1.85988258; //this is the average vehicles owned per household
-const zip_code_pop_95050 = 38699;
+// const average_veh_per_home = 1.85988258; //this is the average vehicles owned per household
+// const zip_code_pop_95050 = 38699;
 
 const percent_flt_avail = [ 98.72404738009172, 98.94407289973621, 99.14171692141903, 99.2652592375488, 99.3765154139245, 99.46787692544532, 99.55432398106454, 99.61723493763674, 99.6897083596079, 99.74791209637071, 99.80963884670155, 99.8363426974442, 99.87867807057278, 99.90940822253603, 99.94046403121568, 99.9705428697462, 99.7580962700464, 99.56391605161954, 99.15323332711625, 98.85356993774036, 98.15228300160756, 97.62090005595374, 96.51781194212785, 95.65973609963912, 93.88931816365135, 92.58302025880832, 89.98170401357103, 87.76611334630029, 83.61511520846483, 80.21235778423177, 75.05866261668102, 71.54956347197474, 67.21658243999764, 64.9553998324347, 61.50921164430003, 59.42474221310362, 55.51857871566923, 53.9576764689337, 51.14950899848729, 49.78047776800775, 45.994629624695385, 44.99995559226582, 43.165590519244915, 42.59965835649925, 40.507284348642195, 40.313311366307545, 39.43824216425528, 39.40709754010763, 38.651425932340466, 38.944132110048315, 38.91349077355303, 39.26591055098155, 38.76265250355997, 39.208802204991876, 39.33823594717245, 39.932441033930374, 39.780773819568424, 40.55166247753726, 41.07369019388408, 42.06294648275962, 42.78279585172533, 44.27957333049169, 45.70532803993127, 47.39240746168406, 49.06924349944776, 51.097877606364364, 53.02313050840919, 55.006054254409186, 57.0098200302565, 59.66110977887937, 62.2160939549232, 64.4942699220497, 66.4808054970854, 68.62555102596673, 70.68488567969007, 72.5788459318075, 74.46140819885203, 76.37763152830689, 78.29802918476284, 80.12842716687534, 81.94920347327688, 83.79008168062548, 85.59676593275482, 87.27312828802265, 88.91574076541167, 90.42213991988844, 91.81464803910247, 92.94902880285628, 94.01892953676811, 94.93698542538168, 95.8113441036891, 96.45741742381854, 97.05760275209529, 97.56278513465905, 98.004523667842, 98.36247960944878]
 
@@ -47,11 +47,11 @@ const percent_flt_avail = [ 98.72404738009172, 98.94407289973621, 99.14171692141
  * BATTERY INVARIANTS -- values set in project.js
  *****************************************************************************/
 
-let msoc;// = 0.2; //min state of charge
+let msoc = 0.0; //min state of charge
 
-let battery_capacity;// = 82; // in kWh, Tesla Model 3
+let battery_capacity = 82; // in kWh, Tesla Model 3
 
-let diversity_constant; // = 1.0; // what percentage of the fleet is this car. E.g. With two cars, could be 0.7 and 0.3
+let diversity_constant = 1.0; // what percentage of the fleet is this car. E.g. With two cars, could be 0.7 and 0.3
 
 const battery_cost_per_kwH = 143;
 
@@ -84,8 +84,11 @@ const summerKelvinTemperatures = [{"index":0,"temp":299.59},{"index":1,"temp":29
  * ===========================================================================
  */
 
+
+let TOTAL_YEARS = 1;
+
 function get_total_years() {
-	return $("#years-inp").val();
+	return TOTAL_YEARS;
 }
 
 /*****************************************************************************
@@ -145,18 +148,21 @@ function get_CF_Per3Hr(cfPerYear) {
 
 // CF = Capacity Fade = Battery Degredation
 function get_3hr_CF(temp3hrAvgValue) {
-	const avgEv_milesDrivenPerYr = 9435; // https://www.autoexpress.co.uk/tesla/352144/tesla-drivers-cover-higher-annual-mileages-owners-any-other-car
-	const avgEv_kWhPerMile       = 0.3;  // https://www.myev.com/research/comparisons/evs-with-the-best-mpge-ratings-for-2019/slide-4
+	// const avgEv_milesDrivenPerYr = 9435; // https://www.autoexpress.co.uk/tesla/352144/tesla-drivers-cover-higher-annual-mileages-owners-any-other-car
+	// const avgEv_kWhPerMile       = 0.3;  // https://www.myev.com/research/comparisons/evs-with-the-best-mpge-ratings-for-2019/slide-4
 	// const avgEv_amphrPerYear     = get_ampHr(avgEv_milesDrivenPerYr, avgEv_kWhPerMile); // DRIVING (for debugging/relativity computations)
 	const avgEv_amphrPerYear = get_ampHr_per_day(battery_capacity * (1-msoc)) * 365; // CHARGING (what we care about)
+
+
 	return get_CF_Per3Hr(calc_cf_cycle_aging_with_SOC_and_temp(msoc, avgEv_amphrPerYear, temp3hrAvgValue));
 }
 
 
 function get_CF_for_season(avgSeasonKelvinTemps) {
 	let CF = 0;
-	for(let temp of avgSeasonKelvinTemps)
+	for(let temp of avgSeasonKelvinTemps) {
 		CF += get_3hr_CF(temp.temp);
+	}
 	return CF;
 }
 
@@ -169,24 +175,23 @@ function convert_CF_to_cost(CF) {
  * SUMMER CF
  *****************************************************************************/
 
-const CF_per_summer = get_CF_for_season(summerKelvinTemperatures);
-
-/*****************************************************************************
- * WINTER CF
- *****************************************************************************/
-
-const CF_per_winter = get_CF_for_season(winterKelvinTemperatures);
+let CF_per_summer;
 
 /*****************************************************************************
  * VEH_POP
  *****************************************************************************/
 
 //Determine the number of vehicles in the fleet
-//Assumes every person has 1 EV
+//Assumes entire alameda county is one aggregate
 function get_veh_pop() {
-	const average_veh_per_household = 1.6;
-	const zip_code_pop_95050 = 38699 * average_veh_per_household;
-	return zip_code_pop_95050 * opt_in * diversity_constant;
+	////////// SCCTC //////////
+	const santa_clara_county_ev_population = 73092; // NOTE WOULD BE SMALLER THAN IS CURRENTLY SINCE SANTA CLARA CITY USES SVP AND NOT PG&E // includes both BEV & PHEV
+	return santa_clara_county_ev_population * opt_in * diversity_constant;
+	///////////////////////////
+	// const alameda_county_ev_population = 45785; // includes both BEV & PHEV
+	// return alameda_county_ev_population * opt_in * diversity_constant;
+	// const cali_ev_population = 425300;
+	// return cali_ev_population * opt_in * diversity_constant;
 }
 
 /*****************************************************************************
@@ -195,7 +200,7 @@ function get_veh_pop() {
 
 //Assumes all vehicles in the fleet are the same
 /**
- * Calculates the fleets capacity every day
+ * Calculates the fleets capacity (in kWh) every day
  * @param {*} opt_in (vehicle percentage, ie 0.5 == 50% opt-in of EV's in fleet)
  * @param {*} totalSeasons
  * @param {*} seasonPF
@@ -210,6 +215,9 @@ function get_fltCap_per_season(totalSeasons, seasonPF, CfPerSeason) {
 	for(let i = 0; i < totalSeasons; ++i) {
 		fltCapPerYear.push(factory_new_flt_cap - (i * batt_degrad_amount));
 	}
+
+	//console.log(`get_fltCap_per_season args: ${totalSeasons} || ${seasonPF} || ${CfPerSeason} || `);
+	//console.log(`get_fltCap_per_season: ${factory_new_flt_cap} || ${batt_degrad_factor} || ${batt_degrad_amount} || `);
 	return fltCapPerYear;
 }
 
@@ -227,7 +235,8 @@ function get_daily_capacity_decrements_from_beginning_to_end_of_season_capacitie
 // Return an array of the fleet cpacity for every day of each season with <opt_in> vehicle opt-in values
 function get_season_fltCap_per_day(getFltCapPerSeason, getDailyCapacityDecrements) {
 	const totalSeasons = get_total_years();
-	const fltCap_per_season = getFltCapPerSeason(opt_in,totalSeasons+1);
+	const fltCap_per_season = getFltCapPerSeason(totalSeasons+1);
+	//console.log(`fltCap_per_season: ${totalSeasons}`);
 	let fltCap_per_day_per_season = [];
 	for(let i = 0; i < fltCap_per_season.length - 1; ++i) {
 		fltCap_per_day_per_season.push(
@@ -257,11 +266,11 @@ function get_summer_fltCap_per_day() {
 }
 
 /*****************************************************************************
- * WINTER FLEET CAPACITY COMPUTATION
+ * SUMMER FLEET CAPACITY COMPUTATION
  *****************************************************************************/
 
 function get_fltCap_per_winter(totalWinters) {
-	return get_fltCap_per_season(totalWinters, PF_per_winter, CF_per_winter);
+	return get_fltCap_per_season(totalWinters, PF_per_winter, CF_per_winter)
 }
 
 
@@ -307,14 +316,13 @@ const get_summer_revenue_pge_tou_FOR_1_DAY = (() => {
 
 	//All vehicles that can will participate in this V2G event. Thus the highest availability
 	//over the peak hours is used to determine how much energy is discharged
-	const summer_peak_difference = PGE_TOU_D.summer_peak - PGE_TOU_D.summer_off_peak;
 	const summer_peak_availability_factor = Math.max(...peak_avail)/100;
 
 	// By using a closure, we only have to compute constant values once, then capture them!
 	// Note that this closure is assigned as <get_summer_revenue_pge_tou_FOR_1_DAY>'s value.
 	return (flt_cap_of_current_day) => {
 		const discharged_energy = summer_peak_availability_factor * flt_cap_of_current_day;
-		return discharged_energy * summer_peak_difference; // revenue
+		return discharged_energy * (PGE_TOU_D.summer_peak/* - PGE_TOU_D.summer_off_peak*/); // @important revenue WITH GREEN ENERGY (only peak, no off-peak reduction since that cost is eliminated)
 	};
 })();
 
@@ -328,7 +336,7 @@ function get_summer_revenue_pge_tou() {
 }
 
 /*****************************************************************************
- * WINTER REVENUE COMPUTATION
+ * SUMMER REVENUE COMPUTATION
  *****************************************************************************/
 
 /**
@@ -345,19 +353,17 @@ const get_winter_revenue_pge_tou_FOR_1_DAY = (() => {
 
 	//All vehicles that can will participate in this V2G event. Thus the highest availability
 	//over the peak hours is used to determine how much energy is discharged
-	const winter_peak_difference = PGE_TOU_D.winter_peak - PGE_TOU_D.winter_off_peak;
 	const winter_peak_availability_factor = Math.max(...peak_avail)/100;
 
 	// By using a closure, we only have to compute constant values once, then capture them!
 	// Note that this closure is assigned as <get_winter_revenue_pge_tou_FOR_1_DAY>'s value.
 	return (flt_cap_of_current_day) => {
 		const discharged_energy = winter_peak_availability_factor * flt_cap_of_current_day;
-		return discharged_energy * winter_peak_difference; // revenue
+		return discharged_energy * (PGE_TOU_D.winter_peak/* - PGE_TOU_D.winter_off_peak*/); // @important revenue WITH GREEN ENERGY (only peak, no off-peak reduction since that cost is eliminated)
 	};
 })();
 
 
-//TO DO exclude holidays
 function get_winter_revenue_pge_tou() {
 	const flt_cap_per_day = get_winter_fltCap_per_day(); // array of flt_cap for every day from june->sept
 	let revenue = 0;
@@ -367,10 +373,41 @@ function get_winter_revenue_pge_tou() {
 }
 
 /*****************************************************************************
+ * USD STRING FORMATTING
+ *****************************************************************************/
+
+const dollarFmt = (new Intl.NumberFormat('en-US', {
+	style: 'currency',
+	currency: 'USD',
+
+	// These options are needed to round to whole numbers if that's what you want.
+	//minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
+	//maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
+})).format;
+
+
+function centFmt(value) {
+	return `${((value * 10000) & -1) / 100}¢`;
+}
+
+/*****************************************************************************
  * SUMMER REVENUE/PROFIT/SUBSIDIES MATH
  *****************************************************************************/
 
-const SUMMER_INDIV_COST_OF_BATTERY_DEGREDATION = convert_CF_to_cost(CF_per_summer); // USD, found by Chris
+
+
+
+
+CF_per_winter = get_CF_for_season(winterKelvinTemperatures);
+
+CF_per_summer = get_CF_for_season(summerKelvinTemperatures);
+
+
+
+
+
+
+
 
 
 function netSummerRevenueOfOneVehicle(totalSummers) {
@@ -382,136 +419,237 @@ function netSummerRevenueOfOneVehicle(totalSummers) {
 
 // Note: THIS DOES NOT ACCOUNT FOR REPLACEMENT OF BATTERIES AFTER SOME NUMBER OF SUMMERS
 function netSummerProfitOfOneVehicle() {
+	const SUMMER_INDIV_COST_OF_BATTERY_DEGREDATION = convert_CF_to_cost(CF_per_summer); // USD, found by Chris
 	const totalSummers = get_total_years();
 	return netSummerRevenueOfOneVehicle(totalSummers) - SUMMER_INDIV_COST_OF_BATTERY_DEGREDATION * totalSummers;
 }
 
 
-function getFleetProfit() {
-	return netSummerProfitOfOneVehicle() * get_veh_pop();
-}
 
-/*****************************************************************************
- * WINTER REVENUE/PROFIT/SUBSIDIES MATH
- *****************************************************************************/
-
-const WINTER_INDIV_COST_OF_BATTERY_DEGREDATION = convert_CF_to_cost(CF_per_winter); // USD, found by Chris
-
-
-function netWinterRevenueOfOneVehicle(totalWinters) {
-	const fleetRevenue = get_winter_revenue_pge_tou(totalWinters);
+function netWinterRevenueOfOneVehicle(totalSummers) {
+	const fleetRevenue = get_winter_revenue_pge_tou(totalSummers);
 	const totalCarsInFleet = get_veh_pop();
 	return fleetRevenue / totalCarsInFleet;
 }
 
 
-// Note: THIS DOES NOT ACCOUNT FOR REPLACEMENT OF BATTERIES AFTER SOME NUMBER OF SUMMERS
+
+// Note: THIS DOES NOT ACCOUNT FOR REPLACEMENT OF BATTERIES AFTER SOME NUMBER OF WINTERS
 function netWinterProfitOfOneVehicle() {
+	const WINTER_INDIV_COST_OF_BATTERY_DEGREDATION = convert_CF_to_cost(CF_per_winter); // USD, found by Chris
 	const totalWinters = get_total_years();
 	return netWinterRevenueOfOneVehicle(totalWinters) - WINTER_INDIV_COST_OF_BATTERY_DEGREDATION * totalWinters;
 }
 
 
-function getWinterFleetProfit() {
-	return netWinterProfitOfOneVehicle() * get_veh_pop();
+
+
+
+
+
+const totalDaysInTheSummer = 30 + 31 + 31 + 30;
+
+
+// Returns revenue from in USD
+// => <centsValuePerKwh> ::= 0.03 | 0.04
+function NEM_metering_revenue_per_EV(centsValuePerKwh = 0.04) {
+	const amountKwhSold = battery_capacity * (1 - msoc); // this would be the number of kWh sold in peak shaving per vehicle, hence used here to mk a comparable NEM contrast
+	const daysActive = totalDaysInTheSummer * get_total_years();
+	return centsValuePerKwh * amountKwhSold * daysActive;
 }
 
-/*****************************************************************************
- * CALCULATION UPDATES
- *****************************************************************************/
 
-// Determine the number of vehicles in the fleet
-function calc_veh_pop() {
-	veh_pop = get_veh_pop();
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+//
+// For the most fundamental change to the math, cmd-f for "@important"
+//
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+function numberOfYearsTillBatteryHitsMsocFromCapacityFade() {
+	return (100 * (1 - msoc)) / CF_per_summer;
 }
 
 
-// Update flt_cap for the Nth year (Nth year determined by <get_total_years()>)
-// Note that <get_fltCap_per_summer> returns an array of fleet capacities for N years (where N is its parameter)
-function calc_flt_cap() {
-	const totalYears = get_total_years();
-	flt_cap = get_fltCap_per_summer(totalYears)[totalYears-1] + get_fltCap_per_winter(totalYears)[totalYears-1];
+function numberOfYearsTillBatteryHitsMsocFromCapacityFade_IncludingFromDriving() {
+	const avgCfpercentFromDrivingPerYear = 2.3;
+	return (100 * (1 - msoc)) / (CF_per_summer + avgCfpercentFromDrivingPerYear);
 }
 
-/**
- * convert daily profit to annual profit
- * @param {*} winter_rev - revenue from winter billing (daily)
- * @param {*} summer_rev - revenue from summer billing (daily)
- * @param {*} winter_length - days of winter billing
- * @param {*} summer_length - days of summer billing
- */
-function calc_annual_profit(winter_rev, summer_rev, winter_length, summer_length) {
-	return winter_rev*winter_length + summer_rev*summer_length;
+
+msoc = .2; // Precentage/100!
+opt_in = .1; // Precentage/100!
+// TOTAL_YEARS = numberOfYearsTillBatteryHitsMsocFromCapacityFade(); // Integer! // at 33, profit goes into the negative. NOTE: new batteries would have to be purchased prior this by quite an amount of time.
+TOTAL_YEARS = 1; // Integer!
+
+
+const netSummerPeakShavingProfitOfOneEV = netSummerProfitOfOneVehicle(); // DOES NOT ACCOUNT FOR COST OF PURCHASING A NEW BATTERY AFTER <N> YEARS !!!
+const netSummerNemProfitOfOneEV = NEM_metering_revenue_per_EV();
+const netSummerPeakShavingProfitOfFleet = netSummerPeakShavingProfitOfOneEV * get_veh_pop();
+const netSummerNemProfitOfFleet = netSummerNemProfitOfOneEV * get_veh_pop();
+const peakShavingCentsEarnedPerKwhForOneEv = netSummerPeakShavingProfitOfOneEV / (totalDaysInTheSummer * TOTAL_YEARS * battery_capacity)
+
+
+const usdCostOfAvgBatPackPerKwh = 245;
+const usdCostOfTeslaBatPackPerKwh = 190;
+const teslaBatteryCost = usdCostOfTeslaBatPackPerKwh * battery_capacity;
+
+const CF_cost_per_summer = convert_CF_to_cost(CF_per_summer);
+
+
+//////////////////////////////
+//////////////////////////////
+//
+// NOTE ON NAVID IDEA: OLD MATH HOLDS IF REFRAME AS "SAVINGS" SINCE CHARGING DURING OFF PEAK THEN CHARGING
+//                     ELECTRONICS DURING ON PEAK THAT WOULD HAVE OTHERWISE BEEN PURCHASING THE POWER TO DO
+//                     SO FROM THE GRID DURING PEAK WILL HAVE SAVED THE DIFF BTWN ON/OFF PEAK PRICING ON THEIR
+//                     ELECTRICITY BILL
+//
+// NOTE ON NAVID IDEA: WE WOULD STILL NEED TO UPDATE SOME OF THE MATH TO ACCOUNT FOR THE NEW BATTERY
+//                     DEGREDATION RATE
+
+
+// NOTE: DIFF BTWN V2H AND NET METERING DOESN'T MATTER SINCE V2H IS FOR THOSE WHO CANNOT NET METER !!!
+
+
+//
+//////////////////////////////
+//////////////////////////////
+
+
+function getMaxFleetCapacity() { // in kWh
+	return get_fltCap_per_summer(1)[0];
 }
 
-/**
- * Converts military time to minutes since 0000
- * @param {*} mil_time - military time
- */
-/*
-function mil_time_to_minutes(mil_time) {
-	var hours = mil_time / 100;
-	var minutes = mil_time % 100;
-	return (minutes + hours * 60);
+
+
+console.log(`\n\nWinter Fleet Profit: ${dollarFmt(netWinterProfitOfOneVehicle() * get_veh_pop())}\n`);
+
+
+
+console.log(`get_veh_pop() = ${get_veh_pop()}`);
+console.log(`getMaxFleetCapacity() = ${getMaxFleetCapacity()} kWh`);
+
+console.log(`CF_per_summer = ${CF_per_summer}`);
+console.log(`CF_cost_per_summer = ${dollarFmt(CF_cost_per_summer)}`);
+
+console.log(`Total Peak Shaving profit for 1 car in ${TOTAL_YEARS} summer(s) = ${dollarFmt(netSummerPeakShavingProfitOfOneEV)}`);
+console.log(`Total NEM profit for 1 car in ${TOTAL_YEARS} summer(s)          = ${dollarFmt(netSummerNemProfitOfOneEV)}`);
+
+console.log(`Total Peak Shaving profit for fleet in ${TOTAL_YEARS} summer(s) = ${dollarFmt(netSummerPeakShavingProfitOfFleet)}`);
+console.log(`Total NEM profit for fleet in ${TOTAL_YEARS} summer(s)          = ${dollarFmt(netSummerNemProfitOfFleet)}`);
+console.log(`Total cents earned per KwH from peak shaving for 1 vehicle over ${TOTAL_YEARS} summer(s) = ${centFmt(peakShavingCentsEarnedPerKwhForOneEv)}`);
+
+
+const netSummerPeakShavingRevenueOfFleet = netSummerRevenueOfOneVehicle(get_total_years()) * get_veh_pop();
+const netSummerPeakShavingCfCostOfFleet = CF_cost_per_summer * get_total_years() * get_veh_pop();
+console.log(`\nTotal Peak Shaving revenue for fleet in ${TOTAL_YEARS} summer(s) = ${dollarFmt(netSummerPeakShavingRevenueOfFleet)}`);
+console.log(`Total Peak Shaving CF cost for fleet in ${TOTAL_YEARS} summer(s) = ${dollarFmt(netSummerPeakShavingCfCostOfFleet)}`);
+
+
+TOTAL_YEARS = numberOfYearsTillBatteryHitsMsocFromCapacityFade();
+const costDiffBtwnBatCostAndGeneratedProfit = teslaBatteryCost - netSummerProfitOfOneVehicle();
+console.log(`\nTesla Battery Cost = ${dollarFmt(teslaBatteryCost)}`);
+console.log(`Total summers until battery degrades to the point of an msoc value of ${msoc*100}% = ${TOTAL_YEARS}`);
+console.log(`Total summers until battery degrades to the point of an msoc value of ${msoc*100}% (accounting for driving) = ${numberOfYearsTillBatteryHitsMsocFromCapacityFade_IncludingFromDriving()}`);
+console.log(`Difference bewteen battery cost and battery profit generated by using a battery until CF mks its cap its msoc: ${dollarFmt(costDiffBtwnBatCostAndGeneratedProfit)}`);
+console.log(`Percentage battery price must decrease for profit to break even on battery cost = ${100 * (costDiffBtwnBatCostAndGeneratedProfit / teslaBatteryCost)}%`);
+
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// -> EXPERIMENTING WITH NUMBER GENERATION FOR
+
+
+// -:- THE BELOW ADDITION ACCOUNTS FOR CF EFFECT OF DRIVING: COMMENT OUT THE "+= 2.3" TO BRING IT BACK TO "PURE V2G" NUMBERS!
+CF_per_summer += 2.3;
+
+console.log('\n===========================================================================');
+for(TOTAL_YEARS = 1; TOTAL_YEARS <= 18; ++TOTAL_YEARS) {
+	let tmp = TOTAL_YEARS;
+	--TOTAL_YEARS;
+	const priorYearAmount = TOTAL_YEARS == 0 ? 0 : netSummerRevenueOfOneVehicle(get_total_years()) * get_veh_pop();
+	TOTAL_YEARS = tmp;
+	const currentYearAmount = netSummerRevenueOfOneVehicle(get_total_years()) * get_veh_pop();
+	console.log(`Yearly Peak Shaving revenue for fleet in ${TOTAL_YEARS}th summer = ${dollarFmt(currentYearAmount - priorYearAmount)}`);
 }
-*/
-/*****************************************************************************
- * JQUERY ZIP UPDATES
- *****************************************************************************/
+console.log('===========================================================================');
+console.log(`Fleet CF cost per year = ${dollarFmt(convert_CF_to_cost(CF_per_summer) * get_veh_pop())}`);
+console.log('===========================================================================\n');
 
-//Retrieve zip code from map
-$("#zip").change(function(){
-	zip_code = $("#zip").val();
 
-	calc_veh_pop();
-	calc_flt_cap();
-	flt_tou_profit[0].revenue = get_winter_revenue_pge_tou();
-	flt_tou_profit[1].revenue = get_summer_revenue_pge_tou();
-	flt_profit = Math.round(calc_annual_profit(flt_tou_profit[0].revenue, flt_tou_profit[1].revenue,
-		PGE_TOU_D.winter_length, PGE_TOU_D.summer_length));
-	indiv_profit = Math.round(calc_annual_profit(flt_tou_profit[0].revenue/veh_pop, flt_tou_profit[1].revenue/veh_pop,
-		PGE_TOU_D.winter_length, PGE_TOU_D.summer_length));
-
-	flt_roi_field.text(flt_profit);
-	indiv_roi_field.text(indiv_profit);
-	flt_cap_field.text((battery_capacity*veh_pop).toFixed(0));
-	updatePS();
-	updateFA();
-});
-
-/*****************************************************************************
- * GRAPH UPDATES
- *****************************************************************************/
-
-// When multiple choice is changed, update graphs. This function is called in app.js
-function updateGraphs(){
-
-	//msoc = $("#msocText").val()/100; //is a percentage;
-	opt_in = $("#optinText").val()/100;
-
-	// Get id of selected vehicle
-	//vehicle_type = $("#car-list .selected").attr("id");
-	//console.log(vehicle_type);
-
-	//console.log(data.batteryKWhCapacity);
-	//battery_capacity = $("#car-list .selected div h6").attr("property");
-
-	calc_veh_pop();
-	calc_flt_cap();
-	console.log(flt_tou_profit);
-
-	flt_tou_profit[0].revenue = get_winter_revenue_pge_tou();
-	flt_tou_profit[1].revenue = get_summer_revenue_pge_tou();
-	flt_profit = Math.round(calc_annual_profit(flt_tou_profit[0].revenue, flt_tou_profit[1].revenue,
-		PGE_TOU_D.winter_length, PGE_TOU_D.summer_length));
-	indiv_profit = Math.round(calc_annual_profit(flt_tou_profit[0].revenue/veh_pop, flt_tou_profit[1].revenue/veh_pop,
-		PGE_TOU_D.winter_length, PGE_TOU_D.summer_length));
-
-	// Set the value of the HTML spans to a smaller number, expressed in larger units (e.g. Gigawatts vs Kilowatts)
-	let flt_val = battery_capacity * veh_pop;
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
-	return {"fleet": flt_profit, "indiv": indiv_profit, "cap": flt_val};
-	//updatePS();
+
+function mkObj(summerNo, totalAccRevenue, objs) {
+	// Get CF cost for 1 year
+	const tmp = TOTAL_YEARS;
+	TOTAL_YEARS = 1;
+	const yearlyCost = convert_CF_to_cost(CF_per_summer) * get_veh_pop();
+	TOTAL_YEARS = tmp;
+
+	const yearlyRevenue = objs.length == 0 ? totalAccRevenue : (totalAccRevenue - objs[summerNo-2].totalAccRevenue);
+	const yearlyProfit = yearlyRevenue - yearlyCost;
+	const totalRevenueDecreaseFromInitialYear = objs.length == 0 ? 0 : (objs[0].yearlyRevenue - yearlyRevenue);
+
+	return ({
+		'summerNo': summerNo,
+		'yearlyRevenue': yearlyRevenue,
+		'yearlyCost': yearlyCost,
+		'yearlyProfit': yearlyProfit,
+		'totalRevenueDecreaseFromInitialYear': totalRevenueDecreaseFromInitialYear,
+		'totalAccRevenue': totalAccRevenue,
+	});
 }
+
+
+function fmtObjs(objs) {
+	return objs.map(o => {
+		o.yearlyRevenue = dollarFmt(`${o.yearlyRevenue}`);
+		o.yearlyCost = dollarFmt(`${o.yearlyCost}`);
+		o.yearlyProfit = dollarFmt(`${o.yearlyProfit}`);
+		o.totalRevenueDecreaseFromInitialYear = dollarFmt(`${o.totalRevenueDecreaseFromInitialYear}`);
+		delete o.totalAccRevenue;
+		return o;
+	})
+}
+
+
+
+function printTableRow(o) {
+	console.log(`${o.summerNo} & \\${o.yearlyRevenue} & \\${o.yearlyCost} & \\${o.yearlyProfit} & \\${o.totalRevenueDecreaseFromInitialYear} \\\\`);
+}
+
+
+
+
+msoc = .20; // Precentage/100! // 0.2 = SCUTC
+opt_in = 0.10; // Precentage/100! // 0.1 = SCUTC
+
+function generateTableData(totalSummers) {
+	let objs = [];
+	for(let i = 1; i <= totalSummers; ++i){
+		TOTAL_YEARS = i;
+		objs.push(mkObj(i, netSummerRevenueOfOneVehicle(get_total_years()) * get_veh_pop(), objs));
+	}
+	objs = fmtObjs(objs);
+	console.log('\nTable Data:');
+
+	// console.log(JSON.stringify(objs,null,2));
+	for(let o of objs) printTableRow(o);
+}
+
