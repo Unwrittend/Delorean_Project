@@ -60,7 +60,7 @@ function toggleMCSelected() {
 		});
 		Cookies.set("cars", JSON.stringify(cars));
 
-		//validateAndUpdate();
+		validateAndUpdate();
 	}
 
 }
@@ -77,6 +77,8 @@ function removeCar(el) {
 	$("#car-sel-" +rm_i).remove();
 	$("#" +rm_id).removeClass("selected");
 	sel_i--;
+
+	validateAndUpdate();
 }
 
 // Next 2 functions are for the view toggle
@@ -243,7 +245,6 @@ $(window).resize(function(){
 	widget_width = parseInt(widget_width, 10);
 	widget_width -= 50;
 
-	//validateAndUpdate();
 	if($("#car-list .selected").length)
 		updatePS();
 	updateFA();
@@ -256,6 +257,7 @@ function validateAndUpdate() {
 // TODO: validate number of years
 	let valid = true;
 	let msoc = $("#msocText");
+	let yearField = $("#years-inp");
 
 	/**  Common Stuff  **/
 	// If no car is selected
@@ -268,6 +270,11 @@ function validateAndUpdate() {
 	if( parseInt(msoc.val()) > parseInt(msoc.attr("max")) || parseInt(msoc.val()) < parseInt(msoc.attr("min")) ) {
 		valid = false;
 		throwError(msoc, "Invalid input");
+	}
+
+	if ( yearField.val() <= 0 ) {
+		valid = false;
+		throwError(yearField, "Invalid Input");
 	}
 
 	// If in organizer view:
@@ -364,6 +371,7 @@ $(function() {
 
 	populateSelectedCars();
 
+	validateAndUpdate();
 	// Set default times
 	//hours1.val( "0" + slider.slider( "values", 0 ) + ":00" );
 	//hours2.val( slider.slider( "values", 1 ) + ":00" );
