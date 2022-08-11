@@ -25,21 +25,14 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3cc0ec0f-7bef-4d4c-bc5c-02b3d35a57c6" name="Default Changelist" comment="Changes to fleet-capacity include winter temperatures">
-      <change afterPath="$PROJECT_DIR$/public/scripts/roi.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/watcherTasks.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/watcherTasks.xml" afterDir="false" />
+    <list default="true" id="3cc0ec0f-7bef-4d4c-bc5c-02b3d35a57c6" name="Default Changelist" comment="Make graphs work and lots of other things">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/legacy/composer.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/legacy/composer.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/legacy/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/legacy/project.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/scripts/fleet-capacity.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/scripts/fleet-capacity.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/scripts/graphs.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/scripts/graphs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/scripts/Vehicle.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/scripts/battery-degradation.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/scripts/fleet-capacity.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/public/scripts/project.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/scripts/project.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/scripts/zip.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/views/about.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/about.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/project.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/project.ejs" afterDir="false" />
     </list>
@@ -100,18 +93,13 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="DefaultHtmlFileTemplate" value="HTML File" />
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="javascript.nodejs.core.library.configured.version" value="16.2.0" />
-    <property name="javascript.nodejs.core.library.typings.version" value="16.11.14" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/views" />
-    <property name="list.type.of.created.stylesheet" value="SCSS" />
-    <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
-    <property name="vue.rearranger.settings.migration" value="true" />
-  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "WebServerToolWindowFactoryState": "false",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Pranav\Documents\V2G\Delorian_Project\views" />
@@ -216,6 +204,9 @@
       <workItem from="1645941091473" duration="2589000" />
       <workItem from="1647234816690" duration="597000" />
       <workItem from="1647454358083" duration="6524000" />
+      <workItem from="1648699850044" duration="777000" />
+      <workItem from="1655185002112" duration="47000" />
+      <workItem from="1660174892066" duration="2652000" />
     </task>
     <task id="LOCAL-00001" summary="got the an interactive map instead of filler image&#10;Mapbox GL JS library was added to the package">
       <created>1613876897219</created>
@@ -350,7 +341,14 @@
       <option name="project" value="LOCAL" />
       <updated>1629010689027</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Make graphs work and lots of other things">
+      <created>1648700200212</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1648700200212</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -418,6 +416,7 @@
     <MESSAGE value="Change formatting of contact e-mail" />
     <MESSAGE value="Add a &quot;shopping cart&quot; to put multiple models in a fleet" />
     <MESSAGE value="Changes to fleet-capacity include winter temperatures" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changes to fleet-capacity include winter temperatures" />
+    <MESSAGE value="Make graphs work and lots of other things" />
+    <option name="LAST_COMMIT_MESSAGE" value="Make graphs work and lots of other things" />
   </component>
 </project>
