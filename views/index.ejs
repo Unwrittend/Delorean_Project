@@ -67,7 +67,7 @@
                 <a class="nav-link selected-nav" href="#">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/project">Project</a>
+                <a class="nav-link" href="/project">Calculator</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/about">About</a>
@@ -75,11 +75,11 @@
         </ul>
         <div class="style-switch">
             <% if(user_mode !== "dark") { %>
-                <button class="btn selected" onclick="switchToLight(this);"><i class="bi bi-sun"></i></button>
-                <button class="btn" onclick="switchToDark(this);"><i class="bi bi-moon"></i></button>
+                <button class="btn selected" onclick="switchToLight(this);" title="Light Mode"><i class="bi bi-sun"></i></button>
+                <button class="btn" onclick="switchToDark(this);" title="Dark Mode"><i class="bi bi-moon"></i></button>
             <% } else { %>
-                <button class="btn" onclick="switchToLight(this);"><i class="bi bi-sun"></i></button>
-                <button class="btn selected" onclick="switchToDark(this);"><i class="bi bi-moon"></i></button>
+                <button class="btn" onclick="switchToLight(this);" title="Light Mode"><i class="bi bi-sun"></i></button>
+                <button class="btn selected" onclick="switchToDark(this);" title="Dark Mode"><i class="bi bi-moon"></i></button>
             <% } %>
         </div>
     </div>
@@ -131,7 +131,7 @@
                 <img class="img-fluid" src="/images/profitability.png" alt="Profitability Infographic" />
                 <p></p>
                 <div class="d-flex justify-content-center">
-                    <a class="btn header-btn">Our Methods</a>
+                    <a class="btn header-btn" href="https://ieeexplore.ieee.org/document/9612447" target="_blank">Our Methods</a>
                 </div>
             </div>
         </div>

@@ -116,7 +116,7 @@ app.get("/what-is-v2g", (req, res) => {
 });
 
 // Load project.ejs
-app.get("/project", (req, res) => {
+app.get(["/project", "/calculator"], (req, res) => {
 
 	// Read cookie to find out user's dark/light mode preference. Default is light
 	user_mode = req.cookies.mode;

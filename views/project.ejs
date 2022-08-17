@@ -69,7 +69,7 @@
                 <a class="nav-link" href="/">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link selected-nav" href="#">Project</a>
+                <a class="nav-link selected-nav" href="#">Calculator</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/about">About</a>
@@ -77,11 +77,11 @@
         </ul>
         <div class="style-switch">
             <% if(user_mode !== "dark") { %>
-                <button class="btn selected" onclick="switchToLight(this);"><i class="bi bi-sun"></i></button>
-                <button class="btn" onclick="switchToDark(this);"><i class="bi bi-moon"></i></button>
+                <button class="btn selected" onclick="switchToLight(this);" title="Light Mode"><i class="bi bi-sun"></i></button>
+                <button class="btn" onclick="switchToDark(this);" title="Dark Mode"><i class="bi bi-moon"></i></button>
             <% } else { %>
-                <button class="btn" onclick="switchToLight(this);"><i class="bi bi-sun"></i></button>
-                <button class="btn selected" onclick="switchToDark(this);"><i class="bi bi-moon"></i></button>
+                <button class="btn" onclick="switchToLight(this);" title="Light Mode"><i class="bi bi-sun"></i></button>
+                <button class="btn selected" onclick="switchToDark(this);" title="Dark Mode"><i class="bi bi-moon"></i></button>
             <% } %>
         </div>
     </div>
@@ -89,23 +89,6 @@
 <!-- Content (sr-only link jumps here) -->
 <!--=================================================================================================================-->
 <main id="article" class="container-fluid content">
-
-    <!-- Buttons to decide whether client wants Individual or Organizer View -->
-    <!--==================================================================================================-->
-    <div class="row d-flex justify-content-center text-center">
-        <section class="view-toggle">
-            <h1 class="text-center">Is Vehicle-to-Grid (V2G) Right For You?</h1>
-            <% if(user_view === "individual") { %>
-<!--                <button id="ind-btn" class="btn selected" onclick="switchToIndiv()">Individual</button>-->
-                <button id="org-btn" class="btn" onclick="switchToOrg()">Organizer</button>
-            <% } else { %>
-<!--                <button id="ind-btn" class="btn" onclick="switchToIndiv()">Individual</button>-->
-                <button id="org-btn" class="btn selected" onclick="switchToOrg()">Organizer</button>
-            <% } %>
-        </section>
-    </div>
-    <!-- The actual form -->
-    <!--=============================================================================================================-->
     <div class="row main-form">
         <!-- Left Column -->
         <!--=========================================================================================================-->
